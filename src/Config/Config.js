@@ -1,0 +1,1 @@
+export const target = process.env.NODE_ENV !== 'production' ? '' : ''; //目标网站
