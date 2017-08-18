@@ -15,7 +15,7 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            files: data,
+            files: [],
         };
     }
 
@@ -26,17 +26,8 @@ class Main extends React.Component {
         });
     };
     onAddImageClick(e){
-        e.preventDefault();
+       // e.preventDefault();
         console.log(e)
-        this.setState({
-            files: this.state.files.concat({
-                url: a2,
-                id: '3',
-            }),
-        });
-    };
-    onTabChange(key){
-        console.log(key);
     };
     render() {
         const { files } = this.state;

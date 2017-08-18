@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import {ListView } from 'antd-mobile-web';
+import action from '../Action/Index';
+import { connect } from 'react-redux';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 const data = [
@@ -45,9 +47,7 @@ const Loader  = function(){
     )
 }
 
-let index = data.length - 1;
-
-const NUM_ROWS = 20;
+const NUM_ROWS = 5;
 let pageIndex = 0;
 
 class Main extends Component {
@@ -84,17 +84,24 @@ class Main extends Component {
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 isLoading: false,
             });
-        }, 600);
+        }, 1600);
+
     }
 
     // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
-    // componentWillReceiveProps(nextProps) {
-    //   if (nextProps.dataSource !== this.props.dataSource) {
-    //     this.setState({
-    //       dataSource: this.state.dataSource.cloneWithRows(nextProps.dataSource),
-    //     });
-    //   }
-    // }
+    componentWillReceiveProps(nextProps) {
+        console.log('nextProps',nextProps)
+
+
+
+      if (nextProps.state.listData !== this.props.state.listData) {
+            /*
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(nextProps.state.listData),
+        });
+        */
+      }
+    }
 
     onEndReached(event){
         // load new data
@@ -102,9 +109,9 @@ class Main extends Component {
         if (this.state.isLoading && !this.state.hasMore) {
             return;
         }
-        console.log('reach end', event);
         this.setState({ isLoading: true });
         setTimeout(() => {
+            this.props.pushData(data);
             var x = this.rData;
             var y = this.genData(++pageIndex);
             var z = {};
@@ -115,11 +122,16 @@ class Main extends Component {
                 z[i] = y[i]
             }
             this.rData = z;
+
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(this.rData),
                 isLoading: false,
             });
-        }, 1000);
+        }, 5600);
+    }
+
+    doSetData(val){
+        this.props.setState(val);
     }
 
     render() {
@@ -132,12 +144,10 @@ class Main extends Component {
             />
         );
         const row = (rowData, sectionID, rowID) => {
-            if (index < 0) {
-                index = data.length - 1;
-            }
-            const obj = data[index--];
+            console.log('rewData:',rowData)
+            const obj = data[Math.floor(Math.random()*3)];
             return (
-                <div key={rowID} className="row">
+                <div key={rowID} className="row" onClick={()=>{}}>
                     <div style={{ display: '-webkit-box', display: 'flex', padding: '0.3rem 0' }}>
                         <img style={{ height: '1.28rem', width: '1.58rem',marginRight: '0.3rem' }} src={obj.img} alt="icon" />
                         <div className="row-text" style={{textAlign:'left'}}>
@@ -154,22 +164,26 @@ class Main extends Component {
                       dataSource={this.state.dataSource}
                       renderHeader={() => <span>最新摩托推荐</span>}
                       renderFooter={() => (<div style={{ padding: 30, textAlign: 'center',position:'relative' }}>
-                          {this.state.isLoading ? <Loader /> : 'Loaded'}
+                          {this.state.isLoading ? <Loader /> : ''}
                       </div>)}
                       renderRow={row}
                       renderSeparator={separator}
                       className="am-list"
-                      pageSize={4}
-                      useBodyScroll
-                      onScroll={() => { console.log('scroll'); }}
-                      scrollRenderAheadDistance={500}
-                      scrollEventThrottle={200}
+                      useBodyScroll={true}
+                      onScroll={() => { }}
+                      scrollRenderAheadDistance={20}
+
+                      scrollEventThrottle={10} /*scroll优化事件间断执行，越高性能越好，但是不容易出发快速的onEndReached*/
                       onEndReached={this.onEndReached.bind(this)}
-                      onEndReachedThreshold={10}
+                      onEndReachedThreshold={50} /*距离底部多少距离的时候触发触底方法*/
             />
         );
     }
 }
 
-//export default connect((state) => { return { state: state['IndexList']} }, action())(Main);
-export default Main;
+
+
+
+
+export default connect((state) => { return { state: state['IndexList']} }, action())(Main);
+//export default Main;

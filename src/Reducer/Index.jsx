@@ -8,7 +8,7 @@ import { Tool, merged } from '../Tool';
  */
 const User = (state = {id:'',time:''}, action) => {
     switch (action.type) {
-        case 'setTime': //设置服务器时间
+        case 'setState': //设置服务器时间
             return Object.assign({},state,{time:action.target});
         case 'login': //从App获取userId
             if(action.target){
@@ -42,10 +42,9 @@ const indexData = [
  */
 const IndexList = (state = indexData, action) => {
     switch (action.type) {
-        case 'pushData': //增加保险首页项目
-            var temp = state;
-            temp.push(action.target);
-            return temp;
+        case 'pushData': //列表页面内容
+            var temp = state.listData || [];
+            return Object.assign({},state,{listData:temp.concat( action.target )});
         case 'clearData': //清空
             return [];
         default:

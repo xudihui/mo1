@@ -17,7 +17,6 @@ class Main extends Component {
             value: '',
             loading:false
         }
-        console.log('router',this.context)
     }
     onErrorClick(){
         if (this.state.hasError) {
@@ -59,7 +58,7 @@ class Main extends Component {
             <div>
                 <List renderHeader={() => '手机验证码登录'}>
                     <InputItem
-                        type="phone"
+                        maxLength="11"
                         placeholder="请输入您的手机号码"
                         error={this.state.hasError}
                         onErrorClick={this.onErrorClick.bind(this)}
