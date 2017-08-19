@@ -29,9 +29,9 @@ const RouteConfig = (
     <Router history={history}>
         <Route path="/" component={Roots}>
             <IndexRoute component={IndexList} />
-            <Route path="my/list/:id" component={MyList} />
+            <Route path="myList" component={MyList} />
             <Route path="todo" component={MyToDoList} />
-            <Route path="my/info/:id" component={MyInfo} />
+            <Route path="my/info" component={MyInfo} />
             <Route path="help" component={Help} />
             <Route path="menu" component={Menu} />
             <Route path="amount" component={Amount} />

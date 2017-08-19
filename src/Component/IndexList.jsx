@@ -8,6 +8,7 @@ import { Drawer,List ,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBa
 
 import ListView from './ListView';
 import Seller from './Sell';
+import Rows from './Rows';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 
@@ -169,17 +170,42 @@ class Buy extends Component {
                     <SearchBar placeholder="请输入车系/车型" />
                 </div>
                 <Banner />
-                <ListView />
-                <Drawer
-                    className="my-drawer"
-                    style={{ minHeight: document.documentElement.clientHeight - 200 }}
-                    enableDragHandle
-                    contentStyle={{ color: '#A6A6A6', textAlign: 'center', marginTop: 42 }}
-                    sidebar={sidebar}
-                    open={this.state.open}
-                    onOpenChange={this.onOpenChange.bind(this)}
-                ><span></span>
-                </Drawer>
+                <div className="am-list am-list-view-scrollview" style={{paddingBottom:'50px'}}>
+                    <div className="am-list-line" style={{height: '2em',
+                        lineHeight: '2em',color:'#888',
+                        fontSize: '.3rem'}}>
+                        推荐车型
+                    </div>
+                    <div className="am-list-body">
+                        <div className="list-view-section-body">
+                            <Rows />
+                            <Rows />
+                            <Rows />
+                            <Rows />
+                            <Rows />
+                                    <Link to="/myList" style={{display:'inline-block',marginTop:'10px',fontSize:'.25rem',marginBottom:'10px',color:'#666'}}>
+                                        查看全部车辆
+                                    </Link>
+
+                        </div>
+                    </div>
+                </div>
+                {
+                    /*
+                    *
+                     <Drawer
+                     className="my-drawer"
+                     style={{ minHeight: document.documentElement.clientHeight - 200 }}
+                     enableDragHandle
+                     contentStyle={{ color: '#A6A6A6', textAlign: 'center', marginTop: 42 }}
+                     sidebar={sidebar}
+                     open={this.state.open}
+                     onOpenChange={this.onOpenChange.bind(this)}
+                     ><span></span>
+                     </Drawer>
+                    * */
+                }
+
             </div>
         );
     }

@@ -6,10 +6,12 @@ import { Tool, merged } from '../Tool';
  * @param {Object} action
  * @returns Object
  */
-const User = (state = {id:'',time:''}, action) => {
+const User = (state = {id:'18868342556',time:''}, action) => {
     switch (action.type) {
-        case 'setState': //设置服务器时间
+        case 'setTime': //设置服务器时间
             return Object.assign({},state,{time:action.target});
+        case 'setState':
+            return Object.assign({},state,{tuy:action.target});
         case 'login': //从App获取userId
             if(action.target){
                 return Object.assign({},state,{id:action.target});

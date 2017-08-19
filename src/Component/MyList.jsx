@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, TabIcon, GetData,GetNextPage } from './common/index';
+import a2 from '../Images/02.jpg';
+import {Icon,NavBar,PlaceHolder } from 'antd-mobile-web';
 
 /**
  * 模块入口
- * 
+ *
  * @class Main
  * @extends {Component}
  */
@@ -36,61 +38,35 @@ class List extends Component {
 class ListItem extends Component {
     render() {
         let {title,applicationInfo,top,applyInfo,id} = this.props.data;
-        console.log('MyItem0000:',this.props)
+        console.log('MyList99999999999:',this.props)
         return (
-            <li>
-                <Link to={`/my/info/${applyInfo.applyNo}`}>
-                    <div className={`con userList status-${top}`} data-flex="main:justify">
-                        <p data-flex="dir:top ">
-                            <span className="name">{title}</span>
-                            <span className="count">{applicationInfo.applicantName}</span>
-                            <span className="time">保障期限:{applyInfo.policyBeginTime.replace(/\-/g,'.') + '-' + applyInfo.policyEndTime.replace(/\-/g,'.')}</span>
-                        </p>
-                        <p data-flex="main:center cross:top" data-flex-box="0">
-                                <span className="status">
-                                    {
-                                        this.props.time && parseInt(this.props.time.replace(/\-/g,'')) - parseInt(applyInfo.policyEndTime.replace(/\-/g,'')) > -1 ? '已失效' : '已生效'
-                                    }
-                                </span>
-                        </p>
+            <div>
+                <div className="rowMoto">
+                    <div data-flex="dir:left main:left">
+                        <img src={a2} alt="icon" data-flex-box="0"/>
+                        <div className="rowMotoText" >
+                            <div >
+                                广东 汕尾市 Honda Dio 系列 Dio
+                            </div>
+                            <div >
+                                5千-1万公里 / ≤2004年 / 250-399cc
+                            </div>
+                            <div>
+                                ￥<span >16956</span>
+                            </div>
+                        </div>
                     </div>
-                </Link>
-            </li>
+
+
+                </div>
+                <div style={{background:'#eee',height:'1px'}}></div>
+            </div>
         );
     }
     shouldComponentUpdate(np) {
         return false;
     }
 }
-
-
-class ListItem_bak extends Component {
-    render() {
-        let {proName,userName,time,status,id} = this.props.data;
-        return (
-            <li>
-                <Link to={`/my/info`}>
-                    <div className={`con userList status-${status}`} data-flex="main:justify">
-                        <p data-flex="dir:top ">
-                            <span className="name">{proName}</span>
-                            <span className="count">{userName}</span>
-                            <span className="time">保障期限:{time}</span>
-                        </p>
-                        <p data-flex="main:center cross:top" data-flex-box="0">
-                                <span className="status">
-                                    {status ? '已生效' : '已失效'}
-                                </span>
-                        </p>
-                    </div>
-                </Link>
-            </li>
-        );
-    }
-    shouldComponentUpdate(np) {
-        return false;
-    }
-}
-
 
 class Main extends Component {
     constructor(props) {
@@ -132,6 +108,14 @@ class Content extends Component {
         }
         return (
             <div className="index-list-box">
+                <NavBar leftContent="back"
+                        mode="dark"
+                        onLeftClick={() => console.log('onLeftClick')}
+                        rightContent={[
+                            <Icon key="0" type="search" style={{ marginRight: '0.32rem' }} />,
+                            <Icon key="1" type="ellipsis" />,
+                        ]}
+                >NavBar</NavBar>
                 {
                     data.length > 0 ? <List {...this.props} list={data} /> : null
                 }
@@ -142,6 +126,9 @@ class Content extends Component {
 Main.contextTypes = {
     router: React.PropTypes.object.isRequired
 }
+
+
+
 export default GetNextPage({
     id: 'MyList',  //应用关联使用的redux
     component: Main, //接收数据的组件入口
