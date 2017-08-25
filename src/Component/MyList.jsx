@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
-import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, TabIcon, GetData,GetNextPage } from './common/index';
+import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, TabIcon, GetData,GetNextPage,TopNavBar } from './common/index';
 import a2 from '../Images/02.jpg';
 import {Icon,NavBar,PlaceHolder } from 'antd-mobile-web';
 
@@ -90,7 +90,6 @@ class Content extends Component {
     constructor(props) {
         super(props);
     }
-
     render() {
         var {data,loadAnimation} = this.props.state;
         for(let i = 0;i < data.length; i++){
@@ -107,18 +106,13 @@ class Content extends Component {
             data[i]['title'] = title;
         }
         return (
-            <div className="index-list-box">
-                <NavBar leftContent="back"
-                        mode="dark"
-                        onLeftClick={() => console.log('onLeftClick')}
-                        rightContent={[
-                            <Icon key="0" type="search" style={{ marginRight: '0.32rem' }} />,
-                            <Icon key="1" type="ellipsis" />,
-                        ]}
-                >NavBar</NavBar>
-                {
-                    data.length > 0 ? <List {...this.props} list={data} /> : null
-                }
+            <div>
+                <TopNavBar handlerClick={() => {alert(1)}} />
+                <div className="index-list-box" style={{paddingTop:'40px'}}>
+                    {
+                        data.length > 0 ? <List {...this.props} list={data} /> : null
+                    }
+                </div>
             </div>
         );
     }

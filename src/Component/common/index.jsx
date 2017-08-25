@@ -240,3 +240,41 @@ export class TabIcon extends Component {
         );
     }
 }
+
+
+/**
+ * 生成头部返回菜单
+ *
+ * @export
+ * @class topNavBar
+ * @extends {Component}
+ */
+export class TopNavBar extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        const { title,handlerClick } = this.props;
+        const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory
+        return (
+            <div data-flex="dir:left box:first cross:center" className="topNavBar">
+                    <span data-flex="dir:left" onClick={() => {
+                        history.goBack();
+                    }}>
+                        <i className="iconfont icon-xiangzuojiantou"></i>
+                        <b>返回</b>
+                    </span>
+                <span>{title || '暂无标题'}</span>
+            </div>
+        );
+    }
+}
+
+
+/**
+ * history 开发环境用浏览器地址，生产发布使用hash路由
+ *
+ * @export
+ * @class history
+ */
+export const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;

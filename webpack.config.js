@@ -54,6 +54,11 @@ module.exports = {
             }
 */
             {
+                test: /\.less/,
+                exclude: /^node_modules$/,
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!less-loader')
+            },
+            {
                 test: /\.css$/,
                 exclude: /^node_modules$/,
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader')
@@ -62,16 +67,13 @@ module.exports = {
                 exclude: /^node_modules$/,
                 loader: 'file-loader?name=[name].[ext]'
             }, {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|gif|svg)$/,
                 exclude: /^node_modules$/,
                 loader: 'url?limit=10000&name=[name].[ext]' //注意后面那个limit的参数，当你图片大小小于这个限制的时候，会自动启用base64编码图片
             }, {
                 test: /\.jsx$/,
                 exclude: /^node_modules$/,
                 loaders: ['jsx', 'babel?presets[]=es2015,presets[]=react']
-            }, {
-                test: /\.(svg)$/i,
-                loader: 'svg-url-loader'
             }
         ],
         rules: [

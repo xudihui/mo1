@@ -1,3 +1,5 @@
+@baseColor: #555; //基础字体颜色
+
 * {
     -moz-user-select:none;
     -webkit-user-select:none;
@@ -7,10 +9,103 @@
 }
 
 body{
-
-    font-size:16px;
+    font-size: .28rem;//html根字体大小是50px,0.28rem=14px
     letter-spacing:.05em;
 }
+#line_bottom(@transform: scaleY(.5),@top:auto,@right:auto,@bottom:0px,@left:auto){
+    content: '';
+    position: absolute;
+    left: @left;
+    bottom: @bottom;
+    right: @right;
+    top: @top;
+    height: 1px;
+    width: 100%;
+    background-color: #eee;
+    display: block;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: @transform;
+    transform: @transform;
+}
+#line_left(@transform: scaleX(.5),@top:0px,@right:auto,@bottom:auto,@left:0px){
+    content: '';
+    position: absolute;
+    left: @left;
+    bottom: @bottom;
+    right: @right;
+    top: @top;
+    height: 100%;
+    width: 1px;
+    background-color: #eee;
+    display: block;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: @transform;
+    transform: @transform;
+}
+.topNavBar{
+    height:38px;
+    padding:0 5px;
+    color:#999;
+    border-bottom:1px solid #ccc;
+    position:fixed;
+    top:0;
+    width:100%;
+    background:#fff;
+    font-size:14px;
+    z-index:2
+}
+.topNavBar b{
+    font-weight:normal;
+    padding-left:3px;
+    position:relative;
+    top:1px
+}
+.topNavBar span:nth-child(2){
+    text-align:center;
+    text-indent:-50px;
+    color:#40a5ed;
+}
+.match{
+    height:35px;
+    line-height:35px;
+    color:@baseColor;
+    position:relative;
+    &:after{
+        #line_bottom() //向下细线
+    }
+    div:nth-child(4){
+        width:50px;
+        position:relative;
+        &:after{
+            #line_left() //向下细线
+        }
+    }
+    i{padding-left:2px;font-size:10px;color:#888}
+    i.icon-viewgallery{
+        font-size:16px
+    }
+}
+.match_subnav{
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    max-height:200px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background: #f8f8f8;
+    ul li{
+        line-height:2.5;
+        padding:0 10px;
+        text-align:left;
+        position:relative;
+        &:after{
+            #line_bottom(scaleY(.5),auto,auto,0px,auto) //向下细线
+        }
+    }
+}
+
 .top{
     background:url(../Images/logo.jpg) 10px center no-repeat;
     background-size:145px 27px;
@@ -19,10 +114,7 @@ body{
 .city{
     float:right;
     height:40px;
-    background:url(../Images/arr.svg) right center no-repeat;
-    background-size: 38px 20px;
-    line-height: 40px;
-    padding-right: 30px;
+    padding-right: 10px;
     color:#777
 }
 .my-drawer {
@@ -81,6 +173,10 @@ div.car{
     color: #888;
     font-size: .28rem;
     padding: 30px 0 18px 0;
+}
+.am-tab-bar-tab-icon i{
+    font-size:22px
+
 }
 .row {
     padding: 0 0.3rem;
