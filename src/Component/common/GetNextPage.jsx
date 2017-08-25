@@ -49,6 +49,7 @@ const Main = (mySetting) => {
              * @param {Object} props
              */
             this.initState = (props) => {
+                console.log('props:',props)
                 var {state, location} = props;
                 var {pathname, search} = location;
                 this.path = pathname + search;
@@ -355,8 +356,10 @@ const Main = (mySetting) => {
         }
         render() {
             var {loadAnimation, loadMsg} = this.state;
+            console.log('this.props.setting.component',this.props.setting.component);
             return (
                 <div>
+
                     <this.props.setting.component {...this.props} state={this.state} />
                     {
                         loadMsg == 'none' ? <Empty text="无保单信息" /> : <div ref="dataload"><DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} /></div>

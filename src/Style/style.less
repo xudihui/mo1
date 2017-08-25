@@ -21,7 +21,7 @@ body{
     top: @top;
     height: 1px;
     width: 100%;
-    background-color: #eee;
+    background-color: #ddd;
     display: block;
     -webkit-transform-origin: 50% 100%;
     transform-origin: 50% 100%;
@@ -37,12 +37,22 @@ body{
     top: @top;
     height: 100%;
     width: 1px;
-    background-color: #eee;
+    background-color: #ddd;
     display: block;
     -webkit-transform-origin: 50% 100%;
     transform-origin: 50% 100%;
     -webkit-transform: @transform;
     transform: @transform;
+}
+.am-search{
+    background:#fff;
+    height: .8rem;
+}
+.clearHistory{
+    color:@baseColor;
+    text-align:center;
+    height:40px;
+    line-height:40px
 }
 .topNavBar{
     height:38px;
@@ -72,6 +82,7 @@ body{
     line-height:35px;
     color:@baseColor;
     position:relative;
+    text-align: center;
     &:after{
         #line_bottom() //向下细线
     }
@@ -94,7 +105,7 @@ body{
     max-height:200px;
     overflow-y:auto;
     overflow-x:hidden;
-    background: #f8f8f8;
+    background: #fdfdfd;
     ul li{
         line-height:2.5;
         padding:0 10px;
@@ -105,35 +116,49 @@ body{
         }
     }
 }
+.match_subnav_his{
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    max-height:400px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    background: #fdfdfd;
+    ul li{
+        line-height:2.5;
+        padding:0 10px;
+        text-align:left;
+        position:relative;
+        &:after{
+            #line_bottom(scaleY(.5),auto,auto,0px,auto) //向下细线
+        }
+    }
+}
+.topWrap{
+    position:fixed;
+    width:100%;
+    z-index:2;
+    background:#fff;
+    .top{
+        height:40px;
+        position:relative;
+        &:after{
+            #line_bottom(scaleY(.5),auto,auto,0px,auto) //向下细线
+        }
+        .logo{
+            background:url(../Images/logo.jpg) 10px center no-repeat;
+            background-size:58px 27px;
+            width:80px
+        }
+    }
+    .city{
+        float:right;
+        height:40px;
+        padding-right: 10px;
+        color:#777
+    }
+}
 
-.top{
-    background:url(../Images/logo.jpg) 10px center no-repeat;
-    background-size:145px 27px;
-    height:40px;
-}
-.city{
-    float:right;
-    height:40px;
-    padding-right: 10px;
-    color:#777
-}
-.my-drawer {
-    position: relative;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-}
-.my-drawer .am-drawer-sidebar {
-    background-color: #fff;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-}
-.my-drawer .am-drawer-sidebar .am-list {
-    width: 6rem;
-    padding: 0;
-}
-.am-drawer{
-    top:40px!important
-}
 .am-list-header{
     text-align:left
 }

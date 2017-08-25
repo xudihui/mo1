@@ -257,7 +257,68 @@ class Main extends Component {
 class Content extends Component {
     constructor(props) {
         super(props);
-        this.state = {a:222};
+        this.handleCheck.bind(this);
+        this.state = {
+            open: false,
+            city:'全国',
+            matchIndex:-1,
+            matchContent:[
+                <ul>
+                    <li data-query="123321" onClick={this.handleCheck}>12</li>
+                    <li data-query="123321" onClick={this.handleCheck}>12</li>
+                    <li data-query="123321" onClick={this.handleCheck}>12</li>
+                    <li data-query="123321" onClick={this.handleCheck}>1</li>
+                </ul>,
+                <ul>
+                    <li>12</li>
+                    <li>12</li>
+                    <li>12</li>
+                    <li>1</li>
+                </ul>,
+                <ul>
+                    <li>134</li>
+                    <li>14</li>
+                    <li>14</li>
+                    <li>1</li>
+                </ul>
+            ]
+        }
+    }
+    handlerSetMatch(e,index){
+        var index_ = this.state.matchIndex;
+        if(index_ != -1){
+            index = -1;
+        }
+        console.log(index,index_)
+        this.setState({matchIndex:index});
+        if(e){
+            e.nativeEvent.stopImmediatePropagation();
+        }
+    }
+    handleCheck(e){
+        var el = e.currentTarget;
+        var queryData = el.getAttribute('data-query');
+        var el_all = el.parentNode.childNodes;
+        for(let i in el_all){
+            if(!isNaN(i)){
+                el_all[i].style.color = '#555';
+            }
+        }
+        el.style.color = '#f30';
+        this.handlerSetMatch(false,-1);
+        //doQuery width queryData
+
+    }
+    handleClick(e){
+// 阻止合成事件与最外层document上的事件间的冒泡
+        e.nativeEvent.stopImmediatePropagation();
+    }
+    componentDidMount(){
+        var self = this;
+        document.addEventListener('click', () => { //遮罩类的组件最好把事件都绑定在doc上进行阻止冒泡
+            console.log('document');
+            self.handlerSetMatch(false,-1);
+        });
     }
     render() {
         var {data} = this.props.state.data;

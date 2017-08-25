@@ -3,13 +3,11 @@ import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-ro
 
 import IndexList from '../Component/IndexList'; //首页组件
 import MyList from '../Component/MyList'; //主题详情
-import MyToDoList from '../Component/MyToDoList'; //我的待办列表
 import MyInfo from '../Component/MyInfo'; //保单详情
 import Help from '../Component/Help'; //保单详情
-import Menu from '../Component/Menu'; //菜单详情
-import Amount from '../Component/Amount'; //余额查询
 import Login from '../Component/Login'; //登录
 import Vcode from '../Component/Vcode'; //登录
+import SearchHistory from '../Component/SearchHistory'; //登录
 /**
  * (路由根目录组件，显示当前符合条件的组件)
  * 
@@ -30,13 +28,11 @@ const RouteConfig = (
         <Route path="/" component={Roots}>
             <IndexRoute component={IndexList} />
             <Route path="myList" component={MyList} />
-            <Route path="todo" component={MyToDoList} />
             <Route path="my/info" component={MyInfo} />
             <Route path="help" component={Help} />
-            <Route path="menu" component={Menu} />
-            <Route path="amount" component={Amount} />
             <Route path="Login" component={Login} />
             <Route path="Vcode" component={Vcode} />
+            <Route path="SearchHistory" component={SearchHistory} />
         </Route>
     </Router>
 );
