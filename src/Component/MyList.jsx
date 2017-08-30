@@ -22,6 +22,7 @@ import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-
  * @class List
  * @extends {Component}
  */
+var tempFun = null;
 class List extends Component {
     render() {
         var self = this;
@@ -121,10 +122,9 @@ class Content extends Component {
         }
         console.log(index,index_)
         this.setState({matchIndex:index});
-        if(e){
-            e.nativeEvent.stopImmediatePropagation();
-        }
+        e && e.nativeEvent.stopImmediatePropagation();
     }
+
     handleCheck(e){
         var el = e.currentTarget;
         var self = this;
@@ -140,17 +140,17 @@ class Content extends Component {
         //doQuery width queryData
 
     }
-    handleClick(e){
-// 阻止合成事件与最外层document上的事件间的冒泡
-        e.nativeEvent.stopImmediatePropagation();
-    }
     componentDidMount(){
-        var self = this;
-        document.addEventListener('click', () => { //遮罩类的组件最好把事件都绑定在doc上进行阻止冒泡
-            console.log('document');
-            self.handlerSetMatch(false,-1);
-        });
+        tempFun = () => {
+            this.handlerSetMatch(false,-1);
+        };
+        document.addEventListener('click',tempFun);
+
     }
+    componentWillUnmount(){
+        document.removeEventListener("click",tempFun);
+    }
+
     render() {
         var {data,loadAnimation} = this.props.state;
         for(let i = 0;i < data.length; i++){
@@ -171,7 +171,7 @@ class Content extends Component {
                 <TopNavBar handlerClick={() => {alert(1)}} />
                 <div className='topWrap'>
                     <div>
-                        <div className="top" onClick={(e) => {this.handleClick(e)}} data-flex="dir:left box:justify" >
+                        <div className="top"  data-flex="dir:left box:justify" >
                             <div className="logo"></div>
                             <div>
                                 <SearchBar onFocus={() => {

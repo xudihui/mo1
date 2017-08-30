@@ -4,7 +4,7 @@ import {ImagePicker } from 'antd-mobile-web';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 import ImageChoose from './ImageChoose';
-import { List, TextareaItem, WhiteSpace,InputItem,Picker,Checkbox } from 'antd-mobile-web';
+import { List, TextareaItem, WhiteSpace,InputItem,Picker,Checkbox,Button,WingBlank } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -182,6 +182,9 @@ class TextareaItemExample extends Component {
                         count={100}
                     />
                 </List>
+                <div className="btnWrap">
+                    <Button className="btn" type="primary">确认卖车</Button>
+                </div>
                 <WhiteSpace />
                 <WhiteSpace />
                 <WhiteSpace />

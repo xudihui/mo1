@@ -1,15 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import {ImagePicker } from 'antd-mobile-web';
-import a1 from '../Images/01.jpg';
-import a2 from '../Images/02.jpg';
-const data = [{
-    url: a1,
-    id: '2121',
-}, {
-    url: a2,
-    id: '2122',
-}];
 
 class Main extends React.Component {
     constructor(props) {

@@ -8,6 +8,7 @@ import { Drawer,List ,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBa
 
 import Seller from './Sell';
 import Buy from './Buy';
+import My from './My';
 import First from './First';
 import MyList from './MyList';
 
@@ -131,42 +132,6 @@ class TabBarExample extends Component {
         );
     }
 }
-
-
-
-// My 首页 我的个人中心
-class My extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div style={{paddingBottom:'2px'}}>
-                <List className="my-list" >
-
-                    <List.Item extra="" arrow="horizontal" onClick={() => {}}>设置</List.Item>
-                    <List.Item  arrow="horizontal" onClick={() => {}}>买家中心
-                        <Badge text="减" hot style={{ marginLeft: 12 }} />
-                        <Badge text="惠" hot style={{ marginLeft: 12 }} />
-                        <Badge text="免" hot style={{ marginLeft: 12 }} />
-                        <Badge text="反" hot style={{ marginLeft: 12 }} />
-                        <Badge text="HOT" hot style={{ marginLeft: 12 }} />
-                    </List.Item>
-                    <List.Item extra="" arrow="horizontal" onClick={() => {}}>卖家中心</List.Item>
-                    {
-                        this.props.id && <List.Item extra={this.props.id} arrow="horizontal" onClick={() => {this.props.login('')}}>退出登录</List.Item>
-
-                    }
-                    {
-                        !this.props.id && <Link to="/login"><List.Item extra="" arrow="horizontal" onClick={() => {}}>登录</List.Item></Link>
-                    }
-
-                </List>
-            </div>
-        );
-    }
-}
-
 
 
 class Main_ extends Component {

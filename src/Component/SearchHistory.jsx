@@ -26,6 +26,7 @@ class Main extends Component {
     }
     handlerClick(e){
         history.push('/?type=Buy&query='+e);
+        console.log('this',this)
     }
     clearHistory(){
         this.setState({historyArr:[]});
@@ -37,12 +38,6 @@ class Main extends Component {
         });
     }
     render(){
-        var temp =  this.state.historyArr.map(function(item,index){
-            return(
-                <li key={index} onClick={() => {this.handlerClick(item)}}>{item}</li>
-            );
-
-        }.bind(this));
         return(
             <div>
                 <SearchBar ref='input'  focused={this.state.focused}
@@ -55,7 +50,15 @@ class Main extends Component {
                 <div className="match_subnav_his" style={{maxHeight:'auto'}}>
                     <ul>
                         {
-                           temp
+                            //在数据遍历中绑定事件，方法1是通过bind(this),并且onClick={() => {this.handlerClick()}}匿名函数才行,否则this指向还是会变化
+                            //方法2，在函数外把this指向其它变量，比如self，然后在遍历内部onClick={() => {self.handlerClick()}} 即可
+                            //仅仅在函数遍历内部使用onClick={self.handlerClick}或者onClick={self.handlerClick},定义函数变量名的话，this永远指向null
+                            this.state.historyArr.map(function(item,index){
+                                return(
+                                    <li key={index} onClick={() => {this.handlerClick(item)}}>{item}</li>
+                                );
+
+                            }.bind(this))
                         }
                     </ul>
                     <p className="clearHistory" onClick={() => {this.clearHistory()}}>清空搜索记录</p>

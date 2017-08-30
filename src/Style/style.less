@@ -1,4 +1,5 @@
 @baseColor: #555; //基础字体颜色
+@baseBlue: #108ee9; //基础蓝色背景
 
 * {
     -moz-user-select:none;
@@ -43,6 +44,32 @@ body{
     transform-origin: 50% 100%;
     -webkit-transform: @transform;
     transform: @transform;
+}
+
+.myTop{
+    height:110px;
+    background:@baseBlue;
+    text-align:center;
+    color:#fff;
+    position: relative;
+    .myImg{
+        margin-top:.3rem;
+        width:60px;
+        height:60px;
+        border-radius:50%;
+    }
+    p{
+        margin-top:4px
+    }
+    i.icon-shezhi{
+        position:absolute;
+        right:.3rem;
+        top:.3rem;
+        font-size:.5rem;
+    }
+}
+.btnWrap{
+    margin:.3rem;
 }
 .am-search{
     background:#fff;
@@ -96,6 +123,21 @@ body{
     i{padding-left:2px;font-size:10px;color:#888}
     i.icon-viewgallery{
         font-size:16px
+    }
+}
+.am-grid{
+    i.iconfont{
+        color:@baseColor;
+        font-size:.5rem
+    }
+}
+.sub-title{
+    position:relative;
+    text-align:left;
+    text-indent:.3rem;
+     padding: 20px 0 12px 0!important;
+    &:after{
+        #line_bottom(scaleY(.5),auto,auto,0px,auto) //向下细线
     }
 }
 .match_subnav{
