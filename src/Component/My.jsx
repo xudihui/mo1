@@ -6,12 +6,42 @@ import a2 from '../Images/02.jpg';
 import ImageChoose from './ImageChoose';
 import { Drawer,List ,Grid,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import myHead from '../Images/myHead.gif';
-const data1 = Array.from(new Array(4)).map(() => ({
-    icon: 'https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png',
-}));
-const data2 = Array.from(new Array(1)).map(() => ({
-    icon: 'https://gw.alipayobjects.com/zos/rmsportal/WXoqXTHrSnRcUwEaQgXJ.png',
-}));
+const data1 = [
+    {
+        title:'买到车辆',
+        icon:'icon-xiangqing',
+    },
+    {
+        title:'砍价记录',
+        icon:'icon-5yongjinzhekou',
+    },
+    {
+        title:'降价提醒',
+        icon:'icon-tongzhi',
+    },
+    {
+        title:'收藏车辆',
+        icon:'icon-shoucang1',
+    },
+    {
+        title:'浏览记录',
+        icon:'icon-jingdianwanfa',
+    },
+    {
+        title:'订阅车源',
+        icon:'icon-bangdan',
+    }
+];
+const data2 = [
+    {
+        title:'已售车辆',
+        icon:'icon-wancheng',
+    },
+    {
+        title:'在售车辆',
+        icon:'icon-weiwancheng',
+    }
+];
 
 // My 首页 我的个人中心
 class My extends Component {
@@ -23,7 +53,14 @@ class My extends Component {
             <div style={{paddingBottom:'2px'}}>
                 <div className="myTop">
                      <img className="myImg" src={myHead} />
-                     <p>15067555555</p>
+                    <p>
+                    {
+                        this.props.id && this.props.id
+                    }
+                    {
+                       !this.props.id && <Link to="/login">立即登录</Link>
+                    }
+                    </p>
                      <i className="iconfont icon-shezhi"></i>
                 </div>
                 <div className="sub-title">买家中心</div>
@@ -31,12 +68,14 @@ class My extends Component {
                       columnNum={4}
                       hasLine={false}
                       renderItem={dataItem => (
-                          <div style={{ padding: '0.25rem', }}>
-                              <i className="iconfont icon-lichengdixian" ></i>
-                              <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>
-                                  <span>标题</span>
+                          <Link to={`/myOwn?type=${dataItem.title}&icon=${dataItem.icon}`}>
+                              <div style={{ padding: '0.25rem', }}>
+                                  <i className={'iconfont '+dataItem.icon} ></i>
+                                  <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>
+                                      <span>{dataItem.title}</span>
+                                  </div>
                               </div>
-                          </div>
+                          </Link>
                       )}
                 />
                 <div className="sub-title">卖家中心</div>
@@ -44,49 +83,35 @@ class My extends Component {
                       columnNum={4}
                       hasLine={false}
                       renderItem={dataItem => (
-                          <div style={{ padding: '0.25rem', }}>
-                              <i className="iconfont icon-process" ></i>
-                              <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>
-                                  <span>卖车进度</span>
+                          <Link to="/help">
+                              <div style={{ padding: '0.25rem', }}>
+                                  <i className={'iconfont '+dataItem.icon} ></i>
+                                  <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>
+                                      <span>{dataItem.title}</span>
+                                  </div>
                               </div>
-                          </div>
+                          </Link>
                       )}
                 />
 
-                <List className="my-list"  renderHeader={() => '买家中心'}>
-
-                    <List.Item extra="" arrow="horizontal" onClick={() => {}}>设置</List.Item>
-                    <List.Item  arrow="horizontal" onClick={() => {}}>买家中心
+                <List className="my-list"  >
+                    <List.Item  arrow="horizontal" onClick={() => {}}>优惠活动
                         <Badge text="减" hot style={{ marginLeft: 12 }} />
                         <Badge text="惠" hot style={{ marginLeft: 12 }} />
                         <Badge text="免" hot style={{ marginLeft: 12 }} />
                         <Badge text="反" hot style={{ marginLeft: 12 }} />
                         <Badge text="HOT" hot style={{ marginLeft: 12 }} />
                     </List.Item>
-                    <List.Item extra="" arrow="horizontal" onClick={() => {}}>卖家中心</List.Item>
-                    {
-                        this.props.id && <List.Item extra={this.props.id} arrow="horizontal" onClick={() => {this.props.login('')}}>退出登录</List.Item>
-
-                    }
-                    {
-                        !this.props.id && <Link to="/login"><List.Item extra="" arrow="horizontal" onClick={() => {}}>登录</List.Item></Link>
-                    }
-
+                    <List.Item extra="" arrow="horizontal" onClick={() => {location.href='tel:15067425400'}}>联系客服</List.Item>
+                    <Link  to="/help">
+                        <List.Item extra="" arrow="horizontal" onClick={() => {}}>关于我们</List.Item>
+                    </Link>
                 </List>
-                <List className="my-list"  renderHeader={() => '卖家中心'}>
-                    <List.Item extra="" arrow="horizontal" onClick={() => {}}>卖车进度</List.Item>
-                </List>
-                <List className="my-list" >
-
+                <div className="btnWrap" style={{paddingBottom:'50px'}}>
                     {
-                        this.props.id && <List.Item extra={this.props.id} arrow="horizontal" onClick={() => {this.props.login('')}}>退出登录</List.Item>
-
+                        this.props.id && <Button className="btn" type="primary"  onClick={() => {this.props.login('')}}>退出登录</Button>
                     }
-                    {
-                        !this.props.id && <Link to="/login"><List.Item extra="" arrow="horizontal" onClick={() => {}}>登录</List.Item></Link>
-                    }
-
-                </List>
+                </div>
             </div>
         );
     }

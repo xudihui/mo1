@@ -45,6 +45,27 @@ body{
     -webkit-transform: @transform;
     transform: @transform;
 }
+.my-own{
+    padding-top:50px;
+    .none{
+        color:@baseColor;
+        text-align:center;
+        line-height:1.5;
+        font-size:.3rem;
+        i.iconfont{
+            font-size:.8rem;
+            color:@baseBlue;
+        }
+    }
+}
+.am-list-view-scrollview .am-list-body{
+    border-top:none;
+}
+.am-button {
+    height: .7rem;
+    line-height: .7rem;
+    font-size:.3rem;
+}
 
 .myTop{
     height:110px;
@@ -57,6 +78,9 @@ body{
         width:60px;
         height:60px;
         border-radius:50%;
+    }
+    a{
+        color:#fff;
     }
     p{
         margin-top:4px
@@ -81,6 +105,24 @@ body{
     height:40px;
     line-height:40px
 }
+.moto-detail{
+    .detail-wrap{
+        margin:.2rem;
+    }
+    .tag-wrap{
+        margin:.1rem 0;
+        padding:0 0 .1rem 0;
+        span{
+            display:inline-block;
+            background:#ddd;
+            color:#777;
+            padding:4px 4px;
+            margin-right:.5em;
+            margin-top:.5em;
+            font-size: .2rem;
+        }
+    }
+}
 .topNavBar{
     height:38px;
     padding:0 5px;
@@ -91,19 +133,29 @@ body{
     width:100%;
     background:#fff;
     font-size:14px;
-    z-index:2
+    z-index:2;
+    box-shadow: 0px 1px 4px #ccc;
+    b{
+        font-weight:normal;
+        padding-left:3px;
+        position:relative;
+        top:1px
+    }
+    span:nth-child(2){
+        text-align:center;
+        text-indent:-50px;
+        color:#40a5ed;
+    }
 }
-.topNavBar b{
-    font-weight:normal;
-    padding-left:3px;
-    position:relative;
-    top:1px
+.topNavBar.transparent{
+    background:none;
+    border-bottom:none;
+    box-shadow:none;
+    span:nth-child(2){
+        display:none
+    }
 }
-.topNavBar span:nth-child(2){
-    text-align:center;
-    text-indent:-50px;
-    color:#40a5ed;
-}
+
 .match{
     height:35px;
     line-height:35px;
@@ -126,12 +178,20 @@ body{
     }
 }
 .am-grid{
+
     i.iconfont{
         color:@baseColor;
         font-size:.5rem
     }
+    span{
+        font-size:.25rem;
+    }
+}
+.am-list-item .am-list-line .am-list-content{
+    font-size:.25rem;
 }
 .sub-title{
+    color:#555!important;
     position:relative;
     text-align:left;
     text-indent:.3rem;

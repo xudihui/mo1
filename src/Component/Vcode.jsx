@@ -52,7 +52,7 @@ class Main extends Component {
             var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
             history.replace('/');
             Toast.info('登录成功！');
-            this.props.login('您好！叶俊');
+            this.props.login('您好！150****5433');
         },1500)
     }
     render() {

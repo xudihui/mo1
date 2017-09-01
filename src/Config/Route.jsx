@@ -8,6 +8,8 @@ import Help from '../Component/Help'; //保单详情
 import Login from '../Component/Login'; //登录
 import Vcode from '../Component/Vcode'; //登录
 import SearchHistory from '../Component/SearchHistory'; //登录
+import MyOwn from '../Component/MyOwn'; //买家中心
+import MotoDetail from '../Component/MotoDetail'; //摩托详情页
 /**
  * (路由根目录组件，显示当前符合条件的组件)
  * 
@@ -32,6 +34,9 @@ const RouteConfig = (
             <Route path="help" component={Help} />
             <Route path="Login" component={Login} />
             <Route path="Vcode" component={Vcode} />
+            <Route path="myOwn" component={MyOwn} />
+            <Route path="motoDetail" component={MotoDetail} />
+
             <Route path="SearchHistory" component={SearchHistory} />
         </Route>
     </Router>

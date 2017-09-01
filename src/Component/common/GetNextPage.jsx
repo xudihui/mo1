@@ -107,6 +107,9 @@ const Main = (mySetting) => {
             this.load = (res) => {
                 var {state } = this;
                 var {response,systemDate} = res;
+                if(!response){
+                    response = [];
+                }
                 if(this.props.location.search == '?none'){ //测试代码，强制呈现空列表页面
                     response = [];
                 }

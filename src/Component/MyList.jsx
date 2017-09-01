@@ -44,24 +44,24 @@ class ListItem extends Component {
         console.log('MyList99999999999:',this.props)
         return (
             <div>
-                <div className="rowMoto">
-                    <div data-flex="dir:left main:left">
-                        <img src={a2} alt="icon" data-flex-box="0"/>
-                        <div className="rowMotoText" >
-                            <div >
-                                广东 汕尾市 Honda Dio 系列 Dio
-                            </div>
-                            <div >
-                                5千-1万公里 / ≤2004年 / 250-399cc
-                            </div>
-                            <div>
-                                ￥<span >16956</span>
+                <Link to={`motoDetail`}>
+                    <div className="rowMoto">
+                        <div data-flex="dir:left main:left">
+                            <img src={a2} alt="icon" data-flex-box="0"/>
+                            <div className="rowMotoText" >
+                                <div >
+                                    广东 汕尾市 Honda Dio 系列 Dio
+                                </div>
+                                <div >
+                                    5千-1万公里 / ≤2004年 / 250-399cc
+                                </div>
+                                <div>
+                                    ￥<span >16956</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-                </div>
+                </Link>
                 <div style={{background:'#eee',height:'1px'}}></div>
             </div>
         );

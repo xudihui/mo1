@@ -254,15 +254,15 @@ export class TopNavBar extends Component {
         super(props);
     }
     render() {
-        const { title,handlerClick } = this.props;
+        const { title,handlerClick,transparent } = this.props;
         const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory
         return (
-            <div data-flex="dir:left box:first cross:center" className="topNavBar">
+            <div data-flex="dir:left box:first cross:center" className={transparent ? "topNavBar transparent" : "topNavBar"} >
                     <span data-flex="dir:left" onClick={() => {
                         history.goBack();
                     }}>
                         <i className="iconfont icon-xiangzuojiantou"></i>
-                        <b>返回</b>
+                        <b></b>
                     </span>
                 <span>{title || '暂无标题'}</span>
             </div>

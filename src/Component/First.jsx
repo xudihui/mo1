@@ -18,8 +18,6 @@ import a2 from '../Images/02.jpg';
  */
 //banner滚动图
 class Banner extends Component {
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -157,13 +155,8 @@ class Main extends Component {
                     <Banner />
                 </div>
 
-
+                <div className="sub-title">为您推荐</div>
                 <div className="am-list am-list-view-scrollview" style={{paddingBottom:'50px'}}>
-                    <div className="am-list-line" style={{height: '2em',
-                        lineHeight: '2em',color:'#888',
-                        fontSize: '.3rem'}}>
-                        推荐车型
-                    </div>
                     <div className="am-list-body">
                         <div className="list-view-section-body">
                             <Rows />
