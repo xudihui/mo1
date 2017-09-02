@@ -7,8 +7,8 @@ import { history } from './common/index';
 import { Drawer,List ,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
 import Rows from './Rows';
-import a1 from '../Images/01.jpg';
-import a2 from '../Images/02.jpg';
+import a1 from '../Images/banner01.jpg';
+import a2 from '../Images/banner02.jpg';
 
 /**
  * 买车模块入口
@@ -22,7 +22,7 @@ class Banner extends Component {
         super(props);
         this.state = {
             data: ['', ''],
-            initialHeight: 100,
+            initialHeight: '85px',
         }
     }
     componentDidMount() {
@@ -35,6 +35,8 @@ class Banner extends Component {
     }
     render() {
         const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
+        console.log(hProp)
+        var self = this;
         return (
             <div >
 
@@ -50,11 +52,12 @@ class Banner extends Component {
                             <img
                                 src={ii}
                                 alt="icon"
-                                onLoad={() => {
-                                    // fire window resize event to change height
+                                onLoad={(e) => {
+                                    console.log(e.currentTarget.offsetHeight)
                                     window.dispatchEvent(new Event('resize'));
-                                    this.setState({
-                                        initialHeight: '100px',
+                                    self.setState({
+                                       // initialHeight: e.currentTarget.naturalHeight,
+                                        initialHeight: e.currentTarget.offsetHeight
                                     });
                                 }}
                             />

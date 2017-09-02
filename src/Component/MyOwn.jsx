@@ -48,10 +48,10 @@ class Main extends Component {
                 text = '****';
         }
         return(
-            <div>
-                <p><i className={'iconfont '+this.icon} ></i></p>
+            <span>
+                <i className={'iconfont '+this.icon} ></i>
                 {text}
-            </div>
+            </span>
         ) ;
 
     }

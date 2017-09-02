@@ -39,7 +39,7 @@ class Main extends Component {
                     <li>1</li>
                 </ul>,
                 <ul>
-                    <li>134</li>
+                    <li>134111111</li>
                     <li>14</li>
                     <li>14</li>
                     <li>1</li>
@@ -103,27 +103,19 @@ class Main extends Component {
                     <div className="match" data-flex="dir:left box:last">
                         <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>
                         <div onClick={(e)=>{this.handlerSetMatch(e,1)}}>品牌<i className="iconfont icon-xiangxiajiantou"></i></div>
-                        <div onClick={(e)=>{this.handlerSetMatch(e,2)}}>价格<i className="iconfont icon-xiangxiajiantou"></i></div>
+                        <div onClick={(e)=>{this.handlerSetMatch(e,2)}}>车型<i className="iconfont icon-xiangxiajiantou"></i></div>
                         <div><i className="iconfont icon-viewgallery"></i></div>
                     </div>
 
                     <div className="match_subnav" onClick={(e) => {this.handleClick(e)}} >
                         <ul style={{display:this.state.matchIndex == 0 ? 'block' : 'none'}}>
-                            <li data-query="123321" onClick={this.handleCheck}>12</li>
-                            <li data-query="123321" onClick={this.handleCheck}>12</li>
-                            <li data-query="123321" onClick={this.handleCheck}>12</li>
-                            <li data-query="123321" onClick={this.handleCheck}>1</li>
+                            <li data-query="123321" onClick={this.handleCheck}>价格升序</li>
+                            <li data-query="123321" onClick={this.handleCheck}>价格降序</li>
                         </ul>
                         <ul style={{display:this.state.matchIndex == 1 ? 'block' : 'none'}}>
-                            <li data-query="123321" onClick={this.handleCheck}>12</li>
-                            <li data-query="123321" onClick={this.handleCheck}>12</li>
-                            <li data-query="123321" onClick={this.handleCheck}>12</li>
-                            <li data-query="123321" onClick={this.handleCheck}>1</li>
-                        </ul>
-                        <ul style={{display:this.state.matchIndex == 2 ? 'block' : 'none'}}>
 
                             <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="1" data-pinyin="国产">
-                                国产          </li>
+                                国产        </li>
                             <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="2" data-pinyin="Aprilia">
                                 Aprilia            </li>
                             <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="3" data-pinyin="Benelli">
@@ -175,6 +167,15 @@ class Main extends Component {
                             <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="26" data-pinyin="VICTORY">
                                 VICTORY            </li>
                         </ul>
+
+                        <ul style={{display:this.state.matchIndex == 2 ? 'block' : 'none'}}>
+                            <li data-query="123321" onClick={this.handleCheck}>公路</li>
+                            <li data-query="123321" onClick={this.handleCheck}>街车</li>
+                            <li data-query="123321" onClick={this.handleCheck}>越野</li>
+                            <li data-query="123321" onClick={this.handleCheck}>拉力</li>
+                        </ul>
+
+
                     </div>
                 </div>
                 </div>

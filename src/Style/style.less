@@ -55,8 +55,14 @@ body{
         i.iconfont{
             font-size:.8rem;
             color:@baseBlue;
+            display:block
         }
     }
+}
+.choose_p{
+    font-size:.2rem;
+    padding:.32rem;
+    color:@baseColor;
 }
 .am-list-view-scrollview .am-list-body{
     border-top:none;
@@ -108,6 +114,22 @@ body{
 .moto-detail{
     .detail-wrap{
         margin:.2rem;
+    }
+    .content{
+        color:@baseColor;
+        margin:0 .3rem;
+        p{
+            margin:.1rem 0;
+            line-height:1.5;
+        }
+        img{
+            width:100%;
+        }
+    }
+    .am-grid{
+        &:after{
+            #line_bottom(scaleY(.5),auto,auto,auto,auto) //向下细线
+        }
     }
     .tag-wrap{
         margin:.1rem 0;
@@ -184,7 +206,7 @@ body{
         font-size:.5rem
     }
     span{
-        font-size:.25rem;
+        font-size:.2rem;
     }
 }
 .am-list-item .am-list-line .am-list-content{
@@ -195,7 +217,11 @@ body{
     position:relative;
     text-align:left;
     text-indent:.3rem;
-     padding: 20px 0 12px 0!important;
+     padding: 20px .3rem 12px 0!important;
+    span{
+        color:@baseBlue;
+        float:right;
+    }
     &:after{
         #line_bottom(scaleY(.5),auto,auto,0px,auto) //向下细线
     }
@@ -331,24 +357,49 @@ div.car{
     margin-right:.15rem
 }
 .rowMotoText{
-    text-align:left
+    text-align:left;
+    div{
+        margin-bottom:5px
+    }
+    div:nth-child(1){
+        color:#444;
+        font-size:.3rem
+    }
+    div:nth-child(2){
+        color:#888;
+        font-size:.2rem
+    }
+    div:nth-child(3){
+        color:#ff5b05;
+        font-size:.3rem;
+        margin-bottom:0
+    }
 }
-.rowMotoText div{
-    margin-bottom:5px
+.am-modal-input input{
+    padding:.2rem;
 }
-.rowMotoText div:nth-child(1){
-    color:#444;
-    font-size:.3rem
+.rowMotoTextDetail{
+    text-align:left;
+    div{
+        margin-bottom:5px
+    }
+    .am-button-primary{
+        background:#ff5b05;
+        padding:0 .3rem;
+        font-size:.28rem;
+        border:none;
+    }
+    div:nth-child(1){
+        color:#333;
+        font-size:.4rem
+    }
+    div:nth-child(2){
+        color:#ff5b05;
+        font-size:.6rem;
+        margin-bottom:0
+    }
 }
-.rowMotoText div:nth-child(2){
-    color:#888;
-    font-size:.2rem
-}
-.rowMotoText div:nth-child(3){
-    color:#ff5b05;
-    font-size:.3rem;
-    margin-bottom:0
-}
+
 
 
 /*loader*/

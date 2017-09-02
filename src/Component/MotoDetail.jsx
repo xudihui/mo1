@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import { history,TopNavBar } from './common/index';
-import { Drawer,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import { Toast ,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,Modal,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import Rows from './Rows';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 const motoData = {
@@ -18,31 +19,55 @@ const motoData = {
 }
 const data1 = [
     {
-        title:'买到车辆',
-        icon:'icon-xiangqing',
+        title:'出厂年份',
+        value:'2005',
     },
     {
-        title:'砍价记录',
-        icon:'icon-5yongjinzhekou',
+        title:'所在地区',
+        value:'丽水',
     },
+    {
+        title:'车型类别',
+        value:'公路',
+    },
+    {
+        title:'品牌车型',
+        value:'雅马哈',
+    },
+    {
+        title:'行驶里程',
+        value:'3000',
+    },
+
+    {
+        title:'总排气量',
+        value:'600毫升',
+    }
+];
+const data2 = [
+
     {
         title:'降价提醒',
         icon:'icon-tongzhi',
+        background:'#e1e1e1'
     },
     {
         title:'收藏车辆',
         icon:'icon-shoucang1',
-    },
-    {
-        title:'浏览记录',
-        icon:'icon-jingdianwanfa',
+        background:'#eaeaea'
     },
     {
         title:'订阅车源',
         icon:'icon-bangdan',
+        background:'#efefef'
+    }
+    ,
+    {
+        title:'联系车主',
+        icon:'icon-iconfonta',
+        background:'#f8f8f8'
     }
 ];
-
 
 /**
  * 摩托详情
@@ -110,19 +135,29 @@ class Main extends Component {
                 <div className="detail-wrap">
                     <div className="tag-wrap">
                         {
-                            motoData.tags.map((i) => {
+                            motoData.tags.map((i,index) => {
                                 return(
-                                    <span>{i}</span>
+                                    <span key={index}>{i}</span>
                                 )
                             })
                         }
                     </div>
-                    <div className="rowMotoText" >
+                    <div className="rowMotoTextDetail" >
                         <div >
                             {motoData.infos.title}
                         </div>
-                        <div>
-                            ￥<span >{motoData.infos.price}</span>
+                        <div data-flex="main:justify">
+                            <span >￥{motoData.infos.price}</span>
+                            <Button className="btn" type="primary" onClick={() => Modal.prompt('砍价', '',
+                                [
+                                    { text: '取消' },
+                                    { text: '立即砍价',
+                                        onPress: value => new Promise((resolve) => {
+                                            Toast.info(value, 1);
+                                            resolve();
+                                        }),
+                                    },
+                                ], 'default', null, ['请输入您的心理价位'])}>立即砍价</Button>
                         </div>
                     </div>
                 </div>
@@ -133,16 +168,50 @@ class Main extends Component {
                       columnNum={4}
                       hasLine={true}
                       renderItem={dataItem => (
-                          <Link to={`/myOwn?type=${dataItem.title}&icon=${dataItem.icon}`}>
                               <div style={{ padding: '0.25rem', }}>
-                                  <i className={'iconfont '+dataItem.icon} ></i>
-                                  <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>
+                                  <div style={{ color: '#333', fontSize: '0.26rem', marginTop: '0.24rem' }}>{dataItem.value}</div>
+                                  <div style={{ color: '#aaa', fontSize: '0.2rem', marginTop: '0.14rem' }}>
                                       <span>{dataItem.title}</span>
                                   </div>
                               </div>
-                          </Link>
                       )}
                 />
+
+
+                <div className="sub-title">详细内容</div>
+                <div className="content">
+                    <p>09年本田CBR600（F5）原国外改装Jardine（贾丁）排气  其余原装原版 实际3116公里</p>
+                    <img src={a1} />
+                    <img src={a2} />
+                </div>
+                <div className="sub-title">猜您喜欢</div>
+                <div className="am-list am-list-view-scrollview" >
+                    <div className="am-list-body">
+                        <div className="list-view-section-body">
+                            <Rows />
+                            <Rows />
+                            <Rows />
+                            <Rows />
+                        </div>
+                    </div>
+                </div>
+
+                <div style={{position:'fixed',width:'100%',bottom:'0',background:'#fff'}} data-flex="main:justify">
+                    {
+                        data2.map(dataItem => (
+                            <Link to="/help" data-flex-box="1">
+                                <div style={{ padding: '0.15rem .05rem',background:dataItem.background }}>
+                                    <i style={{ color: '#ff3300',fontSize: '0.48rem',display:'block', textAlign: 'center' }} className={'iconfont '+dataItem.icon} ></i>
+                                    <div style={{ color: '#888', fontSize: '0.28rem',marginTop:'3px',padding:'0 .15rem' }}>
+                                        <span>{dataItem.title}</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))
+                    }
+                </div>
+
+
 
             </div>
         );
