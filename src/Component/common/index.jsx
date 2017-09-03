@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory,hashHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import { Tool, merged } from '../../Tool';
@@ -259,7 +259,7 @@ export class TopNavBar extends Component {
         return (
             <div data-flex="dir:left box:first cross:center" className={transparent ? "topNavBar transparent" : "topNavBar"} >
                     <span data-flex="dir:left" onClick={() => {
-                        history.goBack();
+                        !handlerClick ?  history.goBack() : handlerClick()
                     }}>
                         <i className="iconfont icon-xiangzuojiantou"></i>
                         <b></b>
@@ -278,3 +278,21 @@ export class TopNavBar extends Component {
  * @class history
  */
 export const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
+
+
+/**
+ * 摩托车型 数据
+ *
+ * @export
+ * @class data
+ */
+export const dataModel = ["公路", "街车", "越野", "拉力", "踏板", "弯梁", "巡航", "太子", "复古", "三轮", "ATV", "攀爬", "迷你", "电摩", "拖车", "汽车", "其他"];
+
+/**
+ * 摩托品牌 数据
+ *
+ * @export
+ * @class data
+ */
+export const dataBrand = ["国产", "Aprilia", "Benelli", "BMW", "Buell", "Cagiva", "Can-Am", "Ducati", "GASGAS", "Harley-Davidson", "Honda", "Husaberg", "Husqvarna", "Indian", "Kawasaki", "KTM", "Moto Guzzi", "MV Agusta", "Piaggio", "Suzuki", "Triumph", "Vespa", "Yamaha", "其他", "汽车", "VICTORY"];
+

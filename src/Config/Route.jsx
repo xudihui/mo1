@@ -11,6 +11,8 @@ import SearchHistory from '../Component/SearchHistory'; //登录
 import MyOwn from '../Component/MyOwn'; //买家中心
 import MotoDetail from '../Component/MotoDetail'; //摩托详情页
 import Choose from '../Component/Choose'; //摩托详情页
+import MySelling from '../Component/MySelling'; //摩托详情页
+import SellEdit from '../Component/SellEdit'; //卖车编辑页
 /**
  * (路由根目录组件，显示当前符合条件的组件)
  * 
@@ -38,6 +40,8 @@ const RouteConfig = (
             <Route path="myOwn" component={MyOwn} />
             <Route path="motoDetail" component={MotoDetail} />
             <Route path="choose" component={Choose} />
+            <Route path="MySelling" component={MySelling} />
+            <Route path="SellEdit" component={SellEdit} />
 
             <Route path="SearchHistory" component={SearchHistory} />
         </Route>

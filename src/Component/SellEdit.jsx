@@ -118,6 +118,9 @@ class TextareaItemExample extends Component {
     onChange(val){
         console.log(val);
     }
+    componentDidMount(){
+        this.autoFillInput()
+    }
     autoFillInput(){
         var x = this.props.form.getFieldsValue();
 
@@ -228,10 +231,7 @@ class TextareaItemExample extends Component {
                 </List>
                 <WhiteSpace />
                 <div className="btnWrap">
-                    <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认卖车</Button>
-                </div>
-                <div className="btnWrap">
-                    <Button className="btn" onClick={() => this.autoFillInput()} type="primary">自动填充表单</Button>
+                    <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认修改</Button>
                 </div>
                 <WhiteSpace />
                 <WhiteSpace />

@@ -19,7 +19,11 @@ const motoData = {
 }
 const data1 = [
     {
-        title:'出厂年份',
+        title:'新车含税价',
+        value:'25万',
+    },
+    {
+        title:'上牌时间',
         value:'2005',
     },
     {

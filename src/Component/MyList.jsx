@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 
-import { history } from './common/index';
+import { history,dataBrand,dataModel } from './common/index';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, TabIcon, GetData,GetNextPage,TopNavBar } from './common/index';
 import a2 from '../Images/02.jpg';
 import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
@@ -184,6 +184,7 @@ class Content extends Component {
                         </div>
                         <div className="match" data-flex="dir:left box:last">
                             <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>
+                            <div onClick={(e)=>{this.handlerSetMatch(e,2)}}>车型<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{this.handlerSetMatch(e,1)}}>品牌<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{
                                 history.push('/Choose')
@@ -192,70 +193,25 @@ class Content extends Component {
                         </div>
                         <div className="match_subnav" >
                             <ul style={{display:this.state.matchIndex == 0 ? 'block' : 'none'}}>
-                                <li data-query="123321" onClick={this.handleCheck}>价格升序</li>
-                                <li data-query="123321" onClick={this.handleCheck}>价格降序</li>
+                                <li data-query="1" onClick={this.handleCheck}>智能排序</li>
+                                <li data-query="2" onClick={this.handleCheck}>最新上架</li>
+                                <li data-query="3" onClick={this.handleCheck}>价格升序</li>
+                                <li data-query="4" onClick={this.handleCheck}>价格降序</li>
                             </ul>
                             <ul style={{display:this.state.matchIndex == 1 ? 'block' : 'none'}}>
-
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="1" data-pinyin="国产">
-                                    国产        </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="2" data-pinyin="Aprilia">
-                                    Aprilia            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="3" data-pinyin="Benelli">
-                                    Benelli            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="4" data-pinyin="BMW">
-                                    BMW            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="5" data-pinyin="Buell">
-                                    Buell            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="6" data-pinyin="Cagiva">
-                                    Cagiva            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="7" data-pinyin="Can-Am">
-                                    Can-Am            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="8" data-pinyin="Ducati">
-                                    Ducati            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="9" data-pinyin="GASGAS">
-                                    GASGAS            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="10" data-pinyin="Harley-Davidson">
-                                    Harley-Davidson            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="11" data-pinyin="Honda">
-                                    Honda            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="12" data-pinyin="Husaberg">
-                                    Husaberg            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="13" data-pinyin="Husqvarna">
-                                    Husqvarna            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="14" data-pinyin="Indian">
-                                    Indian            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="15" data-pinyin="Kawasaki">
-                                    Kawasaki            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="16" data-pinyin="KTM">
-                                    KTM            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="17" data-pinyin="Moto Guzzi">
-                                    Moto Guzzi            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="18" data-pinyin="MV Agusta">
-                                    MV Agusta            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="19" data-pinyin="Piaggio">
-                                    Piaggio            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="20" data-pinyin="Suzuki">
-                                    Suzuki            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="21" data-pinyin="Triumph">
-                                    Triumph            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="22" data-pinyin="Vespa">
-                                    Vespa            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="23" data-pinyin="Yamaha">
-                                    Yamaha            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="24" data-pinyin="其他">
-                                    其他            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="25" data-pinyin="汽车">
-                                    汽车            </li>
-                                <li onClick={this.handleCheck} data-url="" data-relation="cartype-sub" data-role="aside" class="carbrand" data-query="26" data-pinyin="VICTORY">
-                                    VICTORY            </li>
+                                {
+                                    dataBrand.map((item) =>(
+                                        <li data-query="123321" onClick={this.handleCheck}>{item}</li>
+                                        ))
+                                }
                             </ul>
 
                             <ul style={{display:this.state.matchIndex == 2 ? 'block' : 'none'}}>
-                                <li data-query="123321" onClick={this.handleCheck}>公路</li>
-                                <li data-query="123321" onClick={this.handleCheck}>街车</li>
-                                <li data-query="123321" onClick={this.handleCheck}>越野</li>
-                                <li data-query="123321" onClick={this.handleCheck}>拉力</li>
+                                {
+                                    dataModel.map((item) =>(
+                                        <li data-query="123321" onClick={this.handleCheck}>{item}</li>
+                                    ))
+                                }
                             </ul>
 
                         </div>

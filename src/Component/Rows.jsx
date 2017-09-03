@@ -43,8 +43,6 @@ const Main  = function(){
                     </div>
                 </div>
             </div>
-
-
         </div>
         <div style={{background:'#eee',height:'1px'}}></div>
         </div>

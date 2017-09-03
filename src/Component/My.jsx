@@ -36,10 +36,12 @@ const data2 = [
     {
         title:'已售车辆',
         icon:'icon-wancheng',
+        url:"/help"
     },
     {
         title:'在售车辆',
         icon:'icon-weiwancheng',
+        url:"/MySelling"
     }
 ];
 
@@ -83,7 +85,7 @@ class My extends Component {
                       columnNum={4}
                       hasLine={false}
                       renderItem={dataItem => (
-                          <Link to="/help">
+                          <Link to={dataItem.url}>
                               <div style={{ padding: '0.25rem', }}>
                                   <i className={'iconfont '+dataItem.icon} ></i>
                                   <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>
