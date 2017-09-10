@@ -5,6 +5,7 @@ import action from '../../Action/Index';
 import { Tool, merged } from '../../Tool';
 import GetData from './GetData';
 import GetNextPage from './GetNextPage';
+import { Toast } from 'antd-mobile-web';
 
 export { GetData, GetNextPage }
 /**
@@ -253,11 +254,35 @@ export class TopNavBar extends Component {
     constructor(props) {
         super(props);
     }
+    handlerShare(){
+        var options = {
+            message: 'share this', // not supported on some apps (Facebook, Instagram)
+            subject: 'the subject', // fi. for email
+            files: ['http://icon.nipic.com/BannerPic/20170829/original/20170829132344_1.jpg'], // an array of filenames either locally or remotely
+            url: 'https://segmentfault.com/a/1190000002933971',
+            chooserTitle: 'Pick an app' // Android only, you can override the default share sheet title
+        }
+
+        var onSuccess = function(result) {
+            Toast.info('成功！')
+        }
+
+        var onError = function(msg) {
+            Toast.info('分享失败')
+        }
+        try{
+            window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);
+        }catch(e){
+            Toast.info('请在APP中进行分享！')
+        }
+
+    }
     render() {
-        const { title,handlerClick,transparent } = this.props;
+        const { title,handlerClick,transparent,share } = this.props;
         const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory
+        var self = this;
         return (
-            <div data-flex="dir:left box:first cross:center" className={transparent ? "topNavBar transparent" : "topNavBar"} >
+            <div data-flex="dir:left box:first cross:center" className={`topNavBar ${transparent == '0' ? 'transparent' : ''}`}  style={{background:`rgba(255,255,255,${transparent == 'none' ? 1 : transparent})`}}>
                     <span data-flex="dir:left" onClick={() => {
                         !handlerClick ?  history.goBack() : handlerClick()
                     }}>
@@ -265,6 +290,9 @@ export class TopNavBar extends Component {
                         <b></b>
                     </span>
                 <span>{title || '暂无标题'}</span>
+                {
+                   share && <i onClick={self.handlerShare} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'25px'}}></i>
+                }
             </div>
         );
     }

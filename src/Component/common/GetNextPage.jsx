@@ -114,174 +114,13 @@ const Main = (mySetting) => {
                     response = [];
                 }
                 for(let i = 0; i < 15; i++){
-                    response.push({
-                            "id": 39,
-                            "flowId": "S20170726170822331_41_6032",
-                            "carMsg": {
-                                "licenseNo": "粤S*",
-                                "cityCode": "441900",
-                                "cityName": "东莞市",
-                                "noLicenseFlag": "0",
-                                "vehicleModelName": "形格INTEGRA 1.8GS轿车",
-                                "vehicleCodeId": "XGI1006BTQ",
-                                "vehicleFrameNo": "26652145336552265",
-                                "engineNo": "54225636555",
-                                "firstRegisterDate": "2017-02-02"
-                            },
-                            "postAddress": {
-                                "addresseeCity": "441900",
-                                "addresseeDetails": "广东省东莞市分分合合干活好尴尬嘎嘎嘎",
-                                "addresseeProvince": "440000"
-                            },
-                            "applicationInfo": {
-                                "applicantName": "滚滚本",
-                                "applicantIdType": "01",
-                                "applicantIdNo": "362502199104080151",
-                                "applicantMobile": "18868342556",
-                                "applicantEmail": "18868342556@139.com",
-                                "applicantSex": "M",
-                                "applicantBirth": "1991-04-08"
-                            },
-                            "insured": {
-                                "insuredName": "滚滚本",
-                                "insuredIdType": "01",
-                                "insuredIdNo": "362502199104080151",
-                                "insuredMobile": "18868342556",
-                                "insuredSex": "M",
-                                "insuredBirth": "1991-04-08"
-                            },
-                            "owner": {
-                                "ownerName": "滚滚本",
-                                "ownerIdType": "001",
-                                "ownerIdNo": "362502199104080151",
-                                "ownerSex": "M",
-                                "ownerBirth": "1991-04-08"
-                            },
-                            "applyInfo": {
-                                "applyNo": "53523003900210926770",
-                                "policyNo": "13523003980052357932",
-                                "orderNo": "2017000304889324612",
-                                "applyTime": "2017-07-26 17:10:20",
-                                "policyTime": "2017-07-26 17:14:59",
-                                "policyBeginTime": "2017-07-27",
-                                "policyEndTime": "2018-07-26",
-                                "safeType": "C01",
-                                "safePromise": "1) 尊敬的客户：为保障您的利益，请在收到本保险单一周内拨打我公司24小时服务热线95511核实保险单资料。2) 无其它特别约定。",
-                                "totalPremium": "15039.30",
-                                "applyType": "1"
-                            },
-                            "bizInfoList": [
-                                {
-                                    "bizCode": "01",
-                                    "bizDesc": "机动车损失保险",
-                                    "bizAmount": "368600.00",
-                                    "bizPremium": "4867.96"
-                                },
-                                {
-                                    "bizCode": "02",
-                                    "bizDesc": "机动车第三者责任保险",
-                                    "bizAmount": "1000000.00",
-                                    "bizPremium": "2012.00"
-                                },
-                                {
-                                    "bizCode": "03",
-                                    "bizDesc": "机动车全车盗抢险",
-                                    "bizAmount": "368600.00",
-                                    "bizPremium": "1926.14"
-                                },
-                                {
-                                    "bizCode": "04",
-                                    "bizDesc": "机动车车上人员责任保险（司机）",
-                                    "bizAmount": "50000.00",
-                                    "bizPremium": "210.00"
-                                },
-                                {
-                                    "bizCode": "05",
-                                    "bizDesc": "机动车车上人员责任保险（乘客）",
-                                    "bizAmount": "50000.00",
-                                    "bizPremium": "540.00"
-                                },
-                                {
-                                    "bizCode": "08",
-                                    "bizDesc": "玻璃单独破碎险",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "1254.00"
-                                },
-                                {
-                                    "bizCode": "17",
-                                    "bizDesc": "车身划痕损失险",
-                                    "bizAmount": "20000.00",
-                                    "bizPremium": "1780.00"
-                                },
-                                {
-                                    "bizCode": "18",
-                                    "bizDesc": "自燃损失险",
-                                    "bizAmount": "368600.00",
-                                    "bizPremium": "442.32"
-                                },
-                                {
-                                    "bizCode": "27",
-                                    "bizDesc": "不计免赔险(机动车损失保险)",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "730.19"
-                                },
-                                {
-                                    "bizCode": "28",
-                                    "bizDesc": "不计免赔险(机动车第三者责任保险)",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "301.80"
-                                },
-                                {
-                                    "bizCode": "48",
-                                    "bizDesc": "不计免赔险(机动车全车盗抢险)",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "385.23"
-                                },
-                                {
-                                    "bizCode": "49",
-                                    "bizDesc": "不计免赔（车上人员责任保险（司机））",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "31.50"
-                                },
-                                {
-                                    "bizCode": "63",
-                                    "bizDesc": "机动车损失保险无法找到第三方特约险",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "121.70"
-                                },
-                                {
-                                    "bizCode": "75",
-                                    "bizDesc": "不计免赔（车身划痕损失险）",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "267.00"
-                                },
-                                {
-                                    "bizCode": "77",
-                                    "bizDesc": "不计免赔（自燃损失险）",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "88.46"
-                                },
-                                {
-                                    "bizCode": "80",
-                                    "bizDesc": "不计免赔险（车上人员责任保险（乘客））",
-                                    "bizAmount": "0.00",
-                                    "bizPremium": "81.00"
-                                }
-                            ],
-                            "insurancePayInfo": {
-                                "payDeadLine": "2017-07-26 23:59:59",
-                                "paymentType": "0002",
-                                "bankCode": "99059222-杭州市民卡支付",
-                                "bankName": "杭州市民卡支付",
-                                "paySuccessTime": "2017-07-26 17:10:38"
-                            }
-                        });
+                    response.push({});
                 }
 
                 if (response.length < state.limit) {
                     this.get.end();//卸载翻页组件
                     state.nextBtn = false;
-                    state.loadMsg = '保单加载完毕~';
+                    state.loadMsg = '加载完毕~';
                     if(state.pageNumber == 1 && response.length == 0){
                         state.loadMsg = 'none';
                     }
@@ -365,7 +204,7 @@ const Main = (mySetting) => {
 
                     <this.props.setting.component {...this.props} state={this.state} />
                     {
-                        loadMsg == 'none' ? <Empty text="无保单信息" /> : <div ref="dataload"><DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} /></div>
+                        loadMsg == 'none' ? <Empty text="无信息" /> : <div ref="dataload" style={{paddingBottom:'98px'}}><DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} /></div>
                     }
 
                 </div>

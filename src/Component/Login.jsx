@@ -50,7 +50,7 @@ class Main extends Component {
             });
             var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
             history.replace('/Vcode');
-            Toast.info('请输入验证码');
+
         },3000)
     }
     render() {

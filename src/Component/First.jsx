@@ -158,6 +158,39 @@ class Main extends Component {
                     <Banner />
                 </div>
 
+                <div className="sub-title">快速选车</div>
+                <div className="content">
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        2万以下
+                    </Link>
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        2~4万
+                    </Link>
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        4~6万
+                    </Link>
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        6万以上
+                    </Link>
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        公路
+                    </Link>
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        越野
+                    </Link>
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        拉力
+                    </Link>
+                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                        踏板
+                    </Link>
+                </div>
+                <div className="btnWrap">
+                    <Button className="btn" type="primary"  onClick={() => this.props.changeTab('Buy')}>查看全部优质车源</Button>
+                </div>
+                <div className="btnWrap">
+                    <Button className="btn" type="primary"  onClick={() => this.props.changeTab('Sell')}>立即免费卖车</Button>
+                </div>
                 <div className="sub-title">为您推荐</div>
                 <div className="am-list am-list-view-scrollview" style={{paddingBottom:'50px'}}>
                     <div className="am-list-body">
@@ -165,14 +198,9 @@ class Main extends Component {
                             <Rows />
                             <Rows />
                             <Rows />
-                            <Rows />
-                            <Rows />
                             <div onClick={this.props.changeTab} style={{display:'inline-block',marginTop:'10px',fontSize:'.25rem',marginBottom:'10px',color:'#666'}}>
                                 查看全部车辆
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>

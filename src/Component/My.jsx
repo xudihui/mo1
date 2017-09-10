@@ -36,7 +36,7 @@ const data2 = [
     {
         title:'已售车辆',
         icon:'icon-wancheng',
-        url:"/help"
+        url:"/building"
     },
     {
         title:'在售车辆',

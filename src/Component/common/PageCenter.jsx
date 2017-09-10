@@ -90,7 +90,7 @@
         this.xhr = new XMLHttpRequest(); //创建http请求对象
         this.xhr.open('GET', url, true); //异步请求
         this.xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        this.xhr.setRequestHeader('appId', "com.smk.test.test");//增加AppId
+       // this.xhr.setRequestHeader('appId', "com.smk.test.test");//增加AppId
         this.xhr.addEventListener('readystatechange', this.readystatechange, false);
         this.xhr.send(); //发送请求
 

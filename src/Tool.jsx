@@ -25,14 +25,11 @@ Tool.ajax = function (mySetting) {
     for (var attr in mySetting) {
         setting[attr] = mySetting[attr];
     }
-    console.log(mySetting);
-    console.log(setting)
     for (var attr in setting.data) {
         aData.push(attr + '=' + filter(setting.data[attr]));
     }
     sData = aData.join('&');
     setting.type = setting.type.toUpperCase();
-    console.log(sData)
     var xhr = new XMLHttpRequest();
     try {
         if (setting.type == 'GET') { //get方式请求
@@ -104,7 +101,7 @@ Tool.post = function (pathname, data, success, error) {
         type: 'POST', //请求的方式
         data: data, //发给服务器的数据
         success: success || function () { }, //请求成功执行方法
-        error: error || function () { } //请求失败执行方法
+        error: error || function () {alert('error')} //请求失败执行方法
     };
     return Tool.ajax(setting);
 };

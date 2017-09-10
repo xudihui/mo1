@@ -1,10 +1,6 @@
 @baseColor: #555; //基础字体颜色
 @baseBlue: #108ee9; //基础蓝色背景
-
 * {
-    -moz-user-select:none;
-    -webkit-user-select:none;
-    user-select:none;
     margin:0;
     padding:0
 }
@@ -145,6 +141,14 @@ body{
         }
     }
 }
+
+.p1{
+    width:25%;
+    padding:.8em 0;
+    color:#333;
+    display:inline-block;
+    text-align:center;
+}
 .topNavBar{
     height:38px;
     padding:0 5px;
@@ -166,13 +170,13 @@ body{
     span:nth-child(2){
         text-align:center;
         text-indent:-50px;
-        color:#40a5ed;
+        color:@baseColor;
     }
 }
 .topNavBar.transparent{
+    box-shadow:none;
     background:none;
     border-bottom:none;
-    box-shadow:none;
     span:nth-child(2){
         display:none
     }
@@ -362,6 +366,9 @@ div.car{
     height:1.7rem;
     margin-right:.15rem
 }
+.am-list-item .am-input-control .fake-input-container .fake-input{
+    text-align:left;
+}
 .rowMotoText{
     text-align:left;
     p{
@@ -384,6 +391,27 @@ div.car{
         margin-bottom:0
     }
 }
+.talk{
+    border-bottom:1px dotted #eee;
+    margin-bottom:5px;
+    .name{
+        color:#999;
+        font-size:.28rem;
+        padding:5px 0;
+    }
+    .text{
+        color:#333;
+        font-size:.32rem;
+        padding:2px 5px 10px 5px;
+    }
+}
+
+.bgWhite{
+    *{
+        color:#fff!important;
+    }
+
+}
 .am-modal-input input{
     padding:.2rem;
 }
@@ -400,12 +428,28 @@ div.car{
     }
     div:nth-child(1){
         color:#333;
-        font-size:.4rem
+        font-size:.4rem;
+
     }
     div:nth-child(2){
         color:#ff5b05;
-        font-size:.6rem;
-        margin-bottom:0
+        font-size:.5rem;
+        margin-bottom:0;
+        i{
+            font-size:.5rem;
+        }
+
+    }
+    div:nth-child(3){
+        font-size:.28rem;
+        color:#ccc;
+        span{
+            text-decoration: line-through;
+        }
+        i{
+            font-size:.28rem;
+            padding:0 .1rem;
+        }
     }
 }
 

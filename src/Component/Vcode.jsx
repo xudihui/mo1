@@ -2,12 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { List, InputItem, Toast,Button, WhiteSpace, WingBlank,ActivityIndicator } from 'antd-mobile-web';
 import { connect } from 'react-redux';
 import {  browserHistory, hashHistory } from 'react-router';
+import {ajaxFetch} from '../Config/Store';
 import action from '../Action/Index';
+import { Tool, merged } from '../Tool';
 const Button_ = function(props){
     var before = <Button className="btn" >提交</Button>;
     var after =  <Button className="btn" type="primary" onClick={props.onClick}>提交</Button>;
     return props.before ? before : after
 }
+
 
 class Main extends Component {
     constructor(props) {
@@ -42,6 +45,17 @@ class Main extends Component {
     }
     getYzm(value){
         var tel = this.state.value.replace(/\s/g, '');
+        console.log(111,this.props.store);
+        var self = this;
+
+        //异步的action
+        /*
+        ajaxFetch({
+            url:'http://115.236.162.166:18081/ext_smk_activity/baseUser/getUserIdByToken.ext',
+            query:{request:JSON.stringify({accessToken:'0AE2BD2CB088451D188970E48733BE066B2A6A82B5D35802FE81A2FFE5519E461FB903139E41D022F82DA482585AE7D24485950A235B2EBB22EB2F3FA6B1D582968620D9405D813E'})}
+        });
+        */
+
         this.setState({
             loading:true
         });
@@ -50,15 +64,17 @@ class Main extends Component {
                 loading:false
             });
             var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
+            sessionStorage.setItem('selectedTab','My');
             history.replace('/');
             Toast.info('登录成功！');
-            this.props.login('您好！150****5433');
+            this.props.login('您好！罗工');
         },1500)
+
     }
     render() {
         return (
             <div>
-                <List renderHeader={() => '手机验证码登录'}>
+                <List renderHeader={() => '请输入您收到的验证码'}>
                     <InputItem
                         maxLength="4"
                         placeholder="请输入验证码"

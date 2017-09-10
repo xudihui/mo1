@@ -80,6 +80,7 @@ class Main extends Component {
                 {main}
             </div>
         );
+
     }
 }
 
@@ -217,7 +218,7 @@ class Content extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="index-list-box" style={{paddingBottom:'50px',paddingTop:'76px'}}>
+                <div className="index-list-box" style={{paddingTop:'76px'}}>
                     {
                         data.length > 0 ? <List {...this.props} list={data} /> : null
                     }
@@ -236,7 +237,7 @@ export default GetNextPage({
     id: 'MyList',  //应用关联使用的redux
     component: Main, //接收数据的组件入口
     //url: '/api/v1/topics',
-    url:'http://115.236.162.166:18081/ext_smk_activity/insurance/select.ext',
+    url:'https://api.github.com/search/repositories?q=javascript&sort=stars',
     data: (props, state) => { //发送给服务器的数据
 
         var {rows,pageNumber } = state;

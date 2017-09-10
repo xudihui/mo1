@@ -95,5 +95,6 @@ const DB = (_ID = '', seting = {}) => {
         }
     }
 }
+
 const MyList = DB('MyList', { page:  1, nextBtn: true, limit: 10, mdrender: false, data: [],pageNumber:  1, rows: 10, }); //保单列表,含翻页
 export default { IndexList,MyList,User }

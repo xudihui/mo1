@@ -4,6 +4,18 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, TabIcon, GetData } from './common/index';
+const talks = [
+    {
+        name:'150****5400',
+        text:'这辆车车很不错哦！'
+    },
+    {
+        name:'130****4500',
+        text:'老板，600元卖不卖，我过来自提！'
+    }
+]
+
+
 
 /**
  * 模块入口

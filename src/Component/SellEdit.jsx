@@ -4,6 +4,8 @@ import {ImagePicker } from 'antd-mobile-web';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 import ImageChoose from './ImageChoose';
+import { connect } from 'react-redux';
+import action from '../Action/Index';
 
 import { history,dataBrand,dataModel } from './common/index';
 import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal} from 'antd-mobile-web';
@@ -11,6 +13,13 @@ import { createForm } from 'rc-form';
 const alert = Modal.alert;
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
+const data_files = [{
+    url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
+    id: '2121',
+}, {
+    url: 'https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg',
+    id: '2122',
+}];
 const data = [
     { value: 0, label: '有发票' },
     { value: 1, label: '有合格证' },
@@ -109,17 +118,15 @@ class TextareaItemExample extends Component {
                 return Toast.info('请补全信息！')
             }
         }
-        console.log(JSON.stringify(x))
-        alert('恭喜你，发布成功！', '',[
-            { text: '再发布一条', onPress: () => console.log('cancel') },
-            { text: '查看', onPress: () => history.replace('/MySelling') },
-        ])
+        console.log(JSON.stringify(x));
+        Toast.info('修改成功！');
+        history.replace('/MySelling')
     }
     onChange(val){
         console.log(val);
     }
     componentDidMount(){
-        this.autoFillInput()
+        this.autoFillInput();//自动填充
     }
     autoFillInput(){
         var x = this.props.form.getFieldsValue();
@@ -134,7 +141,7 @@ class TextareaItemExample extends Component {
     }
     render() {
         const { getFieldProps,getFieldError  } = this.props.form;
-        let errors;
+        console.log(this.props.location.pathname)
         return (
             <div>
 
@@ -146,7 +153,7 @@ class TextareaItemExample extends Component {
                     >车辆标题</InputItem>
                 </List>
                 <List renderHeader={() => '车辆图片(最多上传10张)'}>
-                    <ImageChoose />
+                    <ImageChoose files={data_files} />
                 </List>
                 <List renderHeader={() => '基本信息'}>
 
@@ -246,5 +253,4 @@ class TextareaItemExample extends Component {
 
 const TextareaItemExampleWrapper = createForm()(TextareaItemExample);
 
-//export default connect((state) => { return { state: state['IndexList']} }, action())(Main);
-export default TextareaItemExampleWrapper;
+export default connect((state) => { return { state: state['IndexList']} }, action())(TextareaItemExampleWrapper);

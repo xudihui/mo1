@@ -27,7 +27,7 @@ const data = [
 ];
 const Main  = function(){
     return(
-        <div>
+        <Link to={`motoDetail`}>
         <div className="rowMoto">
             <div data-flex="dir:left main:left">
                 <img src={a2} alt="icon" data-flex-box="0"/>
@@ -45,7 +45,7 @@ const Main  = function(){
             </div>
         </div>
         <div style={{background:'#eee',height:'1px'}}></div>
-        </div>
+        </Link>
     )
 }
 
