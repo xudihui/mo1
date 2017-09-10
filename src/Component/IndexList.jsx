@@ -38,7 +38,7 @@ class TabBarExample extends Component {
         return (
             <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
                 {
-                    m=='First'&&<First changeTab={(el) => {this.changeTab(el)}}/>
+                    m=='First'&&<First changeTab={(el) => {this.changeTab(el); sessionStorage.setItem('selectedTab',el);}}/>
                 }
                 {
                     m=='Buy'&&<MyList  {...this.props} />

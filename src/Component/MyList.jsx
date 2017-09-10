@@ -41,13 +41,14 @@ class List extends Component {
 class ListItem extends Component {
     render() {
         let {title,applicationInfo,top,applyInfo,id} = this.props.data;
-        console.log('MyList99999999999:',this.props)
+        let {showType} = this.props;
+        var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
         return (
             <div>
                 <Link to={`motoDetail`}>
                     <div className="rowMoto">
-                        <div data-flex="dir:left main:left">
-                            <img src={a2} alt="icon" data-flex-box="0"/>
+                        <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left`}>
+                            <img src={a2} alt="icon" data-flex-box="0" style={imgS}/>
                             <div className="rowMotoText" >
                                 <div >
                                     广东 汕尾市 Honda Dio 系列 Dio
@@ -67,7 +68,7 @@ class ListItem extends Component {
         );
     }
     shouldComponentUpdate(np) {
-        return false;
+        return true;
     }
 }
 
@@ -94,26 +95,7 @@ class Content extends Component {
             open: false,
             city:'全国',
             matchIndex:-1,
-            matchContent:[
-                <ul>
-                    <li data-query="123321" onClick={this.handleCheck}>12</li>
-                    <li data-query="123321" onClick={this.handleCheck}>12</li>
-                    <li data-query="123321" onClick={this.handleCheck}>12</li>
-                    <li data-query="123321" onClick={this.handleCheck}>1</li>
-                </ul>,
-                <ul>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>1</li>
-                </ul>,
-                <ul>
-                    <li>134</li>
-                    <li>14</li>
-                    <li>14</li>
-                    <li>1</li>
-                </ul>
-            ]
+            showType:'icon-viewlist'
         }
     }
     handlerSetMatch(e,index){
@@ -124,6 +106,12 @@ class Content extends Component {
         console.log(index,index_)
         this.setState({matchIndex:index});
         e && e.nativeEvent.stopImmediatePropagation();
+    }
+    handlerChange(){
+        var temp = this.state.showType;
+        this.setState({
+            showType:temp == 'icon-viewlist' ? 'icon-viewgallery' : 'icon-viewlist'
+        })
     }
 
     handleCheck(e){
@@ -154,19 +142,7 @@ class Content extends Component {
 
     render() {
         var {data,loadAnimation} = this.props.state;
-        for(let i = 0;i < data.length; i++){
-            var keys = Object.keys(data[i]);
-            var title = '平安车险';
-            if(keys.indexOf('forceInfo') > -1){
-                title += '(交强险)';
-            }
-            else{
-                title += '(商业险)';
-
-            }
-            var temp = data[i];
-            data[i]['title'] = title;
-        }
+        var self = this;
         return (
             <div>
                 <TopNavBar handlerClick={() => {alert(1)}} />
@@ -190,7 +166,7 @@ class Content extends Component {
                             <div onClick={(e)=>{
                                 history.push('/Choose')
                             }}>筛选<i className="iconfont icon-xiangxiajiantou"></i></div>
-                            <div><i className="iconfont icon-viewgallery"></i></div>
+                            <div onClick={(e)=>{this.handlerChange()}}><i className={`iconfont ${this.state.showType}`}></i></div>
                         </div>
                         <div className="match_subnav" >
                             <ul style={{display:this.state.matchIndex == 0 ? 'block' : 'none'}}>
@@ -220,7 +196,7 @@ class Content extends Component {
                 </div>
                 <div className="index-list-box" style={{paddingTop:'76px'}}>
                     {
-                        data.length > 0 ? <List {...this.props} list={data} /> : null
+                        data.length > 0 ? <List {...this.props} showType={this.state.showType} list={data} /> : null
                     }
                 </div>
             </div>
