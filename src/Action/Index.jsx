@@ -5,7 +5,8 @@ export default (_ID) => {
         'login', //登录成功
         'setState', //设置状态
         'setTime',//设置时间
-        'pushData'
+        'pushData',
+        'setData'
     ];
     for (let i = 0; i < arr.length; i++) {
         action[arr[i]] = (target) => {
