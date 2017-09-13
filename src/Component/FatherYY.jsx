@@ -91,7 +91,8 @@ class Main extends Component {
         a_[this.type][this.n].push({
             name:'',
             id:'',
-            noId:true,
+            noId:'',
+            noId_:true,
             money:''
         })
         console.log('after:',a_,this.n)
@@ -114,11 +115,20 @@ class Main extends Component {
         //滚动条必须滚动到最顶部和最左边才能完整截图
         document.body.scrollTop = 0;
         document.body.scrollLeft = 0;
-        document.querySelector('.father').style.width = '500px';
+        document.querySelector('.father').style.width = '600px';
+        document.querySelector('.father').style.padding = '10px 5px';
         var x = document.querySelectorAll('.del')
+        var y = document.querySelectorAll('input');
         for(let i in x){
             try{
                 x[i].style.display = 'none'
+            }catch(e){
+
+            }
+        }
+        for(let i in y){
+            try{
+                y[i].style.padding = '0'
             }catch(e){
 
             }
@@ -173,7 +183,7 @@ class Main extends Component {
         switch(index)
         {   case 0:
               delete this.props.state.data[this.type][this.n];
-               history.replace(`/Father`);
+               history.goBack();
             break;
             case 1:
                 this.handlerAdd();
@@ -199,13 +209,14 @@ class Main extends Component {
                 <h1>松阳县{this.type == 'yy' ? '玉岩' : '枫坪'}乐天加工处代发工资</h1>
                 <table>
                     <tr>
-                        <td width="25%">姓名</td>
-                        <td width="25%">账号</td>
+                        <td width="15%">姓名</td>
+                        <td width="35%">账号</td>
                         <td width="25%">身份证</td>
                         <td width="25%">合计</td>
                     </tr>
                     {
                         this.state.data[this.type][id].map((item, index) => {
+                            console.log(item.id)
                             return (
                                 <tr className={item.del ? 'del' : ''} onDoubleClick={() => {
                                     var temp_ = this.state.data;
@@ -213,13 +224,26 @@ class Main extends Component {
                                     console.log(temp);
                                     temp[index].del = temp[index].del ? false : true;
                                     temp_[this.type][id] = temp;
-                                    if(temp[index]['noId']){
-                                        temp.splice(index,1);
-                                        temp_[this.type][id] = temp;
+                                    if(temp[index]['noId_']){
+                                        var self = this;
+                                        alert('删除', '这是您手动输入的加工者信息，删除后将直接丢失，真的要删除吗？', [
+                                            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+                                            { text: '确定', onPress: () => {
+                                                temp.splice(index,1);
+                                                temp_[self.type][id] = temp;
+                                                self.setState({
+                                                    data:temp_
+                                                })
+                                            }},
+                                        ])
+
                                     }
-                                    this.setState({
-                                        data:temp_
-                                    })
+                                    else{
+                                        this.setState({
+                                            data:temp_
+                                        })
+                                    }
+
                                         {/*
                                          alert('删除', '确定删除'+item.name +'吗？', [
                                          { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
@@ -240,11 +264,11 @@ class Main extends Component {
 
                                 }}>
                                     {
-                                        !item.noId && <td>{item.name}</td>
+                                        !item.noId_ && <td>{item.name}</td>
                                     }
                                     {
-                                        item.noId && <td style={{padding:0}}>
-                                            <input style={{width:'5em',padding:'10px 5px',textAlign:'center'}}
+                                        item.noId_ && <td style={{padding:0}}>
+                                            <input style={{width:'5em',padding:'20px 5px',textAlign:'center'}}
                                             defaultValue={item.name}
                                             onChange={(e) => {
 
@@ -261,14 +285,13 @@ class Main extends Component {
                                         </td>
                                     }
                                     {
-                                        !item.noId && <td>{item.id}</td>
+                                        !item.noId_ && <td>{item.id}</td>
                                     }
                                     {
-                                        item.noId && <td style={{padding:0}}>
-                                            <input style={{padding:'10px 5px',textAlign:'center'}}
-                                                   defaultValue={item.name}
+                                        item.noId_ && <td style={{padding:0}}>
+                                            <input style={{padding:'20px 5px',textAlign:'center'}}
+                                                   defaultValue={item.id}
                                                    onChange={(e) => {
-
                                                        var temp_ = this.state.data;
                                                        console.log(e.currentTarget.value);
                                                        var temp = this.state.data[this.type][id];
@@ -281,8 +304,29 @@ class Main extends Component {
                                                    }></input>
                                         </td>
                                     }
-                                    <td>{item.noId}</td>
-                                    <td style={{padding:0}}><input type="number" style={{width:'8em',padding:'10px 5px',fontSize:'16px'}}
+
+                                    {
+                                        item.noId_!=true && <td>{item.noId}</td>
+                                    }
+                                    {
+                                        item.noId_==true && <td style={{padding:0}}>
+                                            <input style={{padding:'20px 5px',textAlign:'center'}}
+                                                   defaultValue={item.noId}
+                                                   onChange={(e) => {
+                                                       var temp_ = this.state.data;
+                                                       console.log(e.currentTarget.value);
+                                                       var temp = this.state.data[this.type][id];
+                                                       temp[index]['noId'] = e.currentTarget.value;
+                                                       temp_[this.type][id] = temp;
+                                                       this.setState({
+                                                           data:temp_
+                                                       });
+                                                   }
+                                                   }></input>
+                                        </td>
+                                    }
+                                    <td style={{padding:0}}>
+                                        <input type="number" style={{width:'8em',padding:'20px 5px',fontSize:'16px'}}
                                       onChange={(e) => {
                                             var temp_ = this.state.data;
                                             console.log(e.currentTarget.value);
@@ -293,7 +337,17 @@ class Main extends Component {
                                                 data:temp_
                                             });
                                         }
-                                    } value={item.money || ''} ></input></td>
+                                    }
+                                   onFocus={(e) => {
+                                       e.currentTarget.style.background='yellow'
+                                     }
+                                   }
+                                   onBlur={(e) => {
+                                       e.currentTarget.style.background='none'
+                                   }
+                                   }
+
+                                    value={item.money || ''} ></input></td>
                                 </tr>
                             )
 
@@ -310,7 +364,7 @@ class Main extends Component {
             </div>
 
 
-                <div style={{position:'fixed',width:'100%',bottom:'0',background:'#fff'}} data-flex="main:justify">
+                <div style={{position:'fixed',width:'100%',top:'0',background:'#fff'}} data-flex="main:justify">
                     {
                         footer.map((dataItem,index) => (
                             <div onClick={
