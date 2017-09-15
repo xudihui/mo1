@@ -53,36 +53,6 @@ class Main extends Component {
             data:temp
         };
     }
-    CurentTime() {
-        var now = new Date();
-
-        var year = now.getFullYear();       //年
-        var month = now.getMonth() + 1;     //月
-        var day = now.getDate();            //日
-
-        var hh = now.getHours();            //时
-        var mm = now.getMinutes();          //分
-
-        var clock = 'path_';
-
-        if(month < 10)
-            clock += "0";
-
-        clock += month + "";
-
-        if(day < 10)
-            clock += "0";
-
-        clock += day + "";
-
-        if(hh < 10)
-            clock += "0";
-
-        clock += hh + "";
-        if (mm < 10) clock += '0';
-        clock += mm;
-        return(clock);
-    }
     handlerAdd(){
 
         var a_ = this.state.data;
@@ -137,26 +107,34 @@ class Main extends Component {
             w = document.querySelector('.father').offsetWidth,
             h = document.querySelector('.father').offsetHeight;
         canvas.width = w * 2 +50;
-        canvas.height = h * 2;
+        canvas.height = h * 2 +50;
         canvas.style.width = w +50 + "px";
-        canvas.style.height = h + "px";
+        canvas.style.height = h +50 + "px";
         var context = canvas.getContext("2d");
         //然后将画布缩放，将图像放大两倍画到画布上
         context.scale(2,2);
         var {setData} = this.props;
+        Toast.loading(`正在为您生成${this.type == 'yy' ? '玉岩' : '枫坪'}账单`, 0);
+        var temp = Object.assign({},this.state.data);
+        var temp01  = temp[this.type][this.n];
+        for(let i in temp01){
+            delete temp01[i]['noId_']
+        }
+        setData(temp);
         setTimeout(() => {
             this.flag = true;
-            setData(this.state.data);
+
             html2canvas(document.querySelector('.father'), {
                 canvas: canvas,
                 onrendered: function(canvas) {
+                    Toast.hide();
                     var imgUri = canvas.toDataURL("image/png");
                     //window.location.href= imgUri; // 下载图片
                     var myWindow=window.open('','');
                     myWindow.document.write("<img width='100%' src='"+imgUri+"' />");
                 }
             })
-        },0)
+        },2000)
 
         // html2canvas(document.querySelector('.father')).then(function(canvas) {
         //     document.body.appendChild(canvas);
@@ -190,7 +168,12 @@ class Main extends Component {
                 break;
             case 2:
                 this.flag = true;
-                setData(this.state.data);
+                var temp = Object.assign({},this.state.data);
+                var temp01  = temp[this.type][this.n];
+                for(let i in temp01){
+                    delete temp01[i]['noId_']
+                }
+                setData(temp);
                 Toast.success('恭喜您，保存成功！',1.5)
                 history.replace(`/Father`)
                 break;
@@ -209,59 +192,29 @@ class Main extends Component {
                 <h1>松阳县{this.type == 'yy' ? '玉岩' : '枫坪'}乐天加工处代发工资</h1>
                 <table>
                     <tr>
-                        <td width="15%">姓名</td>
+                        <td width="10%">姓名</td>
                         <td width="35%">账号</td>
-                        <td width="25%">身份证</td>
-                        <td width="25%">合计</td>
+                        <td width="35%">身份证</td>
+                        <td width="20%">合计</td>
                     </tr>
                     {
                         this.state.data[this.type][id].map((item, index) => {
                             console.log(item.id)
                             return (
                                 <tr className={item.del ? 'del' : ''} onDoubleClick={() => {
-                                    var temp_ = this.state.data;
-                                    var temp = this.state.data[this.type][id];
-                                    console.log(temp);
-                                    temp[index].del = temp[index].del ? false : true;
-                                    temp_[this.type][id] = temp;
-                                    if(temp[index]['noId_']){
-                                        var self = this;
-                                        alert('删除', '这是您手动输入的加工者信息，删除后将直接丢失，真的要删除吗？', [
-                                            { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-                                            { text: '确定', onPress: () => {
-                                                temp.splice(index,1);
-                                                temp_[self.type][id] = temp;
-                                                self.setState({
-                                                    data:temp_
-                                                })
-                                            }},
-                                        ])
-
-                                    }
-                                    else{
-                                        this.setState({
-                                            data:temp_
-                                        })
-                                    }
-
-                                        {/*
-                                         alert('删除', '确定删除'+item.name +'吗？', [
-                                         { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
-                                         { text: '确定', onPress: () => {
-                                         var temp_ = this.state.data;
-                                         var temp = this.state.data[this.type][id];
-                                         console.log(temp);
-                                         temp.splice(index,1);
-                                         temp_[this.type][id] = temp;
-                                         this.setState({
-                                         data:temp_
-                                         })
-                                         }},
-                                         ])
-                                        */}
-
-
-
+                                    alert('删除', '确定删除'+item.name +'的信息吗？', [
+                                        { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+                                        { text: '确定', onPress: () => {
+                                            var temp_ = this.state.data;
+                                            var temp = this.state.data[this.type][id];
+                                            console.log(temp);
+                                            temp.splice(index,1);
+                                            temp_[this.type][id] = temp;
+                                            this.setState({
+                                                data:temp_
+                                            })
+                                        }},
+                                    ])
                                 }}>
                                     {
                                         !item.noId_ && <td>{item.name}</td>
