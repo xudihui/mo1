@@ -27,7 +27,7 @@ const User = (state = {id:localStorage.getItem('id')||'',time:''}, action) => {
     }
 }
 
-
+//玉岩乐天加工数据
 var data_ = {
     yy:{
         'base':[
@@ -110,7 +110,6 @@ var data = {};
 try{
     data = JSON.parse(localStorage.getItem('data'));
 }catch(e){
-
 }
 if(!data){
     data = data_;

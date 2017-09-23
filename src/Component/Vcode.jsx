@@ -44,8 +44,8 @@ class Main extends Component {
         });
     }
     getYzm(value){
-        var tel = this.state.value.replace(/\s/g, '');
-        console.log(111,this.props.store);
+        var code = this.state.value.replace(/\s/g, '');
+        var {login} = this.props;
         var self = this;
 
         //异步的action
@@ -55,20 +55,19 @@ class Main extends Component {
             query:{request:JSON.stringify({accessToken:'0AE2BD2CB088451D188970E48733BE066B2A6A82B5D35802FE81A2FFE5519E461FB903139E41D022F82DA482585AE7D24485950A235B2EBB22EB2F3FA6B1D582968620D9405D813E'})}
         });
         */
+        Tool.post($extTelMsgLogin,{tel:15067425400,code:code},function(data){
+            if(data.code == '0'){
+                var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
+                sessionStorage.setItem('selectedTab','My');
+                history.replace('/');
+                Toast.info('登录成功！');
+                login('您好！罗工');
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
 
-        this.setState({
-            loading:true
-        });
-        setTimeout(()=>{
-            this.setState({
-                loading:false
-            });
-            var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
-            sessionStorage.setItem('selectedTab','My');
-            history.replace('/');
-            Toast.info('登录成功！');
-            this.props.login('您好！罗工');
-        },1500)
 
     }
     render() {
@@ -91,12 +90,6 @@ class Main extends Component {
                         <Button_ before={this.state.hasError} onClick={this.getYzm.bind(this)}/>
                     </div>
                 </WingBlank>
-
-                <ActivityIndicator
-                    toast
-                    text="登录中"
-                    animating={this.state.loading}
-                />
 
             </div>
         );

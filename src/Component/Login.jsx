@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { List, InputItem, Toast,Button, WhiteSpace, WingBlank,ActivityIndicator } from 'antd-mobile-web';
 import { connect } from 'react-redux';
 import {  browserHistory, hashHistory } from 'react-router';
-
+import {Tool} from '../Tool';
 const Button_ = function(props){
     var before = <Button className="btn" >获取验证码</Button>;
     var after =  <Button className="btn" type="primary" onClick={props.onClick}>获取验证码</Button>;
@@ -41,17 +41,16 @@ class Main extends Component {
     }
     getYzm(value){
         var tel = this.state.value.replace(/\s/g, '');
-        this.setState({
-            loading:true
-        });
-        setTimeout(()=>{
-            this.setState({
-                loading:false
-            });
-            var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
-            history.replace('/Vcode');
+        Tool.post($A,{tel:tel},function(data){
+              if(data.code == '0'){
+                  var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
+                  history.replace('/Vcode');
+              }
+              else{
+                  Toast.offline(data.msg)
+              }
+        })
 
-        },3000)
     }
     render() {
         return (
@@ -72,13 +71,6 @@ class Main extends Component {
                         <Button_ before={this.state.hasError} onClick={this.getYzm.bind(this)}/>
                     </div>
                 </WingBlank>
-
-                <ActivityIndicator
-                    toast
-                    text="验证码发送中"
-                    animating={this.state.loading}
-                />
-
             </div>
         );
     }

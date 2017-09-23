@@ -1,6 +1,6 @@
 import merged from 'obj-merged';
 import * as config from './Config/Config';
-
+import { List, InputItem, Toast,Button, WhiteSpace, WingBlank,ActivityIndicator } from 'antd-mobile-web';
 const {target} = config;   //开发环境中target直接为空。生产环境target =  'https://cnodejs.org'
 const Tool = {};
 /**
@@ -40,7 +40,8 @@ Tool.ajax = function (mySetting) {
         } else { //post方式请求
             xhr.open(setting.type, setting.url, setting.async);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.setRequestHeader("appId", "com.smk.test.test");
+            xhr.setRequestHeader("appId", "com.luoy.motor.android");
+          //  xhr.setRequestHeader("version", "1.1.1"); //version未被preflight允许
             xhr.send(sData);
         }
     } catch (e) {
@@ -52,8 +53,9 @@ Tool.ajax = function (mySetting) {
     } else {
         httpEnd();
     }
-
+    Toast.loading('拼命加载中~,0');
     function httpEnd() {
+
         if (xhr.readyState == 4) {
             var head = xhr.getAllResponseHeaders();
             var response = xhr.responseText;
@@ -62,7 +64,7 @@ Tool.ajax = function (mySetting) {
             if (/application\/json/.test(head) || setting.dataType === 'json' && /^(\{|\[)([\s\S])*?(\]|\})$/.test(response)) {
                 response = JSON.parse(response);
             }
-
+            Toast.hide();
             if (xhr.status == 200) {
                 setting.success(response, setting, xhr);
             } else {
@@ -99,7 +101,7 @@ Tool.post = function (pathname, data, success, error) {
     var setting = {
         url: target + pathname, //默认ajax请求地址
         type: 'POST', //请求的方式
-        data: data, //发给服务器的数据
+        data: {request:JSON.stringify(data)}, //发给服务器的数据
         success: success || function () { }, //请求成功执行方法
         error: error || function () {alert('error')} //请求失败执行方法
     };

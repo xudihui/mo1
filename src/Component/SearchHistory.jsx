@@ -46,6 +46,9 @@ class Main extends Component {
                                    focused: false,
                                });
                            }}
+                           onCancel={() => {
+                               history.goBack();
+                           }}
                            onSubmit={(e) => {this.handlerSubmit(e)}} autoFocus placeholder="请输入车系/车型" />
                 <div className="match_subnav_his" style={{maxHeight:'auto'}}>
                     <ul>

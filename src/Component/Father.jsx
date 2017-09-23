@@ -84,6 +84,10 @@ class Main extends Component {
             /.*(\d{2})(\d{2})(\d{2})(\d{2})/.test(el);
              return RegExp.$1+'月'+RegExp.$2+'日'+RegExp.$3+'点'+RegExp.$4+'分'
         }
+
+        var getLocalTime = function(nS) {
+            return new Date(parseInt(nS) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+        }
         return (
             <div style={{paddingBottom:'2px'}} className="moto-detail">
                 <div className="myTop">
@@ -121,6 +125,10 @@ class Main extends Component {
                                           }}>删除账单</Button>
                                       }
                                   </div>
+                                  {
+                                      dataItem != 'base' && <p>{getLocalTime(dataItem.slice(0,-3))}</p>
+                                  }
+
                               </div>
 
                       )}

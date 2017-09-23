@@ -97,13 +97,6 @@ class My extends Component {
                 />
 
                 <List className="my-list"  >
-                    <List.Item  arrow="horizontal" onClick={() => {}}>优惠活动
-                        <Badge text="减" hot style={{ marginLeft: 12 }} />
-                        <Badge text="惠" hot style={{ marginLeft: 12 }} />
-                        <Badge text="免" hot style={{ marginLeft: 12 }} />
-                        <Badge text="反" hot style={{ marginLeft: 12 }} />
-                        <Badge text="HOT" hot style={{ marginLeft: 12 }} />
-                    </List.Item>
                     <List.Item extra="" arrow="horizontal" onClick={() => {location.href='tel:15067425400'}}>联系客服</List.Item>
                     <Link  to="/help">
                         <List.Item extra="" arrow="horizontal" onClick={() => {}}>关于我们</List.Item>

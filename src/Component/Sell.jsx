@@ -4,9 +4,9 @@ import {ImagePicker } from 'antd-mobile-web';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 import ImageChoose from './ImageChoose';
-
+import $ from './common/Jquery';
 import { history,dataBrand,dataModel } from './common/index';
-import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal} from 'antd-mobile-web';
+import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
 const alert = Modal.alert;
 const CheckboxItem = Checkbox.CheckboxItem;
@@ -46,22 +46,6 @@ const years = [
     ]
 ];
 
-const times = [
-    [
-        {
-            label: '请在晚22点以前联系我 ',
-            value: '请在晚22点以前联系我 ',
-        },
-        {
-            label: '请在工作时间联系我 ',
-            value: '请在工作时间联系我 ',
-        },
-        {
-            label: '随时联系我 ',
-            value: '随时联系我 ',
-        }
-    ]
-];
 const provinces = [
     [
         {
@@ -105,14 +89,14 @@ class TextareaItemExample extends Component {
         console.log(this.state);
         console.log(x);
         for(let i in x){
+            console.log(i)
             if(!x[i]){
                 return Toast.info('请补全信息！')
             }
         }
         console.log(JSON.stringify(x))
         alert('恭喜你，发布成功！', '',[
-            { text: '再发布一条', onPress: () => console.log('cancel') },
-            { text: '查看', onPress: () => history.replace('/MySelling') },
+            { text: '立即查看', onPress: () => history.replace('/MySelling') },
         ])
     }
     onChange(val){
@@ -131,6 +115,7 @@ class TextareaItemExample extends Component {
     }
     render() {
         const { getFieldProps,getFieldError  } = this.props.form;
+        console.log('jQuery',$('body'))
         let errors;
         return (
             <div>
@@ -141,17 +126,54 @@ class TextareaItemExample extends Component {
                         clear
                         placeholder="请输入标题"
                     >车辆标题</InputItem>
+                    <InputItem
+                        {...getFieldProps('desc')}
+                        clear
+                        placeholder="请输入文字简介"
+                    >车辆简介</InputItem>
                 </List>
                 <List renderHeader={() => '车辆图片(最多上传10张)'}>
                     <ImageChoose />
                 </List>
+                <List renderHeader={() => '车辆行驶证(可选)'}>
+                    <ImageChoose />
+                </List>
+                <List renderHeader={() => '购车发票(可选)'}>
+                    <ImageChoose />
+                </List>
                 <List renderHeader={() => '基本信息'}>
-
+                    <List.Item
+                        extra={<Switch
+                            {...getFieldProps('Switch1', {
+                                initialValue: false,
+                                valuePropName: 'checked',
+                            })}
+                            onClick={(checked) => { console.log(checked); }}
+                        />}
+                    >是否有ABS</List.Item>
                     <InputItem
                         {...getFieldProps('newPrice')}
                         clear
                         placeholder="请输入新车价格"
-                    >新车含税价(元)</InputItem>
+                    >新车含税价</InputItem>
+                    <InputItem
+                        {...getFieldProps('sellPrice')}
+                        clear
+                        placeholder="请输入想要卖的价格"
+                    >售卖价格</InputItem>
+                    <InputItem
+                        {...getFieldProps('mobile')}
+                        clear
+                        placeholder="联系方式"
+                    >联系方式</InputItem>
+                    <Picker
+                        {...getFieldProps('year')}
+                        data={years}
+                        cascade={false}
+                        extra="请选择(可选)"
+                    >
+                        <List.Item arrow="horizontal">车辆手续</List.Item>
+                    </Picker>
                     <Picker
                         {...getFieldProps('year')}
                         data={years}
@@ -169,14 +191,6 @@ class TextareaItemExample extends Component {
                         <List.Item arrow="horizontal">所在地区</List.Item>
                     </Picker>
                     <Picker
-                        {...getFieldProps('model')}
-                        data={dataModel_}
-                        cascade={false}
-                        extra="请选择(可选)"
-                    >
-                        <List.Item arrow="horizontal">车型类别</List.Item>
-                    </Picker>
-                    <Picker
                         {...getFieldProps('brand')}
                         data={dataBrand_}
                         cascade={false}
@@ -192,39 +206,6 @@ class TextareaItemExample extends Component {
                     >
                         <List.Item arrow="horizontal">行驶里程</List.Item>
                     </Picker>
-                    <Picker
-                        {...getFieldProps('time')}
-                        data={times}
-                        cascade={false}
-                        extra="请选择(可选)"
-                    >
-                        <List.Item arrow="horizontal">联系时间</List.Item>
-                    </Picker>
-                </List>
-                <WhiteSpace />
-                <List renderHeader={() => '车辆手续'}>
-                    {data.map(i => (
-                        <CheckboxItem key={i.value} onChange={() => this.onChange(i.value)}>
-                            {i.label}
-                        </CheckboxItem>
-                    ))}
-                </List>
-                <List renderHeader={() => '价格/车主'}>
-                    <InputItem
-                        {...getFieldProps('sellPrice')}
-                        clear
-                        placeholder="请输入想要卖的价格"
-                    >预售价格</InputItem>
-                    <InputItem
-                        {...getFieldProps('name')}
-                        clear
-                        placeholder="联系姓名"
-                    >联系姓名</InputItem>
-                    <InputItem
-                        {...getFieldProps('mobile')}
-                        clear
-                        placeholder="联系方式"
-                    >联系方式</InputItem>
                 </List>
                 <WhiteSpace />
                 <div className="btnWrap">
