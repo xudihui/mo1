@@ -41,8 +41,9 @@ class Main extends Component {
     }
     getYzm(value){
         var tel = this.state.value.replace(/\s/g, '');
-        Tool.post($A,{tel:tel},function(data){
+        Tool.post($extTelSendCode,{tel:tel},function(data){
               if(data.code == '0'){
+                  sessionStorage.setItem('tel',tel);
                   var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
                   history.replace('/Vcode');
               }
@@ -50,7 +51,6 @@ class Main extends Component {
                   Toast.offline(data.msg)
               }
         })
-
     }
     render() {
         return (

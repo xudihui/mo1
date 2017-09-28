@@ -6,7 +6,8 @@ export default (_ID) => {
         'setState', //设置状态
         'setTime',//设置时间
         'pushData',
-        'setData'
+        'setData',
+        'setCity',//切换城市
     ];
     for (let i = 0; i < arr.length; i++) {
         action[arr[i]] = (target) => {

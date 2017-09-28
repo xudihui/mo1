@@ -6,10 +6,16 @@ import { Tool, merged } from '../Tool';
  * @param {Object} action
  * @returns Object
  */
-const User = (state = {id:localStorage.getItem('id')||'',time:''}, action) => {
+var userDefault = {
+    id:localStorage.getItem('id')||'',
+    city:localStorage.getItem('city') || '全国'
+
+}
+const User = (state = userDefault, action) => {
     switch (action.type) {
-        case 'setTime': //设置服务器时间
-            return Object.assign({},state,{time:action.target});
+        case 'setCity':
+            localStorage.setItem('city',action.target);
+            return Object.assign({},state,{city:action.target});
         case 'setState':
             return Object.assign({},state,{tuy:action.target});
         case 'login': //从App获取userId

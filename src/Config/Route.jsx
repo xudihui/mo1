@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, hashHistory } from 'react-router';
 import {Toast} from 'antd-mobile-web';
 import IndexList from '../Component/IndexList'; //首页组件
+import ImageChoose from '../Component/ImageChoose'; //保单详情
 import MyList from '../Component/MyList'; //主题详情
 import MyInfo from '../Component/MyInfo'; //保单详情
 import Help from '../Component/Help'; //保单详情
@@ -53,6 +54,7 @@ const RouteConfig = (
             <Route path="MySelling" component={MySelling} />
             <Route path="SellEdit" component={SellEdit} />
             <Route path="Building" component={Building} />
+            <Route path="ImageChoose" component={ImageChoose} />
             <Route path="father" component={Father} />
             <Route path="fatheryy" component={FatherYY} />
 

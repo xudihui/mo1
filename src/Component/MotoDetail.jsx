@@ -206,18 +206,12 @@ class Main extends Component {
             <div className="moto-detail" >
                 <Banner />
                 <div className="detail-wrap">
-                    <div className="tag-wrap">
-                        {
-                            motoData.tags.map((i,index) => {
-                                return(
-                                    <span key={index}>{i}</span>
-                                )
-                            })
-                        }
-                    </div>
                     <div className="rowMotoTextDetail" >
                         <div >
                             {motoData.infos.title}
+                            {
+                                Math.random()>0.5 ? <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                            }
                         </div>
                         <div data-flex="main:justify">
                             <span ><i className="iconfont icon-lichengdixian"></i>{motoData.infos.price}</span>

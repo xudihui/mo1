@@ -4,14 +4,13 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import { history } from './common/index';
-import { Drawer,List ,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import { Drawer,List ,NoticeBar, WhiteSpace,Modal,Toast, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
 import Seller from './Sell';
-import Buy from './Buy';
 import My from './My';
 import First from './First';
 import MyList from './MyList';
-
+var alert = Modal.alert;
 
 
 import Rows from './Rows';
@@ -53,7 +52,89 @@ class TabBarExample extends Component {
             </div>
         );
     }
+    componentDidMount(){
+        if(sessionStorage.getItem('city') == 'done'){
+            return;
+        }
+        var geolocation;
+        var MGeocoder;
+        var geocoder;
+        var map;
+        var {setCity} = this.props;
+        //初始化地图
+        map = new AMap.Map('amap', {
+            resizeEnable: true,
+            mapStyle:'fresh',
+            zooms: [15, 15],
+            //缩放范围
+            view: AMap.View2D({
+                zoom: 15
+            }) //center: [120.195805, 30.231164]
+        });
+        var onError = function(){
+            Toast.offline('定位失败')
+        }
 
+        var onComplete = function(data) {
+            var str = ['定位成功'];
+            var lnglatXY = new AMap.LngLat(data.position.getLng(), data.position.getLat());
+            AMap.service('AMap.Geocoder',function(){//回调函数
+                //实例化Geocoder
+                geocoder = new AMap.Geocoder({
+                    // city: "010"//城市，默认：“全国”
+                });
+                geocoder.getAddress(lnglatXY, function(status, result) {
+                    if (status === 'complete' && result.info === 'OK') {
+                        var x = result.regeocode.formattedAddress;
+                        if(x.indexOf('省') > -1){
+                            var y = x.split('省');
+                            var city = y[1].split('市')[0] + '市'
+                        }
+                        else{
+                            var city = y[1].split('市')[0] + '市'
+                        }
+                        if(localStorage.getItem('city') != city){
+                            sessionStorage.setItem('city','done');
+                            alert('定位提示', '我们发现您正在'+city+'是否立即切换', [
+                                { text: '不用了', onPress: () => console.log('cancel')},
+                                { text: '立即切换', onPress: () => {
+                                    setCity(city)
+                                }},
+                            ])
+                        }
+                        //获得了有效的地址信息:
+                        //即，result.regeocode.formattedAddress
+                    }
+                    // else{
+                    //     Toast.offline(result.info)
+                    //     //获取地址失败
+                    // }
+                });
+            })
+
+        }
+
+
+        let getLocation = function() {
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                //是否使用高精度定位，默认:true
+                timeout: 10000,
+                //超过10秒后停止定位，默认：无穷大
+                buttonOffset: new AMap.Pixel(10, 20),
+                //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                zoomToAccuracy: true,
+                //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                buttonPosition: 'LB'
+            });
+            map.addControl(geolocation); //不加的话，不能执行zoomToAccuracy
+            geolocation.getCurrentPosition(); //触发获取定位的方法
+            AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
+        }
+        map.plugin('AMap.Geolocation', getLocation);
+
+    }
     render() {
         return (
             <TabBar
@@ -129,45 +210,6 @@ class TabBarExample extends Component {
                     {this.renderContent('我的','My')}
                 </TabBar.Item>
             </TabBar>
-        );
-    }
-}
-
-
-class Main_ extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {token:'',token_:Tool.getQueryString('token'),'links':{}}
-    }
-    componentDidMount(){
-        Tool.post('http://115.236.162.166:18081/ext_smk_activity/baseUser/getUserIdByToken.ext',
-            //{request:JSON.stringify({accessToken:Tool.getQueryString('token')})},
-            {request:JSON.stringify({accessToken:'0AE2BD2CB088451D188970E48733BE066B2A6A82B5D35802FE81A2FFE5519E461FB903139E41D022F82DA482585AE7D24485950A235B2EBB22EB2F3FA6B1D582968620D9405D813E'})},
-
-            function(data){
-                this.setState({token:JSON.stringify(data)});
-                this.props.setTime(data.systemDate);//设置系统时间
-                Tool.post('http://115.236.162.166:18081/ext_smk_activity/insurance/getCarInUrlMsg.ext',
-                    {request:JSON.stringify({"userId":data.response.userId})},
-                   // {request:JSON.stringify({"userId":'13666666666'})},
-                    function(data){
-                       var temp = data.response;
-                       this.setState({links:temp});
-                    }.bind(this),
-                    function(){
-                        alert('error');
-                    })
-            }.bind(this),
-            function(){
-               alert('error');
-            })
-    }
-    render() {
-        var data = this.props.state;
-        return (
-            <div className="index-list-box">
-                <div className="car"></div>
-            </div>
         );
     }
 }

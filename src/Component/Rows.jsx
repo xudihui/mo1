@@ -34,9 +34,12 @@ const Main  = function(){
                 <div className="rowMotoText" >
                     <div >
                         广东 汕尾市 Honda Dio 系列 Dio
+                        {
+                            Math.random()>0.5 ? <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                        }
                     </div>
                     <div >
-                        5千-1万公里 / ≤2004年 / 250-399cc
+                        5694公里 / 2014年 / ABS
                     </div>
                     <div>
                         ￥<span >16956</span>

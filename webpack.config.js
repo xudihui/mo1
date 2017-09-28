@@ -55,6 +55,11 @@ module.exports = {
                 loader: 'babel?presets=es2015&compact=false',
             },
             {
+                test: /\.scss/,
+                exclude: /^node_modules$/,
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!sass-loader')
+            },
+            {
                 test: /\.less/,
                 exclude: /^node_modules$/,
                 loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer-loader!less-loader')

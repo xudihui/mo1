@@ -8,6 +8,7 @@ import $ from './common/Jquery';
 import { history,dataBrand,dataModel } from './common/index';
 import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
+
 const alert = Modal.alert;
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -76,12 +77,13 @@ const dataModel_ = [dataModel.map(i => {
     temp.value = i;
     return temp;
 })];
-console.log(dataBrand_)
+
 class TextareaItemExample extends Component {
     constructor(props) {
         super(props);
         this.state = {
             focused: false,
+            cut:a2
         };
     }
     handlerClick(){
@@ -108,11 +110,11 @@ class TextareaItemExample extends Component {
         for(let i in x){
             x[i] = '111';
         }
-
         this.props.form.setFieldsValue(
-            {"title":"12321","newPrice":"213213","year":["2011"],"provinces":["缙云 "],"model":["公路"],"brand":["国产"],"mile":["2011"],"time":["请在晚22点以前联系我 "],"sellPrice":"123213","name":"阿辉","mobile":"15067425400"}
+            {"title":"12321","weight":"80KG","Switch1":"true","desc":"一般般啦","newPrice":"213213","year":["2011"],"provinces":["缙云 "],"model":["公路"],"brand":["国产"],"mile":["2011"],"time":["请在晚22点以前联系我 "],"sellPrice":"123213","name":"阿辉","mobile":"15067425400"}
         );
     }
+
     render() {
         const { getFieldProps,getFieldError  } = this.props.form;
         console.log('jQuery',$('body'))
@@ -131,17 +133,6 @@ class TextareaItemExample extends Component {
                         clear
                         placeholder="请输入文字简介"
                     >车辆简介</InputItem>
-                </List>
-                <List renderHeader={() => '车辆图片(最多上传10张)'}>
-                    <ImageChoose />
-                </List>
-                <List renderHeader={() => '车辆行驶证(可选)'}>
-                    <ImageChoose />
-                </List>
-                <List renderHeader={() => '购车发票(可选)'}>
-                    <ImageChoose />
-                </List>
-                <List renderHeader={() => '基本信息'}>
                     <List.Item
                         extra={<Switch
                             {...getFieldProps('Switch1', {
@@ -150,7 +141,12 @@ class TextareaItemExample extends Component {
                             })}
                             onClick={(checked) => { console.log(checked); }}
                         />}
-                    >是否有ABS</List.Item>
+                    >是否含有ABS</List.Item>
+                    <InputItem
+                        {...getFieldProps('weight')}
+                        clear
+                        placeholder="车重"
+                    >车重</InputItem>
                     <InputItem
                         {...getFieldProps('newPrice')}
                         clear
@@ -166,14 +162,19 @@ class TextareaItemExample extends Component {
                         clear
                         placeholder="联系方式"
                     >联系方式</InputItem>
-                    <Picker
-                        {...getFieldProps('year')}
-                        data={years}
-                        cascade={false}
-                        extra="请选择(可选)"
-                    >
-                        <List.Item arrow="horizontal">车辆手续</List.Item>
-                    </Picker>
+
+                </List>
+                <List renderHeader={() => '车辆图片(最多上传10张)'}>
+                    <ImageChoose />
+                </List>
+                <List renderHeader={() => '车辆行驶证(可选)'}>
+                    <ImageChoose />
+                </List>
+                <List renderHeader={() => '购车发票(可选)'}>
+                    <ImageChoose />
+                </List>
+                <List renderHeader={() => '基本信息'}>
+                  
                     <Picker
                         {...getFieldProps('year')}
                         data={years}

@@ -51,10 +51,13 @@ class ListItem extends Component {
                             <img src={a2} alt="icon" data-flex-box="0" style={imgS}/>
                             <div className="rowMotoText" >
                                 <div >
-                                    广东 汕尾市 Honda Dio 系列 Dio
+                                   广东 汕尾市 Honda Dio 系列 Dio
+                                    {
+                                        Math.random()>0.5 ? <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                                    }
                                 </div>
                                 <div >
-                                    5千-1万公里 / ≤2004年 / 250-399cc
+                                    5694公里 / 2014年 / ABS
                                 </div>
                                 <div>
                                     ￥<span >16956</span>
@@ -93,7 +96,7 @@ class Content extends Component {
         this.handleCheck.bind(this);
         this.state = {
             open: false,
-            city:'全国',
+            city:props.city || '全国',
             matchIndex:-1,
             showType:'icon-viewlist'
         }
@@ -155,13 +158,12 @@ class Content extends Component {
                                     history.push('/SearchHistory');
                                 }} placeholder="请输入车系/车型" />
                             </div>
-                            <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.state.city}
+                            <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.city || '全国'}
                                 <i className="iconfont icon-shouhuodizhi"></i>
                             </div>
                         </div>
                         <div className="match" data-flex="dir:left box:last">
                             <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>
-                            <div onClick={(e)=>{this.handlerSetMatch(e,2)}}>车型<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{this.handlerSetMatch(e,1)}}>品牌<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{
                                 history.push('/Choose')

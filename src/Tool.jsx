@@ -53,7 +53,7 @@ Tool.ajax = function (mySetting) {
     } else {
         httpEnd();
     }
-    Toast.loading('拼命加载中~,0');
+    Toast.loading('拼命加载中~',0);
     function httpEnd() {
 
         if (xhr.readyState == 4) {

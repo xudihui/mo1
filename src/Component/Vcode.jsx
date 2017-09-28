@@ -55,13 +55,13 @@ class Main extends Component {
             query:{request:JSON.stringify({accessToken:'0AE2BD2CB088451D188970E48733BE066B2A6A82B5D35802FE81A2FFE5519E461FB903139E41D022F82DA482585AE7D24485950A235B2EBB22EB2F3FA6B1D582968620D9405D813E'})}
         });
         */
-        Tool.post($extTelMsgLogin,{tel:15067425400,code:code},function(data){
+        Tool.post($extTelMsgLogin,{tel:sessionStorage.getItem('tel'),code:code},function(data){
             if(data.code == '0'){
                 var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
                 sessionStorage.setItem('selectedTab','My');
                 history.replace('/');
                 Toast.info('登录成功！');
-                login('您好！罗工');
+                login('你好！'+sessionStorage.getItem('tel').slice(0,3)+'****'+sessionStorage.getItem('tel').slice(-4));
             }
             else{
                 Toast.offline(data.msg)

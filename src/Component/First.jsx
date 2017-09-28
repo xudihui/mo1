@@ -77,28 +77,7 @@ class Main extends Component {
         this.handleCheck.bind(this);
         this.state = {
             open: false,
-            city:'全国',
-            matchIndex:-1,
-            matchContent:[
-                <ul>
-                    <li data-query="123321" onClick={this.handleCheck}>12</li>
-                    <li data-query="123321" onClick={this.handleCheck}>12</li>
-                    <li data-query="123321" onClick={this.handleCheck}>12</li>
-                    <li data-query="123321" onClick={this.handleCheck}>1</li>
-                </ul>,
-                <ul>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>12</li>
-                    <li>1</li>
-                </ul>,
-                <ul>
-                    <li>134</li>
-                    <li>14</li>
-                    <li>14</li>
-                    <li>1</li>
-                </ul>
-            ]
+            matchIndex:-1
         }
     }
     handlerSetMatch(e,index){
@@ -149,7 +128,7 @@ class Main extends Component {
                                 history.push('/SearchHistory');
                             }} placeholder="请输入车系/车型" />
                         </div>
-                        <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.state.city}
+                        <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.state.city||'全国'}
                             <i className="iconfont icon-shouhuodizhi"></i>
                         </div>
                     </div>
@@ -213,5 +192,4 @@ class Main extends Component {
 
 
 
-
-export default Main;
+export default connect((state) => {return{state:state['User']}},action())(Main);

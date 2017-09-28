@@ -252,7 +252,7 @@ const Main = (mySetting) => {
 
     }
     Index.defaultProps = { setting }
-    return connect((state) => { return { state: state[setting.id],time: state['User']['time'],phone: state['User']['id'] } }, action())(Index); //连接redux
+    return connect((state) => { return { state: state[setting.id],city: state['User']['city'],phone: state['User']['id'] } }, action())(Index); //连接redux
 }
 
 
