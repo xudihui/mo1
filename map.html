@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+
+<link>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <title></title>
+    <link href="http://at.alicdn.com/t/font_395174_wl6cc40cfe5yu8fr.css" rel="stylesheet">
+    <script>
+        var $extTelSendCode = 'http://47.94.230.18/motor/extTelSendCode.ext'; //发送短信验证码
+        var $extTelMsgLogin = 'http://47.94.230.18/motor/extTelMsgLogin.ext'; //免密登录
+    </script>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8be9012609bdbcc8918e368acd8d3d71&plugin=AMap.Autocomplete"></script>
+</head>
+
+<body>
+<div id="amap" style='height:300px'></div>
+<script type="text/javascript">
+    
+        var geolocation;
+        var MGeocoder;
+        var geocoder;
+        var map;
+        var geocoder_CallBack2;
+        map = new AMap.Map('amap', {
+            resizeEnable: true,
+            mapStyle:'fresh',
+            zooms: [15, 15],
+            //缩放范围
+            view: AMap.View2D({
+                zoom: 15
+            }) //center: [120.195805, 30.231164]
+        });
+        geocoder_CallBack2 = function(data) { //回调函数
+            alert(data)
+            //返回地址描述
+            var address = data.regeocode.formattedAddress;
+            alert(address)
+        }     
+        //获取经纬度
+        var onError = function(){
+            alert('定位失败')
+        }
+
+        var onComplete = function(data) {
+            var str = ['定位成功'];
+            var lnglatXY = new AMap.LngLat(data.position.getLng(), data.position.getLat());
+            AMap.service('AMap.Geocoder',function(){//回调函数
+                //实例化Geocoder
+                geocoder = new AMap.Geocoder({
+                   // city: "010"//城市，默认：“全国”
+                });
+            geocoder.getAddress(lnglatXY, function(status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    var x = result.regeocode.formattedAddress;
+                    if(x.indexOf('省') > -1){
+                     var y = x.split('省');
+                     var city = y[1].split('市')[0] + '市'
+                    }
+                    else{
+                     var city = y[1].split('市')[0] + '市'
+                    }
+                    alert(city)
+                   //获得了有效的地址信息:
+                   //即，result.regeocode.formattedAddress
+                }else{
+                    alert(result.info)
+                   //获取地址失败
+                }
+            });                  
+                //TODO: 使用geocoder 对象完成相关功能
+            })
+            
+        }
+        
+
+        let getLocation = function() {
+            alert(4)
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                //是否使用高精度定位，默认:true
+                timeout: 10000,
+                //超过10秒后停止定位，默认：无穷大
+                buttonOffset: new AMap.Pixel(10, 20),
+                //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                zoomToAccuracy: true,
+                //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                buttonPosition: 'LB'
+            });
+            map.addControl(geolocation); //不加的话，不能执行zoomToAccuracy
+            geolocation.getCurrentPosition(); //触发获取定位的方法
+            AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
+        }           
+        map.plugin('AMap.Geolocation', getLocation);        
+       
+</script>
+
+</body>
+</html>

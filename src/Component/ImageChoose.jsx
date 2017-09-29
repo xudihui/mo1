@@ -1,18 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import ReactCrop from 'react-image-crop';
+import '../Style/imageChoose.less'; //加载图片选择样式
+
+
+
+
 class Main extends React.Component {
     constructor() {
         super();
         this.state = {
             crop: {
-                width: 90,
+                width: 100,
                 aspect: 16/9
             },
             keepSelection:true,
-            minWidth:90,
+            minWidth:100,
             pixelCrop_:{},
-            cut:0
+            src:0,
+            done:false
         };
     }
 
@@ -25,17 +31,31 @@ class Main extends React.Component {
             pixelCrop_:pixelCrop,
             crop
         });
+
+    }
+    onDone(){
+        var self = this;
         var oColorImg = this.refs.img,
-            oCanvas = document.createElement('canvas'),
+            oCanvas = this.refs.c,
             oCtx = oCanvas.getContext('2d');
-        oCanvas.width = 300;
-        oCanvas.height = 100;
-        oCtx.drawImage(oColorImg, 0, 0);
-        var oImgData = oCtx.getImageData(0, 0, 300, 100);
-        oCtx.putImageData(oImgData, 0, 0);
-        var oGrayImg = new Image();
-        oGrayImg.src = oCanvas.toDataURL();
-        oColorImg.parentNode.insertBefore(oGrayImg, oColorImg);
+        oCanvas.style.height = oCanvas.offsetWidth*9/16 + 'px';
+        oCanvas.setAttribute('width',oCanvas.offsetWidth*2); //让绘图更加清晰
+        oCanvas.setAttribute('height',oCanvas.offsetHeight*2);//让绘图更加清晰
+        oColorImg.style.display= 'block';
+        /*
+        var x = -self.state.crop.x*oCanvas.offsetWidth/100;
+        var y = -self.state.crop.y*oCanvas.offsetWidth/100
+
+        var y = -document.querySelector('.ReactCrop__crop-selection').offsetTop
+        var x = -document.querySelector('.ReactCrop__crop-selection').offsetLeft
+         */
+        var x = 0;
+        var y = -self.state.crop.y*2*oColorImg.offsetHeight/100;//相对于y轴的比例
+        oCtx.drawImage(oColorImg,x,y,oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5);
+        oColorImg.src = oCanvas.toDataURL('image/jpeg');
+        this.setState({
+            done:true
+        });
     }
     componentDidMount(){
 
@@ -53,33 +73,35 @@ class Main extends React.Component {
             const reader = new FileReader();
             reader.onload = (e2) => {
                 this.setState({
-                    cut:e2.target.result
+                    src:e2.target.result
                 });
             };
             reader.readAsDataURL(file);
         });
+
     }
     render() {
         return (
-            <div>
-                <img src={this.state.cut} ref="img" alt=""/>
-                <p  onClick={()=>{
-                    alert('完成')
-                    this.setState({
-                        cut:0
-                    })
-                }} style={{position:'absolute',zIndex:'2',width:'200px','height':'50px',top:'20px',right:'20px',color:'#fff'}}>宽度:{this.state.pixelCrop_.width}高度:{this.state.pixelCrop_.height}</p>
-                {
-                    this.state.cut != 0 && <ReactCrop
-                        crop={this.state.crop}
-                        minWidth={90}
-                        src={this.state.cut}
-                        onImageLoaded={this.onImageLoaded}
-                        onComplete={this.onCropComplete.bind(this)}
-                    />
-                }
+            <div className="imageChoose">
+                <img src={this.state.src} ref="img" style={{width:'100%',display:'none'}} alt=""/>
+                <div className="imageChooseWorkSpace" style={{display:this.state.done ? 'none' : 'block'}}>
+                    <p style={{display:this.state.src == 0 ? 'none' : 'block'}}  onClick={()=>{
+                        this.onDone();
+                    }} >完成</p>
+                    {
+                         this.state.src != 0 && <ReactCrop
+                            crop={this.state.crop}
+                            minWidth={100}
+                            src={this.state.src}
+                            onImageLoaded={this.onImageLoaded}
+                            onComplete={this.onCropComplete.bind(this)}
+                        />
+                    }
+                    <i className="iconfont icon-icon_pic_add"></i>
+                    <input ref="enter" type="file"  />
+                    <canvas ref="c" style={{width:'100%'}} />
+                </div>
 
-                <input type="file" ref="enter" />
             </div>
         );
     }
