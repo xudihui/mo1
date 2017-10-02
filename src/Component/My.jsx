@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
-import {ImagePicker } from 'antd-mobile-web';
-import a1 from '../Images/01.jpg';
-import a2 from '../Images/02.jpg';
-import ImageChoose from './ImageChoose';
+import { connect } from 'react-redux';
+import action from '../Action/Index';
 import { Drawer,List ,Grid,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import myHead from '../Images/myHead.gif';
+
 const data1 = [
     {
         title:'买到车辆',
@@ -41,7 +40,7 @@ const data2 = [
     {
         title:'在售车辆',
         icon:'icon-weiwancheng',
-        url:"/MySelling"
+        url:`/MySellList`
     }
 ];
 
@@ -85,7 +84,7 @@ class My extends Component {
                       columnNum={4}
                       hasLine={false}
                       renderItem={dataItem => (
-                          <Link to={dataItem.url}>
+                          <Link to={dataItem.url+`?userId=${this.props.state.userInfo.id}`}>
                               <div style={{ padding: '0.25rem', }}>
                                   <i className={'iconfont '+dataItem.icon} ></i>
                                   <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>
@@ -112,5 +111,4 @@ class My extends Component {
     }
 }
 
-//export default connect((state) => { return { state: state['IndexList']} }, action())(Main);
-export default My;
+export default connect((state) => { return { state: state['User']} }, action())(My);

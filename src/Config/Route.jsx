@@ -4,6 +4,7 @@ import {Toast} from 'antd-mobile-web';
 import IndexList from '../Component/IndexList'; //首页组件
 import ImageChoose from '../Component/ImageChoose'; //保单详情
 import MyList from '../Component/MyList'; //主题详情
+import MySellList from '../Component/MySellList'; //主题详情
 import MyInfo from '../Component/MyInfo'; //保单详情
 import Help from '../Component/Help'; //保单详情
 import Login from '../Component/Login'; //登录
@@ -11,6 +12,7 @@ import Vcode from '../Component/Vcode'; //登录
 import SearchHistory from '../Component/SearchHistory'; //登录
 import MyOwn from '../Component/MyOwn'; //买家中心
 import MotoDetail from '../Component/MotoDetail'; //摩托详情页
+import MotoDetailHot from '../Component/MotoDetailHot'; //摩托详情页
 import Choose from '../Component/Choose'; //摩托详情页
 import MySelling from '../Component/MySelling'; //摩托详情页
 import SellEdit from '../Component/SellEdit'; //卖车编辑页
@@ -44,12 +46,14 @@ const RouteConfig = (
         <Route path="/" component={Roots}>
             <IndexRoute component={IndexList} />
             <Route path="myList" onEnter={requireLogin} component={MyList} />
+            <Route path="mySellList" onEnter={requireLogin} component={MySellList} />
             <Route path="my/info" component={MyInfo} />
             <Route path="help" component={Help} />
             <Route path="Login" component={Login} />
             <Route path="Vcode" component={Vcode} />
             <Route path="myOwn" component={MyOwn} />
             <Route path="motoDetail" component={MotoDetail} onEnter={requireLogin}/>
+            <Route path="motoDetailHot" component={MotoDetailHot} onEnter={requireLogin}/>
             <Route path="choose" component={Choose} />
             <Route path="MySelling" component={MySelling} />
             <Route path="SellEdit" component={SellEdit} />

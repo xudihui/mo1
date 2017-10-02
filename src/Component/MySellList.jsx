@@ -8,7 +8,6 @@ import { history,dataBrand,dataModel,formatParams } from './common/index';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, GetData,GetNextPage,TopNavBar } from './common/index';
 import a2 from '../Images/02.jpg';
 import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder,Tag } from 'antd-mobile-web';
-
 /**
  * 模块入口
  *
@@ -100,21 +99,9 @@ class Content extends Component {
         var self = this;
         return (
             <div>
-                <TopNavBar handlerClick={() => {alert(1)}} />
-                <div className='topWrap'>
+                <TopNavBar title="出售中的车辆"  />
+                <div className='topWrap' style={{top:'39px'}}>
                     <div>
-                        <div className="top"  data-flex="dir:left box:justify" >
-                            <div className="logo"></div>
-                            <div>
-                                <SearchBar onFocus={() => {
-                                    var target = Object.assign({},query);
-                                    history.push(`/SearchHistory?${formatParams(target)}`);
-                                }} placeholder="请输入车系/车型" />
-                            </div>
-                            <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.city || '全国'}
-                                <i className="iconfont icon-shouhuodizhi"></i>
-                            </div>
-                        </div>
                         <div className="match" data-flex="dir:left box:last">
                             <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{this.handlerSetMatch(e,1)}}>品牌<i className="iconfont icon-xiangxiajiantou"></i></div>
@@ -128,15 +115,15 @@ class Content extends Component {
                             <ul style={{display:this.state.matchIndex == 0 ? 'block' : 'none'}}>
                                 <li data-query="time" onClick={()=>{
                                     var target = Object.assign({},query,{orderKey:'time'})
-                                    history.replace(`/?${formatParams(target)}`)
+                                    history.replace(`/MySellList?${formatParams(target)}`)
                                 }}>最新上架</li>
                                 <li data-query="priceup" onClick={()=>{
                                     var target = Object.assign({},query,{orderKey:'priceup'})
-                                    history.replace(`/?${formatParams(target)}`)
+                                    history.replace(`/MySellList?${formatParams(target)}`)
                                 }}>价格升序</li>
                                 <li data-query="pricedown" onClick={()=>{
                                     var target = Object.assign({},query,{orderKey:'pricedown'})
-                                    history.replace(`/?${formatParams(target)}`)
+                                    history.replace(`/MySellList?${formatParams(target)}`)
                                 }}>价格降序</li>
 
                             </ul>
@@ -145,7 +132,7 @@ class Content extends Component {
                                     dataBrand.map((item) =>(
                                         <li onClick={()=>{
                                             var target = Object.assign({},query,{brand:item})
-                                            history.replace(`/?${formatParams(target)}`)
+                                            history.replace(`/MySellList?${formatParams(target)}`)
                                         }}>{item}</li>
                                         ))
                                 }
@@ -176,7 +163,7 @@ class Content extends Component {
                                          afterClose={(selected) => {
                                              var target = Object.assign({},query);
                                              delete target[i];
-                                             history.replace(`/?${formatParams(target)}`);
+                                             history.replace(`/MySellList?${formatParams(target)}`);
                                              location.reload();
                                          }}>
                                         {
@@ -189,7 +176,7 @@ class Content extends Component {
                 </div>
                 <div className="index-list-box" style={{paddingTop:queryKeys.join('').indexOf('brand')>-1 || queryKeys.join('').indexOf('title')>-1 ? '104px' : '74px'}}>
                     {
-                        data.length > 0 ? <ListMoto {...this.props} showType={this.state.showType} list={data} /> : null
+                        data.length > 0 ? <ListMoto {...this.props} edit={true} showType={this.state.showType} list={data} /> : null
                     }
                 </div>
             </div>
