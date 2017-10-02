@@ -18,7 +18,7 @@ class ListItem extends Component {
         var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
         return (
             <div>
-                <Link to={`motoDetail?id=${id}&from=${from||'buy'}`}>
+                <Link to={`motoDetail?id=${id}&from=${from||'data'}`}>
                     <div className="rowMoto">
                         <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left`}>
                             <img src={imgUrls.split(',')[0]} alt="icon" data-flex-box="0" style={imgS}/>

@@ -3,6 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
+import MyHotList from './common/MyHotList';
 import { history,formatParams} from './common/index';
 import { Drawer,List ,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
@@ -115,6 +116,7 @@ class Main extends Component {
             console.log('document');
             self.handlerSetMatch(false,-1);
         });
+
     }
 
     render() {
@@ -214,26 +216,9 @@ class Main extends Component {
                 <div className="btnWrap">
                     <Button className="btn" type="primary"  onClick={() => this.props.changeTab_('Sell')}>立即免费卖车</Button>
                 </div>
-                <div className="sub-title">为您推荐</div>
-                <div className="am-list am-list-view-scrollview" style={{paddingBottom:'50px'}}>
-                    <div className="am-list-body">
-                        <div className="list-view-section-body">
-                            <Rows />
-                            <Rows />
-                            <Rows />
-                            <div onClick={() => this.props.changeTab_()} style={{display:'inline-block',marginTop:'10px',fontSize:'.25rem',marginBottom:'10px',color:'#666'}}>
-                                查看全部车辆
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <MyHotList data={this.props.state.myHotList} paddingBottom="50px"/>
             </div>
         );
     }
 }
-
-
-
-
-export default connect((state) => {return{state:state['User']}},action())(Main);
+export default connect((state) => {return{state:state['MyList']}},action())(Main);

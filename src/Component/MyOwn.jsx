@@ -5,9 +5,8 @@ import action from '../Action/Index';
 import { history,TopNavBar } from './common/index';
 import { Button,PlaceHolder } from 'antd-mobile-web';
 import ListMoto from './common/ListMoto';
+import MyHotList from './common/MyHotList';
 import { Tool} from '../Tool';
-
-import Rows from './Rows';
 /**
  * 砍价，降价，收藏，浏览，订阅记录
  *
@@ -86,7 +85,7 @@ class Main extends Component {
 
     }
     render() {
-        var from = 'own';
+        var from = 'myown';
         if(this.type=='浏览记录'){
             from = 'myViewList';
         }
@@ -107,9 +106,7 @@ class Main extends Component {
                         </div>
                     </div>
                 }
-                {
-                    Object.keys(this.props.state.path).length > 0 && <div><div className="sub-title">为您推荐</div><ListMoto showType="icon-viewlist" list={this.props.state.path[Object.keys(this.props.state.path)[0]]['data'].slice(0,5) || []} /></div>
-                }
+                <MyHotList data={this.props.state.myHotList} />
             </div>
         );
     }

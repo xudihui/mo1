@@ -3,6 +3,8 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
+
+import MyHotList from './common/MyHotList';
 import { history,TopNavBar,dataCityNo,getDateDiff } from './common/index';
 import { Toast ,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,Modal,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import Rows from './Rows';
@@ -89,7 +91,12 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.id = props.location.query.id;
-        var data_ =location.href.indexOf('myown')>-1 ? props['state']['myown'] : props['state']['data']['data'];
+        this.from = props.location.query.from;
+        var data_ = props['state'][this.from];
+        if(this.from == 'data'){
+            data_ = props['state']['data']['data'];
+        }
+
         var data_moto = {};
         for(let i in data_){
             data_[i]['id'] == this.id ? data_moto = data_[i] : {}
@@ -183,6 +190,10 @@ class Main extends Component {
                 var talks_ = data.response.searchData;
                 self.setState({talks:talks_ || []});
             }
+            else if(data.code == '-1001'){
+                Toast.offline(data.msg);
+                history.replace('/login');
+            }
             else{
                 Toast.offline(data.msg)
             }
@@ -191,6 +202,7 @@ class Main extends Component {
     }
     render() {
         var self = this;
+        console.log('火焰山',this.props.state.myHotList)
         var data1 = [
             {
                 title:'出厂时间',
@@ -302,18 +314,7 @@ class Main extends Component {
                         this.state.talks.length == 0 && <div style={{margin:'.2rem',color:'#bbb'}}>暂无，快来成为第一个砍价的人吧！</div>
                     }
                 </div>
-
-                <div className="sub-title">猜您喜欢</div>
-                <div className="am-list am-list-view-scrollview" style={{paddingBottom:'50px'}}>
-                    <div className="am-list-body">
-                        <div className="list-view-section-body">
-                            <Rows />
-                            <Rows />
-                            <Rows />
-                            <Rows />
-                        </div>
-                    </div>
-                </div>
+                <MyHotList data={this.props.state.myHotList} paddingBottom="50px"/>
 
                 <div style={{position:'fixed',width:'100%',bottom:'0',background:'#fff'}} data-flex="main:justify">
                     {

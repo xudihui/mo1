@@ -13,11 +13,6 @@ import MyList from './MyList';
 var alert = Modal.alert;
 
 
-import Rows from './Rows';
-import a1 from '../Images/01.jpg';
-import a2 from '../Images/02.jpg';
-
-
 
 
 
@@ -54,6 +49,23 @@ class TabBarExample extends Component {
         );
     }
     componentDidMount(){
+        var {myHotList} = this.props;
+        var self = this;
+        console.log('冷却成都',myHotList)
+        if(myHotList.length == 0){
+            Tool.post($extMotorFindPage,{rows:3},function(data){
+                if(data.code == '0'){
+                    var data_ = data.response.searchData;
+                    self.props.setHotList(data_);
+                    self.setState({
+                        open:true
+                    })
+                }
+                else{
+                    Toast.offline(data.msg)
+                }
+            })
+        }
         if(sessionStorage.getItem('city') == 'done'){
             return;
         }
@@ -211,4 +223,4 @@ class TabBarExample extends Component {
     }
 }
 
-export default connect((state) => {return{state:state['User']}},action())(TabBarExample);
+export default connect((state) => {return{state:state['User'],myHotList:state['MyList']['myHotList']}},action())(TabBarExample);

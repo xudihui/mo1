@@ -57,7 +57,7 @@ const DB = (_ID = '', seting = {}) => {
             return {
                 defaults,
                 myViewList:JSON.parse(localStorage.getItem('myViewList')||'[]'),
-                hotList:[],
+                myHotList:[],
                 path: {}
             };
         },
@@ -71,8 +71,12 @@ const DB = (_ID = '', seting = {}) => {
             state.myown = target;
             return merged(state);
         },
+        setHotList:(state, target) => {
+            state.myHotList = target;
+            return merged(state);
+        },
         setViewList:(state, target) => {
-            state.myViewList.push(target);
+            state.myViewList.unshift(target);
             state.myViewList = state.myViewList.unique();
             localStorage.setItem('myViewList',JSON.stringify(state.myViewList))
             return merged(state);
