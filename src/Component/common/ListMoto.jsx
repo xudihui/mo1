@@ -3,6 +3,8 @@ import { Router, Route, IndexRoute, browserHistory,hashHistory, Link } from 'rea
 
 import { history,formatParams} from './index';
 
+import { Tool, merged } from '../../Tool';
+import { Toast } from 'antd-mobile-web';
 
 /**
  * 摩托车列表
@@ -14,15 +16,17 @@ import { history,formatParams} from './index';
 class ListItem extends Component {
     render() {
         let {title,status,price,mileage,id,createTime,imgUrls,hasAbs} = this.props.data;
-        let {from} = this.props;
+        let {from,showType,location,setState,state} = this.props;
         let edit = this.props.edit || false;
-        let {showType} = this.props;
+        var {pathname, search} = location || {};
+        var path = pathname + search;
         var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
         return (
             <div>
                 <Link to={`motoDetail?id=${id}&from=${from||'data'}`} onClick={(e)=>{
                     if(edit){
-                        return e.preventDefault();
+                        e.preventDefault()
+                        return
                     }
                     if(from == 'myHotList'){
                         e.preventDefault();
@@ -56,21 +60,56 @@ class ListItem extends Component {
                                         </div>
                                     }
                                     {
-                                        edit && <div data-flex="main:justify">
+                                        edit && <div data-flex="dir:left">
                                             <p onClick={() => {
-                                                history.push('/Sell')
+                                                history.push(`selledit?id=${id}&from=${from||'data'}`)
                                             }}><i className="iconfont icon-bianji" />编辑</p>
-                                            <p onClick={() => {
-                                                history.push('/Sell')
-                                            }}><i className="iconfont icon-ccgl-shangjiajilu-8" />上架</p>
-                                            <p onClick={() => {
-                                                history.push('/Sell')
-                                            }}><i className="iconfont icon-icon1" />下架</p>
+                                            {
+                                                status == 'off' &&  <p onClick={() => {
+                                                    Tool.post($extMotorOn,{id},function(data){
+                                                        if(data.code == '0'){
+                                                            Toast.info('上架成功', .5);
+                                                            var temp = state;
+                                                            for(let i in temp['data']){
+                                                                if(temp['data'][i]['id'] == id){
+                                                                    temp['data'][i]['status'] = 'edit';
+                                                                }
+                                                            }
+                                                            setState(temp);
+                                                        }
+                                                        else{
+                                                            Toast.offline(data.msg)
+                                                        }
+                                                    })
+                                                }}><i className="iconfont icon-ccgl-shangjiajilu-8" />上架</p>
+                                            }
+                                            {
+                                                status != 'off' &&  <p onClick={() => {
+                                                    Tool.post($extMotorOff,{id},function(data){
+                                                        if(data.code == '0'){
+                                                            Toast.info('下架成功', .5);
+                                                            var temp = state;
+                                                            for(let i in temp['data']){
+                                                                if(temp['data'][i]['id'] == id){
+                                                                    temp['data'][i]['status'] = 'off';
+                                                                }
+                                                            }
+                                                            setState(temp);
+                                                        }
+                                                        else{
+                                                            Toast.offline(data.msg)
+                                                        }
+                                                    })
+                                                }}><i className="iconfont icon-icon1" />下架</p>
+                                            }
+
+
 
                                         </div>
                                     }
-
-
+                                </div>
+                                <div>
+                                    ￥{price/100}元
                                 </div>
                             </div>
                         </div>

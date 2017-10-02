@@ -318,7 +318,7 @@ class Main extends Component {
                         this.state.talks.length == 0 && <div style={{margin:'.2rem',color:'#bbb'}}>暂无，快来成为第一个砍价的人吧！</div>
                     }
                 </div>
-                <MyHotList data={this.props.state.myHotList} paddingBottom="50px"/>
+                <MyHotList {...this.props} data={this.props.state.myHotList}  paddingBottom="50px"/>
 
                 <div style={{position:'fixed',width:'100%',bottom:'0',background:'#fff'}} data-flex="main:justify">
                     {

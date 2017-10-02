@@ -17,8 +17,6 @@ import Choose from '../Component/Choose'; //摩托详情页
 import MySelling from '../Component/MySelling'; //摩托详情页
 import SellEdit from '../Component/SellEdit'; //卖车编辑页
 import Building from '../Component/Building'; //卖车编辑页
-import Father from '../Component/Father'; //卖车编辑页
-import FatherYY from '../Component/FatherYY'; //卖车编辑页
 /**
  * (路由根目录组件，显示当前符合条件的组件)
  * 

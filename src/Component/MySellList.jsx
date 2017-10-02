@@ -95,7 +95,6 @@ class Content extends Component {
         var {data,loadAnimation} = this.props.state;
         var query = this.props.location.query;
         var queryKeys = Object.keys(query);
-        console.log('queryKeys,',queryKeys,'query,',query)
         var self = this;
         return (
             <div>
@@ -176,7 +175,7 @@ class Content extends Component {
                 </div>
                 <div className="index-list-box" style={{paddingTop:queryKeys.join('').indexOf('brand')>-1 || queryKeys.join('').indexOf('title')>-1 ? '104px' : '74px'}}>
                     {
-                        data.length > 0 ? <ListMoto {...this.props} edit={true} showType={this.state.showType} list={data} /> : null
+                        data.length > 0 ? <ListMoto {...this.props} edit={true} showType={this.state.showType} from="selledit" list={data} /> : null
                     }
                 </div>
             </div>

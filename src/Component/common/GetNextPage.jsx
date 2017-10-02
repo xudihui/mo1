@@ -49,7 +49,6 @@ const Main = (mySetting) => {
              * @param {Object} props
              */
             this.initState = (props) => {
-                console.log('props:',props)
                 var {state, location} = props;
                 var {pathname, search} = location;
                 this.path = pathname + search;
@@ -224,9 +223,12 @@ const Main = (mySetting) => {
             var {location} = np;
             var {pathname, search} = location;
             var path = pathname + search;
-            if (this.path !== path) {
+
+            //如果是卖车列表强制卸载
+            if (this.path !== path ) {
                 this.unmount(); //地址栏已经发生改变，做一些卸载前的处理
             }
+
 
             this.initState(np);
 

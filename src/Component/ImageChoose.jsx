@@ -8,8 +8,8 @@ import { Tool, merged } from '../Tool';
 
 
 class Main extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             crop: {
                 width: 100,
@@ -41,6 +41,27 @@ class Main extends React.Component {
             crop
         });
 
+    }
+    onImgDone(){
+        var self = this;
+        var oColorImg = this.refs.img;
+        var wrap = this.refs.wrap;
+        var x = document.querySelectorAll('.am-list-body');
+        for(let i in x){
+            try{
+                x[i].style.position = 'relative'
+            }catch(e){
+            }
+        }
+        wrap.setAttribute('class','imageChoose imageChooseDone');
+        wrap.style.position = 'relative';
+        oColorImg.src = this.props.src;
+        oColorImg.style.display = 'inline-block';
+        wrap.setAttribute('src',self.props.src);//从服务器拿图片
+        this.setState({
+            done:true,
+            winWidth:'100%'
+        });
     }
     onDone(){
         var self = this;
@@ -91,7 +112,9 @@ class Main extends React.Component {
         });
     }
     componentDidMount(){
-
+       if(this.props.src){
+           this.onImgDone();
+       }
         /**
          * Select an image file.
          */
