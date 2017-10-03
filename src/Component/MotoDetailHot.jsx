@@ -124,14 +124,6 @@ class Main extends Component {
                 backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
             },
             {
-                title:'订阅车源',
-                icon:'icon-bangdan',
-                background:'#efefef',
-                checked:false,
-                backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
-            }
-            ,
-            {
                 title:'联系车主',
                 icon:'icon-iconfonta',
                 background:'#f8f8f8',
@@ -170,7 +162,7 @@ class Main extends Component {
             })
             return;
         }
-        if(index == 3){
+        if(index == 2){
             location.href = 'tel:'+this.state.motoData.tel;
             return;
         }

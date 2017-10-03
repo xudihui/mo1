@@ -78,6 +78,7 @@ const DB = (_ID = '', seting = {}) => {
         setViewList:(state, target) => {
             state.myViewList.unshift(target);
             state.myViewList = state.myViewList.unique();
+
             localStorage.setItem('myViewList',JSON.stringify(state.myViewList))
             return merged(state);
         },

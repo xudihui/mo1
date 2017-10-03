@@ -15,7 +15,7 @@ import { Toast } from 'antd-mobile-web';
  */
 class ListItem extends Component {
     render() {
-        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs} = this.props.data;
+        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs,productDate} = this.props.data;
         let {from,showType,location,setState,state} = this.props;
         let edit = this.props.edit || false;
         var {pathname, search} = location || {};
@@ -56,7 +56,7 @@ class ListItem extends Component {
                                 <div>
                                     {
                                         !edit && <div>
-                                            {`${mileage}公里/${createTime}年/${hasAbs!='false'?'ABS':''}`}
+                                            {`${mileage}公里/${productDate?productDate.slice(0,4) : '未知'}年/${hasAbs!='false'?'ABS':''}`}
                                         </div>
                                     }
                                     {

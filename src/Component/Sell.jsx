@@ -121,7 +121,13 @@ class TextareaItemExample extends Component {
                 continue;
             }
             else if(i == 'oriPrice' || i == 'price'){
-                x[i] = x[i]*100;//元转换为分;
+                if(isNaN(x[i])){
+                    return Toast.info('请输入正确的价格！')
+                }
+                else{
+                    x[i] = x[i]*100;//元转换为分;
+                }
+
             }
             if(x[i] instanceof Array){
                 if(i == 'productDate'){
@@ -131,14 +137,20 @@ class TextareaItemExample extends Component {
                     x[i] = x[i].join();
                 }
             }
-            if(!x[i]){
+            else if(!x[i]){
                 return Toast.info('请补全信息！')
             }
         }
         if(images['imgUrls'] == ''){
             return Toast.info('请至少上传一张车辆照片！')
         }
-        console.log(Object.assign({},x,images));
+        if(isNaN(x['mileage'])){
+            return Toast.info('请输入正确的公里数！')
+        }
+        if(!/^1[3|4|5|7|8][0-9]{9}$/.test(x['tel'])){
+            return Toast.info('请输入正确的手机号码！')
+        }
+
 
         Tool.post($extMotorAdd,Object.assign({},x,images),function(data){
             if(data.code == '0'){
@@ -154,9 +166,6 @@ class TextareaItemExample extends Component {
                 Toast.offline(data.msg)
             }
         })
-
-
-
     }
     onChange(val){
         console.log(val);
@@ -228,6 +237,13 @@ class TextareaItemExample extends Component {
                         maxLength="9"
                     >车重</InputItem>
                     <InputItem
+                        {...getFieldProps('mileage')}
+                        clear
+                        placeholder="请输入具体公里数"
+                        extra="KM"
+                        maxLength="9"
+                    >行驶里程</InputItem>
+                    <InputItem
                         {...getFieldProps('oriPrice')}
                         clear
                         placeholder="请输入新车价格"
@@ -297,21 +313,10 @@ class TextareaItemExample extends Component {
                     >
                         <List.Item arrow="horizontal">品牌车型</List.Item>
                     </Picker>
-                    <Picker
-                        {...getFieldProps('mileage')}
-                        data={years}
-                        cascade={false}
-                        extra="请选择(可选)"
-                    >
-                        <List.Item arrow="horizontal">行驶里程</List.Item>
-                    </Picker>
                 </List>
                 <WhiteSpace />
                 <div className="btnWrap">
                     <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认卖车</Button>
-                </div>
-                <div className="btnWrap">
-                    <Button className="btn" onClick={() => this.autoFillInput()} type="primary">自动填充表单</Button>
                 </div>
                 <WhiteSpace />
                 <WhiteSpace />
