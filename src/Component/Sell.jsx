@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import {ImagePicker } from 'antd-mobile-web';
+import { Tool, merged } from '../Tool';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 import ImageChoose from './ImageChoose';
 import $ from './common/Jquery';
-import { history,dataBrand,dataModel } from './common/index';
+import { history,dataBrand,dataModel,dataCity } from './common/index';
 import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
-
+import { district} from 'antd-mobile-demo-data';
 const alert = Modal.alert;
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
@@ -47,23 +48,6 @@ const years = [
     ]
 ];
 
-const provinces = [
-    [
-        {
-            label: '缙云',
-            value: '缙云 ',
-        },
-        {
-            label: '松阳 ',
-            value: '松阳 ',
-        },
-        {
-            label: '云和 ',
-            value: '云和 ',
-        }
-    ]
-];
-
 const dataBrand_ = [dataBrand.map(i => {
     var temp = {};
     temp.label = i;
@@ -78,6 +62,18 @@ const dataModel_ = [dataModel.map(i => {
     return temp;
 })];
 
+var keys = Object.keys(dataCity);
+var dataCity_ = [];
+for(let i in keys ){
+    var temp = {};
+    temp.label = keys[i];
+    temp.value = dataCity[keys[i]]
+    dataCity_.push(temp)
+
+}
+dataCity_ = [dataCity_];
+
+
 class TextareaItemExample extends Component {
     constructor(props) {
         super(props);
@@ -88,18 +84,78 @@ class TextareaItemExample extends Component {
     }
     handlerClick(){
         var x = this.props.form.getFieldsValue();
-        console.log(this.state);
-        console.log(x);
+        //console.log(this.state);
+
+        var images = {
+            imgUrls:'',//车辆图片
+            driLicense:'',//行驶证
+            invoice:'',//购车发票
+
+        };
+        var imgUrls = this.refs.imgUrls.querySelectorAll('.imageChooseDone');
+        var invoice = this.refs.invoice.querySelector('.imageChooseDone');
+        var driLicense = this.refs.driLicense.querySelector('.imageChooseDone');
+        var changeTab_ = this.props.changeTab_;
+        for(let i in imgUrls){
+            if(!isNaN(i)){
+                if(i == 0){
+                    images['imgUrls'] = imgUrls[i].getAttribute('src');
+                }
+                else{
+                    images['imgUrls'] = images['imgUrls'] +','+imgUrls[i].getAttribute('src');
+                }
+            }
+        }
+        if(invoice){
+            images['invoice'] = invoice.getAttribute('src')
+        }
+        if(driLicense){
+            images['driLicense'] = driLicense.getAttribute('src')
+        }
+
+        console.log(Object.assign({},x,images));
+
+        //数组转字符串;
         for(let i in x){
-            console.log(i)
+            if(i == 'hasAbs'){
+                continue;
+            }
+            else if(i == 'oriPrice' || i == 'price'){
+                x[i] = x[i]*100;//元转换为分;
+            }
+            if(x[i] instanceof Array){
+                if(i == 'productDate'){
+                    x[i] = x[i].join()+'-01-01';
+                }
+                else{
+                    x[i] = x[i].join();
+                }
+            }
             if(!x[i]){
                 return Toast.info('请补全信息！')
             }
         }
-        console.log(JSON.stringify(x))
-        alert('恭喜你，发布成功！', '',[
-            { text: '立即查看', onPress: () => history.replace('/MySelling') },
-        ])
+        if(images['imgUrls'] == ''){
+            return Toast.info('请至少上传一张车辆照片！')
+        }
+        console.log(Object.assign({},x,images));
+
+        Tool.post($extMotorAdd,Object.assign({},x,images),function(data){
+            if(data.code == '0'){
+                console.log(data);
+                alert('恭喜你，发布成功！', '',[
+                    { text: '立即查看', onPress: () => {changeTab_();
+                        location.href = location.origin;
+                } },
+                ])
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
+
+
+
     }
     onChange(val){
         console.log(val);
@@ -111,8 +167,29 @@ class TextareaItemExample extends Component {
             x[i] = '111';
         }
         this.props.form.setFieldsValue(
-            {"title":"12321","weight":"80KG","Switch1":"true","desc":"一般般啦","newPrice":"213213","year":["2011"],"provinces":["缙云 "],"model":["公路"],"brand":["国产"],"mile":["2011"],"time":["请在晚22点以前联系我 "],"sellPrice":"123213","name":"阿辉","mobile":"15067425400"}
-        );
+            {
+                "title": "丽水小霸王",
+                "weight": "80",
+                "hasAbs": "true",
+                "content": "TTR 系，动力强，高速稳高速稳高速稳高速稳",
+                "oriPrice": "88883",
+                "productDate": [
+                    "2011"
+                ],
+                "area": [
+                    "330000",
+                    "331100"
+                ],
+                "brand": [
+                    "国产"
+                ],
+                "mileage": [
+                    "2011"
+                ],
+                "price": "123213",
+                "tel": "15067425400"
+            }
+           );
     }
 
     render() {
@@ -129,13 +206,13 @@ class TextareaItemExample extends Component {
                         placeholder="请输入标题"
                     >车辆标题</InputItem>
                     <InputItem
-                        {...getFieldProps('desc')}
+                        {...getFieldProps('content')}
                         clear
                         placeholder="请输入文字简介"
                     >车辆简介</InputItem>
                     <List.Item
                         extra={<Switch
-                            {...getFieldProps('Switch1', {
+                            {...getFieldProps('hasAbs', {
                                 initialValue: false,
                                 valuePropName: 'checked',
                             })}
@@ -146,37 +223,56 @@ class TextareaItemExample extends Component {
                         {...getFieldProps('weight')}
                         clear
                         placeholder="车重"
+                        extra="KG"
+                        maxLength="9"
                     >车重</InputItem>
                     <InputItem
-                        {...getFieldProps('newPrice')}
+                        {...getFieldProps('oriPrice')}
                         clear
                         placeholder="请输入新车价格"
+                        extra="元"
+                        maxLength="7"
                     >新车含税价</InputItem>
                     <InputItem
-                        {...getFieldProps('sellPrice')}
+                        {...getFieldProps('price')}
                         clear
                         placeholder="请输入想要卖的价格"
+                        maxLength="7"
+                        extra="元"
                     >售卖价格</InputItem>
                     <InputItem
-                        {...getFieldProps('mobile')}
+                        {...getFieldProps('tel')}
                         clear
                         placeholder="联系方式"
+                        maxLength="11"
                     >联系方式</InputItem>
 
                 </List>
                 <List renderHeader={() => '车辆图片(最多上传10张)'}>
-                    <ImageChoose />
+                    <div className="cropWrap"  ref="imgUrls">
+                        <ImageChoose />
+                        <ImageChoose />
+                        <ImageChoose />
+                        <ImageChoose />
+                        <ImageChoose />
+                    </div>
+
+
                 </List>
                 <List renderHeader={() => '车辆行驶证(可选)'}>
-                    <ImageChoose />
+                    <div className="cropWrap" ref="driLicense">
+                        <ImageChoose />
+                    </div>
                 </List>
                 <List renderHeader={() => '购车发票(可选)'}>
-                    <ImageChoose />
+                    <div className="cropWrap" ref="invoice">
+                        <ImageChoose />
+                    </div>
                 </List>
                 <List renderHeader={() => '基本信息'}>
                   
                     <Picker
-                        {...getFieldProps('year')}
+                        {...getFieldProps('productDate')}
                         data={years}
                         cascade={false}
                         extra="请选择(可选)"
@@ -184,10 +280,15 @@ class TextareaItemExample extends Component {
                         <List.Item arrow="horizontal">出厂年份</List.Item>
                     </Picker>
                     <Picker
-                        {...getFieldProps('provinces')}
-                        data={provinces}
-                        cascade={false}
+                        {...getFieldProps('area', {
+                            initialValue: ['340000', '341500'],
+                        })}
+                        data={district}
+                        onOk={e => console.log('ok', e)}
+                        onDismiss={e => console.log('dismiss', e)}
                         extra="请选择(可选)"
+                        cols = '2'
+
                     >
                         <List.Item arrow="horizontal">所在地区</List.Item>
                     </Picker>
@@ -200,7 +301,7 @@ class TextareaItemExample extends Component {
                         <List.Item arrow="horizontal">品牌车型</List.Item>
                     </Picker>
                     <Picker
-                        {...getFieldProps('mile')}
+                        {...getFieldProps('mileage')}
                         data={years}
                         cascade={false}
                         extra="请选择(可选)"

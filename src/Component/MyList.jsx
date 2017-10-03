@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 
-import { history,dataBrand,dataModel } from './common/index';
-import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, TabIcon, GetData,GetNextPage,TopNavBar } from './common/index';
+import { history,dataBrand,dataModel,formatParams } from './common/index';
+import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, GetData,GetNextPage,TopNavBar } from './common/index';
 import a2 from '../Images/02.jpg';
-import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder,Tag } from 'antd-mobile-web';
 
 /**
  * 模块入口
@@ -40,27 +40,27 @@ class List extends Component {
 
 class ListItem extends Component {
     render() {
-        let {title,applicationInfo,top,applyInfo,id} = this.props.data;
+        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs} = this.props.data;
         let {showType} = this.props;
         var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
         return (
             <div>
-                <Link to={`motoDetail`}>
+                <Link to={`motoDetail?id=${id}`}>
                     <div className="rowMoto">
                         <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left`}>
-                            <img src={a2} alt="icon" data-flex-box="0" style={imgS}/>
+                            <img src={imgUrls.split(',')[0]} alt="icon" data-flex-box="0" style={imgS}/>
                             <div className="rowMotoText" >
                                 <div >
-                                   广东 汕尾市 Honda Dio 系列 Dio
+                                    {title}
                                     {
-                                        Math.random()>0.5 ? <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                                        status == !'edit' ? <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
                                     }
                                 </div>
-                                <div >
-                                    5694公里 / 2014年 / ABS
+                                <div>
+                                    {`${mileage}公里/${createTime}年/${hasAbs!='false'?'ABS':''}`}
                                 </div>
                                 <div>
-                                    ￥<span >16956</span>
+                                    ￥<span >{price/100}</span>
                                 </div>
                             </div>
                         </div>
@@ -142,9 +142,11 @@ class Content extends Component {
     componentWillUnmount(){
         document.removeEventListener("click",tempFun);
     }
-
     render() {
         var {data,loadAnimation} = this.props.state;
+        var query = this.props.location.query;
+        var queryKeys = Object.keys(query);
+        console.log('queryKeys,',queryKeys,'query,',query)
         var self = this;
         return (
             <div>
@@ -155,7 +157,8 @@ class Content extends Component {
                             <div className="logo"></div>
                             <div>
                                 <SearchBar onFocus={() => {
-                                    history.push('/SearchHistory');
+                                    var target = Object.assign({},query);
+                                    history.push(`/SearchHistory?${formatParams(target)}`);
                                 }} placeholder="请输入车系/车型" />
                             </div>
                             <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.city || '全国'}
@@ -166,21 +169,34 @@ class Content extends Component {
                             <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{this.handlerSetMatch(e,1)}}>品牌<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{
-                                history.push('/Choose')
+                                var target = Object.assign({},query);
+                                history.push(`/Choose?${formatParams(target)}`);
                             }}>筛选<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{this.handlerChange()}}><i className={`iconfont ${this.state.showType}`}></i></div>
                         </div>
                         <div className="match_subnav" >
                             <ul style={{display:this.state.matchIndex == 0 ? 'block' : 'none'}}>
-                                <li data-query="1" onClick={this.handleCheck}>智能排序</li>
-                                <li data-query="2" onClick={this.handleCheck}>最新上架</li>
-                                <li data-query="3" onClick={this.handleCheck}>价格升序</li>
-                                <li data-query="4" onClick={this.handleCheck}>价格降序</li>
+                                <li data-query="time" onClick={()=>{
+                                    var target = Object.assign({},query,{orderKey:'time'})
+                                    history.replace(`/?${formatParams(target)}`)
+                                }}>最新上架</li>
+                                <li data-query="priceup" onClick={()=>{
+                                    var target = Object.assign({},query,{orderKey:'priceup'})
+                                    history.replace(`/?${formatParams(target)}`)
+                                }}>价格升序</li>
+                                <li data-query="pricedown" onClick={()=>{
+                                    var target = Object.assign({},query,{orderKey:'pricedown'})
+                                    history.replace(`/?${formatParams(target)}`)
+                                }}>价格降序</li>
+
                             </ul>
                             <ul style={{display:this.state.matchIndex == 1 ? 'block' : 'none'}}>
                                 {
                                     dataBrand.map((item) =>(
-                                        <li data-query="123321" onClick={this.handleCheck}>{item}</li>
+                                        <li onClick={()=>{
+                                            var target = Object.assign({},query,{brand:item})
+                                            history.replace(`/?${formatParams(target)}`)
+                                        }}>{item}</li>
                                         ))
                                 }
                             </ul>
@@ -196,7 +212,32 @@ class Content extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="index-list-box" style={{paddingTop:'76px'}}>
+                <div className="tag-container">
+                    {
+                        queryKeys.map(i =>{
+                            console.log('queryKeys',i);
+
+                            return(
+                                i == 'brand' || i == 'title' ?
+                                    <Tag closable
+                                         onClose={() => {
+                                             console.log('onClose');
+                                         }}
+                                         afterClose={(selected) => {
+                                             var target = Object.assign({},query);
+                                             delete target[i];
+                                             history.replace(`/?${formatParams(target)}`);
+                                             location.reload();
+                                         }}>
+                                        {
+                                            query[i]
+                                        }
+                                    </Tag> : ''
+                            );
+                        })
+                    }
+                </div>
+                <div className="index-list-box" style={{paddingTop:'104px'}}>
                     {
                         data.length > 0 ? <List {...this.props} showType={this.state.showType} list={data} /> : null
                     }
@@ -215,15 +256,15 @@ export default GetNextPage({
     id: 'MyList',  //应用关联使用的redux
     component: Main, //接收数据的组件入口
     //url: '/api/v1/topics',
-    url:'https://api.github.com/search/repositories?q=javascript&sort=stars',
+    url:$extMotorFindPage,
     data: (props, state) => { //发送给服务器的数据
-
-        var {rows,pageNumber } = state;
-        var {phone } = props;
-        var obj = {"phone":phone,rows,pageNumber};
+        console.log('$$$$',props)
+        var {rows,page } = state;
+        var {orderKey,brand,title,area,maxPrice,minPrice} = props.location.query;
+        var obj = {rows,page,orderKey,brand,title,area,maxPrice,minPrice};
         return {
             "request":JSON.stringify(obj),
-            pageNumber
+            page
         }
     },
     success: (state) => { return state; }, //请求成功后执行的方法

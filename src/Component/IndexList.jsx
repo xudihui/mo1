@@ -32,22 +32,23 @@ class TabBarExample extends Component {
     }
     changeTab(el){
         this.setState({selectedTab:el || 'Buy'});
+        sessionStorage.setItem('selectedTab',el || 'Buy');
     }
     renderContent(pageText,m) {
         return (
             <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
                 {
-                    m=='First'&&<First changeTab={(el) => {this.changeTab(el); sessionStorage.setItem('selectedTab',el);}}/>
+                    m=='First'&&<First changeTab_={(el) => {this.changeTab(el);}}/>
                 }
                 {
                     m=='Buy'&&<MyList  {...this.props} />
                 }
 
                 {
-                    m=='Sell'&&<Seller />
+                    m=='Sell'&&<Seller changeTab_={(el) => {this.changeTab(el); }} />
                 }
                 {
-                    m=='My'&&<My id={this.props.state.id} login={this.props.login} />
+                    m=='My'&&<My userInfo={this.props.state.userInfo} login={this.props.login} />
                 }
             </div>
         );
@@ -72,7 +73,7 @@ class TabBarExample extends Component {
             }) //center: [120.195805, 30.231164]
         });
         var onError = function(){
-            Toast.offline('定位失败')
+            Toast.offline('定位失败',1)
         }
 
         var onComplete = function(data) {

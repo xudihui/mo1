@@ -33,9 +33,9 @@ class Roots extends Component {
 var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
 
 var requireLogin = (nextState, push) => {
-    if (!localStorage.getItem('id')) {
+    if (!localStorage.getItem('userInfo')) {
         push({ pathname: '/Login' });
-        Toast.info('只有登录才能查看哦！')
+        Toast.info('只有登录才能查看哦！',1)
     }
 }
 
@@ -43,7 +43,7 @@ const RouteConfig = (
     <Router history={history}>
         <Route path="/" component={Roots}>
             <IndexRoute component={IndexList} />
-            <Route path="myList" component={MyList} />
+            <Route path="myList" onEnter={requireLogin} component={MyList} />
             <Route path="my/info" component={MyInfo} />
             <Route path="help" component={Help} />
             <Route path="Login" component={Login} />
@@ -55,10 +55,6 @@ const RouteConfig = (
             <Route path="SellEdit" component={SellEdit} />
             <Route path="Building" component={Building} />
             <Route path="ImageChoose" component={ImageChoose} />
-            <Route path="father" component={Father} />
-            <Route path="fatheryy" component={FatherYY} />
-
-
             <Route path="SearchHistory" component={SearchHistory} />
         </Route>
     </Router>

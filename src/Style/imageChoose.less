@@ -1,11 +1,13 @@
 
 /* 裁切*/
 .ReactCrop {
-    position: relative;
+    position: fixed;
+    top:0;left:0;
     display: inline-block;
     cursor: crosshair;
     overflow: hidden;
     max-width: 100%;
+    z-index:2
 }
 .ReactCrop--disabled {
     cursor: inherit;
@@ -220,23 +222,59 @@
     line-height:30px;
 }
 .imageChoose{
+    width:25%;
+    position:relative;
+    display:inline-block;
     p{
-        position:absolute;z-index:99992;width:60px;text-align:center;background:#fff;border-radius:5px;line-height:30px;height:30px;top:20px;right:20px;color:#888
+        position:fixed;z-index:99992;width:60px;text-align:center;background:#fff;border-radius:5px;line-height:30px;height:30px;top:20px;right:20px;color:#888
     }
+
     i.iconfont{
         font-size:50px;
+        color:#74777b;
     }
+    i.icon-shanchu{
+        display:none;
+    }
+
     input{
         opacity:0;
-        width:50px;
-        height:50px;
+        width:100%;
+        height:100%;
         background:#000;
         position:absolute;
         top:0;
         left:0;
+    }
+    .imageChooseWorkSpace{
+        text-align:center;
     }
     canvas{
         position:absolute;
         top: -9999px;
     }
 }
+.cropWrap{
+    text-align:left;
+}
+.imageChooseDone{
+    position:relative;
+    overflow: visible!important;
+    img{
+        border:1px solid #ccc;
+        height:35px;
+    }
+    i.icon-shanchu{
+        display: inline-block;
+        font-size: 30px;
+        position: absolute;
+        color:#ff3300;
+        border-radius: 50%;
+        right: 50%;
+        top: 50%;
+        margin-top: -15px;
+        margin-right: -15px;
+        opacity: .6;
+    }
+}
+

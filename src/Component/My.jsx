@@ -57,10 +57,10 @@ class My extends Component {
                      <img className="myImg" src={myHead} />
                     <p>
                     {
-                        this.props.id && this.props.id
+                        this.props.userInfo && JSON.parse(localStorage.userInfo).tel
                     }
                     {
-                       !this.props.id && <Link to="/login">立即登录</Link>
+                       !this.props.userInfo && <Link to="/login">立即登录</Link>
                     }
                     </p>
                      <i className="iconfont icon-shezhi"></i>
@@ -104,7 +104,7 @@ class My extends Component {
                 </List>
                 <div className="btnWrap" style={{paddingBottom:'50px'}}>
                     {
-                        this.props.id && <Button className="btn" type="primary"  onClick={() => {this.props.login('')}}>退出登录</Button>
+                        this.props.userInfo && <Button className="btn" type="primary"  onClick={() => {this.props.login('')}}>退出登录</Button>
                     }
                 </div>
             </div>

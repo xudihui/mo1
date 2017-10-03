@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
-import { history } from './common/index';
+import { history,formatParams} from './common/index';
 import { Drawer,List ,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
 import Rows from './Rows';
@@ -139,36 +139,80 @@ class Main extends Component {
 
                 <div className="sub-title">快速选车</div>
                 <div className="content">
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{maxPrice:2000000})
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
+                    }
+                    }>
                         2万以下
                     </Link>
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{maxPrice:4000000,minPrice:2000000})
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
+                    }
+                    }>
                         2~4万
                     </Link>
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                    <Link className="p1" onClick={() => {
+
+                        var target = Object.assign({},{maxPrice:6000000,minPrice:4000000})
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
+                    }
+                    }>
                         4~6万
                     </Link>
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{minPrice:6000000})
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
+                    }
+                    }>
                         6万以上
                     </Link>
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
-                        公路
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'Indian'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        Indian
                     </Link>
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
-                        越野
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'Buell'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        Buell
                     </Link>
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
-                        拉力
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'Cagiva'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        Cagiva
                     </Link>
-                    <Link className="p1" onClick={() => this.props.changeTab('Buy')}>
-                        踏板
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'GASGAS'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        GASGAS
                     </Link>
                 </div>
                 <div className="btnWrap">
-                    <Button className="btn" type="primary"  onClick={() => this.props.changeTab('Buy')}>查看全部优质车源</Button>
+                    <Button className="btn" type="primary"  onClick={() =>{
+                        history.replace(`/`);
+                        this.props.changeTab_('Buy')
+                    } }>查看全部优质车源</Button>
                 </div>
                 <div className="btnWrap">
-                    <Button className="btn" type="primary"  onClick={() => this.props.changeTab('Sell')}>立即免费卖车</Button>
+                    <Button className="btn" type="primary"  onClick={() => this.props.changeTab_('Sell')}>立即免费卖车</Button>
                 </div>
                 <div className="sub-title">为您推荐</div>
                 <div className="am-list am-list-view-scrollview" style={{paddingBottom:'50px'}}>
@@ -177,7 +221,7 @@ class Main extends Component {
                             <Rows />
                             <Rows />
                             <Rows />
-                            <div onClick={this.props.changeTab} style={{display:'inline-block',marginTop:'10px',fontSize:'.25rem',marginBottom:'10px',color:'#666'}}>
+                            <div onClick={() => this.props.changeTab_()} style={{display:'inline-block',marginTop:'10px',fontSize:'.25rem',marginBottom:'10px',color:'#666'}}>
                                 查看全部车辆
                             </div>
                         </div>

@@ -90,7 +90,11 @@
         this.xhr = new XMLHttpRequest(); //创建http请求对象
         this.xhr.open('GET', url, true); //异步请求
         this.xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-       // this.xhr.setRequestHeader('appId', "com.smk.test.test");//增加AppId
+        this.xhr.setRequestHeader("appId", "com.luoy.motor.android");//增加AppId
+        if(localStorage.getItem('userInfo')){
+            this.xhr.setRequestHeader("userId", JSON.parse(localStorage.getItem('userInfo')).id);
+            this.xhr.setRequestHeader("token", JSON.parse(localStorage.getItem('userInfo')).token);
+        }
         this.xhr.addEventListener('readystatechange', this.readystatechange, false);
         this.xhr.send(); //发送请求
 
@@ -109,7 +113,6 @@
             if (/application\/json/.test(head) || this.dataType === 'json' && /^(\{|\[)([\s\S])*?(\]|\})$/.test(response)) {
                 response = JSON.parse(response);
             }
-
             if (xhr.status === 200) {
                 this.loadCall(response, xhr);
                 if (this.data[this.pageName]) this.data[this.pageName]++;

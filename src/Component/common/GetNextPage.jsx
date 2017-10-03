@@ -3,10 +3,10 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../../Action/Index';
 import { Tool, merged, config } from '../../Tool';
-import { DataLoad, DataNull, Header, TipMsgSignin, Footer, UserHeadImg,Empty } from './index';
+import { DataLoad, DataNull, Header, TipMsgSignin, Footer, UserHeadImg,Empty,formatParams,history } from './index';
 
 import GetNextPage from './PageCenter';
-
+import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder,Tag } from 'antd-mobile-web';
 const {target} = config;
 
 /**
@@ -87,7 +87,7 @@ const Main = (mySetting) => {
                     start: this.start,
                     load: this.load,
                     error: this.error,
-                    pageName:'pageNumber'
+                    pageName:'page'
                 });
             }
 
@@ -107,21 +107,18 @@ const Main = (mySetting) => {
             this.load = (res) => {
                 var {state } = this;
                 var {response,systemDate} = res;
+                response = response.searchData;
                 if(!response){
                     response = [];
                 }
                 if(this.props.location.search == '?none'){ //测试代码，强制呈现空列表页面
                     response = [];
                 }
-                for(let i = 0; i < 15; i++){
-                    response.push({});
-                }
-
-                if (response.length < state.limit) {
+                if (response.length < state.rows) {
                     this.get.end();//卸载翻页组件
                     state.nextBtn = false;
                     state.loadMsg = '加载完毕~';
-                    if(state.pageNumber == 1 && response.length == 0){
+                    if(state.page == 1 && response.length == 0){
                         state.loadMsg = 'none';
                     }
                 }
@@ -131,7 +128,7 @@ const Main = (mySetting) => {
                 }
                 Array.prototype.push.apply(state.data, response);
                 state.loadAnimation = false;
-                state.pageNumber = ++state.pageNumber;
+                state.page = ++state.page;
                 this.props.setState(state);
                 console.log('systemDate',systemDate)
                 this.props.setTime(systemDate);//设置系统时间
@@ -198,13 +195,14 @@ const Main = (mySetting) => {
         }
         render() {
             var {loadAnimation, loadMsg} = this.state;
+            var query = this.props.location.query;
+            var queryKeys = Object.keys(query);
             console.log('this.props.setting.component',this.props.setting.component);
             return (
                 <div>
-
                     <this.props.setting.component {...this.props} state={this.state} />
                     {
-                        loadMsg == 'none' ? <Empty text="无信息" /> : <div ref="dataload" style={{paddingBottom:'98px'}}><DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} /></div>
+                        loadMsg == 'none' ? <Empty text="暂无出售车辆" /> : <div ref="dataload" style={{paddingBottom:'98px'}}><DataLoad loadAnimation={loadAnimation} loadMsg={loadMsg} /></div>
                     }
 
                 </div>

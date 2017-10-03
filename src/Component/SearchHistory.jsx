@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { SearchBar } from 'antd-mobile-web';
 import { connect } from 'react-redux';
-import { history } from './common/index';
+import { history,formatParams } from './common/index';
 class Main extends Component {
     constructor(props) {
         super(props);
@@ -22,10 +22,14 @@ class Main extends Component {
             localStorage.setItem('historyArr', JSON.stringify(temp));
             this.setState({historyArr: temp})
         }
-        history.push('/?type=Buy&query=' + e);
+        sessionStorage.setItem('selectedTab','Buy');
+        var target = Object.assign({},this.props.location.query,{title:e});
+        history.replace(`/?${formatParams(target)}`)
     }
     handlerClick(e){
-        history.push('/?type=Buy&query='+e);
+        sessionStorage.setItem('selectedTab','Buy');
+        var target = Object.assign({},this.props.location.query,{title:e})
+        history.replace(`/?${formatParams(target)}`)
         console.log('this',this)
     }
     clearHistory(){

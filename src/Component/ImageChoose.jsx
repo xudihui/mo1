@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import ReactCrop from 'react-image-crop';
 import '../Style/imageChoose.less'; //加载图片选择样式
-
+import { List, InputItem, Toast,Button, WhiteSpace, WingBlank,ActivityIndicator,Modal } from 'antd-mobile-web';
+import { Tool, merged } from '../Tool';
 
 
 
@@ -18,10 +19,21 @@ class Main extends React.Component {
             minWidth:100,
             pixelCrop_:{},
             src:0,
-            done:false
+            done:false,
+            winWidth:window.innerWidth+'px'
         };
     }
-
+    //重新上传
+    onInit(){
+        this.refs.wrap.setAttribute('class','imageChoose');
+        this.refs.img.style.display = 'none';
+        this.setState({
+            pixelCrop_:{},
+            src:0,
+            done:false,
+            winWidth:window.innerWidth+'px'
+        })
+    }
     onImageLoaded(crop){
         console.log('Image was loaded. Crop:', crop);
     }
@@ -37,6 +49,7 @@ class Main extends React.Component {
         var self = this;
         var oColorImg = this.refs.img,
             oCanvas = this.refs.c,
+            wrap = this.refs.wrap,
             oCtx = oCanvas.getContext('2d');
         oCanvas.style.height = oCanvas.offsetWidth*9/16 + 'px';
         oCanvas.setAttribute('width',oCanvas.offsetWidth*2); //让绘图更加清晰
@@ -50,11 +63,34 @@ class Main extends React.Component {
         var x = -document.querySelector('.ReactCrop__crop-selection').offsetLeft
          */
         var x = 0;
-        var y = -self.state.crop.y*2*oColorImg.offsetHeight/100;//相对于y轴的比例
+        var y = -(self.state.crop.y||0)*2*oColorImg.offsetHeight/100;//相对于y轴的比例
         oCtx.drawImage(oColorImg,x,y,oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5);
-        oColorImg.src = oCanvas.toDataURL('image/jpeg');
+        var pngData = oCanvas.toDataURL('image/png');
+       // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
+        var x = document.querySelectorAll('.am-list-body');
+        for(let i in x){
+            try{
+                x[i].style.position = 'relative'
+            }catch(e){
+            }
+        }
+        Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
+            if(data.code == '0'){
+                Toast.info('图片成功上传一张！',.5);
+                console.log(data.response.fileRdfUrl+data.response.fileUrl);
+                wrap.setAttribute('class','imageChoose imageChooseDone');
+                wrap.style.position = 'relative';
+                oColorImg.src = pngData;
+                wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
+            }
+            else{
+                Toast.offline(data.msg);
+                self.onInit();
+            }
+        })
         this.setState({
-            done:true
+            done:true,
+            winWidth:'100%'
         });
     }
     componentDidMount(){
@@ -72,6 +108,14 @@ class Main extends React.Component {
             }
             const reader = new FileReader();
             reader.onload = (e2) => {
+                var x = document.querySelectorAll('.am-list-body');
+                for(let i in x){
+                    try{
+                        x[i].style.position = 'static'
+                    }catch(e){
+                    }
+                }
+                this.refs.wrap.style.position = 'static';
                 this.setState({
                     src:e2.target.result
                 });
@@ -82,8 +126,15 @@ class Main extends React.Component {
     }
     render() {
         return (
-            <div className="imageChoose">
-                <img src={this.state.src} ref="img" style={{width:'100%',display:'none'}} alt=""/>
+            <div className="imageChoose" ref="wrap" >
+                <i className="iconfont icon-shanchu" onClick={()=>{
+                    Modal.alert('删除', `确定删除辛辛苦苦上传的图片吗?`, [
+                        { text: '取消', onPress: () => console.log('cancel') },
+                        { text: '确定', onPress: () => this.onInit()},
+                    ])
+
+                }}></i>
+                <img src={this.state.src} ref="img" style={{width:this.state.winWidth,display:'none'}} alt=""/>
                 <div className="imageChooseWorkSpace" style={{display:this.state.done ? 'none' : 'block'}}>
                     <p style={{display:this.state.src == 0 ? 'none' : 'block'}}  onClick={()=>{
                         this.onDone();
@@ -99,7 +150,7 @@ class Main extends React.Component {
                     }
                     <i className="iconfont icon-icon_pic_add"></i>
                     <input ref="enter" type="file"  />
-                    <canvas ref="c" style={{width:'100%'}} />
+                    <canvas ref="c" style={{width:this.state.winWidth}} />
                 </div>
 
             </div>

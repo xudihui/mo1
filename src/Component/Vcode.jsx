@@ -61,7 +61,7 @@ class Main extends Component {
                 sessionStorage.setItem('selectedTab','My');
                 history.replace('/');
                 Toast.info('登录成功！');
-                login('你好！'+sessionStorage.getItem('tel').slice(0,3)+'****'+sessionStorage.getItem('tel').slice(-4));
+                login(data.response);
             }
             else{
                 Toast.offline(data.msg)

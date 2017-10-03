@@ -3,94 +3,14 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
-import { history,TopNavBar } from './common/index';
+import { history,TopNavBar,dataCityNo } from './common/index';
 import { Toast ,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,Modal,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import Rows from './Rows';
 import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 
-var talks = [
-    {
-        name:'150****5400',
-        text:'这辆车车很不错哦！'
-    },
-    {
-        name:'130****4500',
-        text:'老板，600元卖不卖，我过来自提！'
-    }
-];
-const motoData = {
-    images:[a1,a2],
-    tags:['0过户','有发票','有合格证','有车牌','大贸车'],
-    infos:{
-        title:'丽水 遂昌县 Yamaha YZF 系列 YZF-R6',
-        props:'5千-1万公里 / ≤2004年 / 250-399cc',
-        price:'16956',
-        newPrice:'999999'
-    }
-}
-const data1 = [
-    {
-        title:'新车含税价',
-        value:'25万',
-    },
-    {
-        title:'上牌时间',
-        value:'2005',
-    },
-    {
-        title:'所在地区',
-        value:'丽水',
-    },
-    {
-        title:'车型类别',
-        value:'公路',
-    },
-    {
-        title:'品牌车型',
-        value:'雅马哈',
-    },
-    {
-        title:'行驶里程',
-        value:'3000',
-    },
+var talks = [];
 
-    {
-        title:'总排气量',
-        value:'600毫升',
-    }
-];
-const footer = [
-    {
-        title:'降价提醒',
-        icon:'icon-tongzhi',
-        background:'#e1e1e1',
-        checked:false,
-        backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
-    },
-    {
-        title:'收藏车辆',
-        icon:'icon-shoucang1',
-        background:'#eaeaea',
-        checked:false,
-        backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
-    },
-    {
-        title:'订阅车源',
-        icon:'icon-bangdan',
-        background:'#efefef',
-        checked:false,
-        backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
-    }
-    ,
-    {
-        title:'联系车主',
-        icon:'icon-iconfonta',
-        background:'#f8f8f8',
-        checked:false,
-        backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
-    }
-];
 
 /**
  * 摩托详情
@@ -102,8 +22,7 @@ class Banner extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: ['', ''],
-            initialHeight: 100,
+            initialHeight: 200,
             transparent: 0
         }
     }
@@ -130,11 +49,6 @@ class Banner extends Component {
             }
         }
         window.addEventListener('scroll',this.scroll);
-        setTimeout(() => {
-            this.setState({
-                data: [a1,a2],
-            });
-        }, 100);
     }
     componentWillUnmount(){
 
@@ -151,15 +65,15 @@ class Banner extends Component {
                     selectedIndex={1}
                     swipeSpeed={25}
                 >
-                    {this.state.data.map((ii,index) => (
+                    {this.props.data.map((ii,index) => (
                         <Link to="/" key={ii} style={hProp}>
                             <img
                                 src={ii}
-                                onLoad={() => {
+                                onLoad={(e) => {
                                     // fire window resize event to change height
                                     window.dispatchEvent(new Event('resize'));
                                     this.setState({
-                                        initialHeight: '200px',
+                                        initialHeight: e.currentTarget.offsetHeight
                                     });
                                 }}
                             />
@@ -174,16 +88,78 @@ class Banner extends Component {
 class Main extends Component {
     constructor(props) {
         super(props);
+        this.id = props.location.query.id;
+        var data_ = props['state']['data']['data'];
+        var data_moto = {};
+        for(let i in data_){
+            data_[i]['id'] == this.id ? data_moto = data_[i] : null
+        }
+        console.log('MMMWWW,',data_moto);
+
+        const footer = [
+            {
+                title:'降价提醒',
+                icon:'icon-tongzhi',
+                background:'#e1e1e1',
+                checked:false,
+                backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+            },
+            {
+                title:'收藏车辆',
+                icon:'icon-shoucang1',
+                background:'#eaeaea',
+                checked:data_moto.isCollect == 1 ? true : false,
+                backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+            },
+            {
+                title:'订阅车源',
+                icon:'icon-bangdan',
+                background:'#efefef',
+                checked:false,
+                backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+            }
+            ,
+            {
+                title:'联系车主',
+                icon:'icon-iconfonta',
+                background:'#f8f8f8',
+                checked:false,
+                backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+            }
+        ];
         this.state = {
+            motoData:data_moto,
             a:222,
             talks:talks,
             footer:footer
         };
     }
     handlerChecked(index,bk){
+        var self = this;
         var footer_ = this.state.footer;
+
+        //收藏 方法
+        if(index == 1){
+            Tool.post(this.state.motoData.isCollect == 1 ? $extCollectDelete : $extCollectAdd,{pid:this.state.motoData.id},function(data){
+                if(data.code == '0'){
+
+                    Toast.success(self.state.motoData.isCollect == 1 ? '取消收藏！':'成功收藏！','1.5');
+                    footer_[index].checked = !footer_[index].checked;
+                    var motoData = self.state.motoData;
+                    motoData.isCollect = self.state.motoData.isCollect == 1 ? 0 : 1
+                    self.setState({
+                        footer:footer_,
+                        motoData:motoData
+                    })
+                }
+                else{
+                    Toast.offline(data.msg)
+                }
+            })
+            return;
+        }
         if(index == 3){
-            location.href = 'tel:15067425400';
+            location.href = 'tel:'+this.state.motoData.tel;
             return;
         }
         if(!footer_[index].checked){
@@ -202,19 +178,37 @@ class Main extends Component {
     }
     render() {
         var self = this;
+        var data1 = [
+            {
+                title:'出厂时间',
+                value:this.state.motoData.productDate.slice(0,4),
+            },
+            {
+                title:'所在地区',
+                value:dataCityNo[this.state.motoData.area.split(',')[1]],
+            },
+            {
+                title:'品牌车型',
+                value:this.state.motoData.brand,
+            },
+            {
+                title:'行驶里程',
+                value:this.state.motoData.mileage+'公里',
+            }
+        ];
         return (
             <div className="moto-detail" >
-                <Banner />
+                <Banner data={this.state.motoData.imgUrls.split(',')} />
                 <div className="detail-wrap">
                     <div className="rowMotoTextDetail" >
                         <div >
-                            {motoData.infos.title}
+                            {this.state.motoData.title}
                             {
-                                Math.random()>0.5 ? <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                                this.state.motoData.status == !'edit' ?  <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
                             }
                         </div>
                         <div data-flex="main:justify">
-                            <span ><i className="iconfont icon-lichengdixian"></i>{motoData.infos.price}</span>
+                            <span ><i className="iconfont icon-lichengdixian"></i>{this.state.motoData.price/100}元</span>
                             <Button className="btn" type="primary" onClick={() => Modal.prompt('留言/砍价', '',
                                 [
                                     { text: '取消' },
@@ -223,19 +217,27 @@ class Main extends Component {
                                             if(value == ''){
                                                 return Toast.fail('不能发布空内容！', 1);
                                             }
-                                            Toast.success('恭喜您，发布成功', 1);
-                                            var talks_ = self.state.talks;
-                                            talks_.unshift({
-                                                name:'游客'+Math.floor(Math.random()*10000),
-                                                text:value
-                                            });
-                                            self.setState({talks:talks_});
-                                            resolve(); //关闭对话框
+                                            Tool.post($extEvaluateAdd,{pid:self.state.motoData.id,content:value,tel:self.props.tel},function(data){
+                                                if(data.code == '0'){
+                                                    Toast.success('恭喜您，发布成功', 1);
+                                                    var talks_ = self.state.talks;
+                                                    talks_.unshift({
+                                                        name:self.props.tel,
+                                                        text:value
+                                                    });
+                                                    self.setState({talks:talks_});
+                                                }
+                                                else{
+                                                    Toast.offline(data.msg)
+                                                }
+                                                resolve(); //关闭对话框
+                                            })
+
                                         }),
                                     },
                                 ], 'default', null, ['请输入您想说的话'])}>留言/砍价</Button>
                         </div>
-                        <div><span>新车含税{motoData.infos.newPrice}万</span>
+                        <div><span>新车含税{this.state.motoData.oriPrice/1000000}万</span>
                             <i onClick={()=>{
                             Toast.info('新车含税价=厂家公布的指导价+购置税。结果仅供参考。')
                             }} className="iconfont icon-information"></i>
@@ -261,9 +263,12 @@ class Main extends Component {
 
                 <div className="sub-title">详细内容</div>
                 <div className="content">
-                    <p>09年本田CBR600（F5）原国外改装Jardine（贾丁）排气  其余原装原版 实际3116公里</p>
-                    <img src={a1} />
-                    <img src={a2} />
+                    <p>{this.state.motoData.content}</p>
+                    {
+                        this.state.motoData.imgUrls.split(',').map(i =>{
+                            return <img src={i} />
+                        })
+                    }
                 </div>
 
                 <div className="sub-title">大家在说</div>
@@ -296,7 +301,6 @@ class Main extends Component {
                 <div style={{position:'fixed',width:'100%',bottom:'0',background:'#fff'}} data-flex="main:justify">
                     {
                         this.state.footer.map((dataItem,index) => (
-
                                 <div className={dataItem.checked ? 'bgWhite' : ''} data-flex-box="1" onClick={() => {
                                     self.handlerChecked(index,dataItem.background);
                                 }} style={{ padding: '0.15rem .05rem',textAlign:'center',background:(dataItem.checked ? dataItem.backgroundChecked : dataItem.background) }}>
@@ -317,7 +321,7 @@ class Main extends Component {
 }
 
 
-export default connect((state) => { return { state: state['MyList']} }, action())(Main);
+export default connect((state) => { return { state: state['MyList'],tel:state['User']['userInfo']['tel']} }, action())(Main);
 
 
 

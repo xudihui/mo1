@@ -36,11 +36,22 @@ Tool.ajax = function (mySetting) {
             sData = setting.url + '?' + sData;
             xhr.open(setting.type, sData + '&' + 111, setting.async);
             xhr.setRequestHeader("appId", "com.smk.test.test");
+            if(localStorage.getItem('userInfo')){
+                xhr.setRequestHeader("userId", JSON.parse(localStorage.getItem('userInfo')).id);
+                xhr.setRequestHeader("token", JSON.parse(localStorage.getItem('userInfo')).token);
+            }
             xhr.send();
         } else { //post方式请求
             xhr.open(setting.type, setting.url, setting.async);
             xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhr.setRequestHeader("appId", "com.luoy.motor.android");
+            if(localStorage.getItem('userInfo')){
+                xhr.setRequestHeader("userId", JSON.parse(localStorage.getItem('userInfo')).id);
+                xhr.setRequestHeader("token", JSON.parse(localStorage.getItem('userInfo')).token);
+            }
+
+
+
           //  xhr.setRequestHeader("version", "1.1.1"); //version未被preflight允许
             xhr.send(sData);
         }

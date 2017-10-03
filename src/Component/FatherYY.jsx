@@ -25,7 +25,7 @@ const footer = [
         backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
     },
     {
-        title:'保存副本',
+        title:'金额重置',
         icon:'icon-weiwancheng',
         background:'#efefef',
         checked:false,
@@ -44,11 +44,11 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.type = this.props.location.query.type;
-        this.n = new Date().getTime();
+        this.n = 'base';
        // this.props.location.query.id
         var temp = Object.assign({},props.state.data);
         //这真的是一个大坑啊，浅复制指针指向同一个，一定要深复制
-        temp[this.type][this.n] = [...temp[this.type][this.props.location.query.id]]; //永远指向属性传递过来的state.data,更改它的同时就是修改指针，如果不是深复制，将无法区分
+        //temp[this.type][this.n] = [...temp[this.type][this.props.location.query.id]]; //永远指向属性传递过来的state.data,更改它的同时就是修改指针，如果不是深复制，将无法区分
         this.state = {
             data:temp
         };
@@ -68,6 +68,17 @@ class Main extends Component {
         console.log('after:',a_,this.n)
         this.setState({
             data:a_
+        })
+    }
+    clearPrice(){
+        var temp_ = this.state.data;
+        var temp = temp_[this.type][this.n];
+        for(let i in temp){
+            temp[i]['money'] = '';
+        }
+        console.log('重置完：',temp)
+        this.setState({
+            data:temp_
         })
     }
     sum(){
@@ -123,7 +134,7 @@ class Main extends Component {
             delete temp01[i]['noId_']
         }
 
-        if(this.props.state.data[this.type][this.n].length <=23){
+        if(this.props.state.data[this.type][this.n].length <=30){
             document.querySelector('#father1').style.paddingTop = '0px';
             document.querySelector('#father1').style.width = '500px';
             var canvas = document.createElement("canvas"),
@@ -222,16 +233,21 @@ class Main extends Component {
 
     }
     componentDidMount(){
-        m = this.props.state.data[this.type][this.props.location.query.id];
+       // m = this.props.state.data[this.type][this.props.location.query.id];
     }
     componentWillUnmount(){
-        if(!this.flag){
-            delete this.props.state.data[this.type][this.n];
+        var {setData} = this.props;
+        var temp = Object.assign({},this.state.data);
+        var temp01  = temp[this.type][this.n];
+        for(let i in temp01){
+            delete temp01[i]['noId_']
         }
+        setData(temp);
 
     }
     handlerClick(index){
         var {setData} = this.props;
+        var self = this;
         switch(index)
         {   case 0:
               delete this.props.state.data[this.type][this.n];
@@ -241,15 +257,12 @@ class Main extends Component {
                 this.handlerAdd();
                 break;
             case 2:
-                this.flag = true;
-                var temp = Object.assign({},this.state.data);
-                var temp01  = temp[this.type][this.n];
-                for(let i in temp01){
-                    delete temp01[i]['noId_']
-                }
-                setData(temp);
-                Toast.success('恭喜您，保存成功！',1.5)
-                history.replace(`/Father`)
+                alert('价格重置', '确认重置每个人的金额吗？', [
+                    { text: '取消', onPress: () => console.log('cancel'), style: 'default' },
+                    { text: '确定', onPress: () => {
+                        self.clearPrice();
+                    }},
+                ])
                 break;
             default:
                 this.handlerOutPut()
@@ -260,13 +273,13 @@ class Main extends Component {
         var {setData} = this.props;
         var id = this.n;
         var begin = this.state.data[this.type][id];
-        var first = this.state.data[this.type][id].slice(0,23);
-        var second = this.state.data[this.type][id].slice(23);
+        var first = this.state.data[this.type][id].slice(0,30);
+        var second = this.state.data[this.type][id].slice(30);
         var l = second.length;
         var bgL = begin.length;
 
-        if(second.length<=23){
-            for(let i = 0;i< 23- l;i++){
+        if(second.length<=30){
+            for(let i = 0;i< 30- l;i++){
                 second.push({
                     id:"·",
                     name:"·",
@@ -274,6 +287,7 @@ class Main extends Component {
                 })
             }
         }
+        console.log('我的天哪，',this.state.data)
         return (
             <div>
             <div className="father" id="father1">
@@ -288,7 +302,6 @@ class Main extends Component {
                     </tr>
                     {
                         begin.map((item, index) => {
-                            console.log(item.id)
                             return (
                                 <tr className={item.del ? 'del' : ''} onDoubleClick={() => {
                                     alert('删除', '确定删除'+item.name +'的信息吗？', [
