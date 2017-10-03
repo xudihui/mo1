@@ -25,6 +25,8 @@ class Main extends React.Component {
     }
     //重新上传
     onInit(){
+        var {index,onDel} = this.props;
+        onDel(index);
         this.refs.wrap.setAttribute('class','imageChoose');
         this.refs.img.style.display = 'none';
         this.setState({
@@ -92,14 +94,15 @@ class Main extends React.Component {
             }catch(e){
             }
         }
+        wrap.setAttribute('class','imageChoose imageChooseDone');
+        wrap.style.position = 'relative';
         Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
             if(data.code == '0'){
                 Toast.info('图片成功上传一张！',.5);
                 console.log(data.response.fileRdfUrl+data.response.fileUrl);
-                wrap.setAttribute('class','imageChoose imageChooseDone');
-                wrap.style.position = 'relative';
                 oColorImg.src = pngData;
                 wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
+                self.props.onDone(data.response.fileRdfUrl+'/'+data.response.fileUrl)
             }
             else{
                 Toast.offline(data.msg);
@@ -164,7 +167,7 @@ class Main extends React.Component {
     }
     render() {
         return (
-            <div className="imageChoose" ref="wrap" >
+            <div className="imageChoose" style={{display:this.props.display}} ref="wrap" >
                 <i className="iconfont icon-shanchu" onClick={()=>{
                     Modal.alert('删除', `确定删除辛辛苦苦上传的图片吗?`, [
                         { text: '取消', onPress: () => console.log('cancel') },
@@ -194,6 +197,67 @@ class Main extends React.Component {
         );
     }
 }
+export default class ImageChoose extends Component {
+    constructor(props) {
+        super(props);
+        var src = props.src || '';
+        src = src.split(',');
+        this.state = {
+            length:props.length,
+            arr:[],
+            src:src
+        };
+    }
+    onDone(el){
+        var src_ = this.state.src;
+        src_.push(el);
+        console.log('上传图片',src_)
+        this.setState({
+            src:src_
+        })
+    }
+    onDel(index){
 
-//export default connect((state) => { return { state: state['IndexList']} }, action())(Main);
-export default Main;
+        var src_ = this.state.src;
+        console.log(index+'删除前的src',JSON.stringify(src_))
+        src_[index] = 'empty';
+        //src_.splice(index,1,'');
+        console.log('删除后的src',JSON.stringify(src_))
+        this.setState({
+            src:src_
+        })
+    }
+    render() {
+        var self = this;
+        var {src,length} = this.state;
+        var arr = [];
+        for(let i = 0;i<length;i++){
+            arr.push(
+                {
+                    display:'',
+                    src:''
+                }
+            )
+        }
+        for(let i in arr){
+            arr[i]['src'] = src[i] || '';
+            if(arr[i]['src'] =='' && i!=src.length){
+                arr[i]['display'] = 'none'
+            }
+        }
+        if(length == 1){
+            arr[0]['display'] = '';
+            arr = arr.slice(0,1)
+        }
+        else if(src.length < length){
+            arr[src.length]['display'] = '';
+        }
+        return (
+            <div className="cropWrap"  >
+                {
+                    arr.map((i,index)=><Main src={i.src} index={index} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
+                }
+            </div>
+        );
+    }
+}

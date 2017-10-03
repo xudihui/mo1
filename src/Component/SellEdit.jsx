@@ -287,24 +287,20 @@ class TextareaItemExample extends Component {
 
                 </List>
                 <List renderHeader={() => '车辆图片(最多上传10张)'}>
-                    <div className="cropWrap"  ref="imgUrls">
-                        <ImageChoose src="http://47.94.230.18//group0/M00/00/00/b5ce044f-a41a-4a42-bf96-ebd54c842e3f.png" />
-                        <ImageChoose />
-                        <ImageChoose />
-                        <ImageChoose />
-                        <ImageChoose />
+                    <div ref="imgUrls">
+                        <ImageChoose src={this.state.data.imgUrls} length="10" />
                     </div>
 
 
                 </List>
                 <List renderHeader={() => '车辆行驶证(可选)'}>
-                    <div className="cropWrap" ref="driLicense">
-                        <ImageChoose />
+                    <div ref="driLicense">
+                        <ImageChoose src={this.state.data.driLicense} length="1" />
                     </div>
                 </List>
                 <List renderHeader={() => '购车发票(可选)'}>
-                    <div className="cropWrap" ref="invoice">
-                        <ImageChoose />
+                    <div ref="invoice">
+                        <ImageChoose src={this.state.data.invoice}  length="1" />
                     </div>
                 </List>
                 <List renderHeader={() => '基本信息'}>
