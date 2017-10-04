@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import ImageChoose from './ImageChoose';
-import { history,dataBrand,dataModel,dataCity,TopNavBar  } from './common/index';
+import { history,dataBrand,dataModel,dataCity,TopNavBar,dataCityNo } from './common/index';
 import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
 import { district} from 'antd-mobile-demo-data';
@@ -72,7 +72,35 @@ for(let i in keys ){
 }
 dataCity_ = [dataCity_];
 
-
+var keys_dataCityNo = Object.keys(dataCityNo);
+var arr_dataCityNo = [];
+var m = 0;
+for(let i in keys_dataCityNo){
+    if(isNaN(i)){
+        continue;
+    }
+    var temp = {
+        label:dataCityNo[keys_dataCityNo[i]],
+        value:keys_dataCityNo[i],
+        children:[]
+    }
+    if(keys_dataCityNo[i].indexOf('0000') > -1){
+        if(m != 0){
+            arr_dataCityNo.push(m);
+        }
+        m = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i],
+            children:[]
+        }
+    }else{
+        var temp = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i]
+        }
+        m.children.push(temp)
+    }
+}
 class TextareaItemExample extends Component {
     constructor(props) {
         super(props);
@@ -336,7 +364,7 @@ class TextareaItemExample extends Component {
                         {...getFieldProps('area', {
                             initialValue: ['340000', '341500'],
                         })}
-                        data={district}
+                        data={arr_dataCityNo}
                         onOk={e => console.log('ok', e)}
                         onDismiss={e => console.log('dismiss', e)}
                         extra="请选择(可选)"

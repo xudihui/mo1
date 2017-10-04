@@ -143,7 +143,7 @@ const Main = (mySetting) => {
              */
             this.error = () => {
                 this.state.loadAnimation = false;
-                this.state.loadMsg = '加载失败';
+                this.state.loadMsg = '加载失败,点击重试~';
                 this.props.setState(this.state);
             }
 

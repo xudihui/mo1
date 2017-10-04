@@ -53,9 +53,9 @@ class TabBarExample extends Component {
         var self = this;
         console.log('冷却成都',myHotList)
         if(myHotList.length == 0){
-            Tool.post($extMotorFindPage,{rows:3},function(data){
+            Tool.post($extMotorFindPage,{isHot:'y',rows:3},function(data){
                 if(data.code == '0'){
-                    var data_ = data.response.searchData;
+                    var data_ = data.response.searchData || [];
                     self.props.setHotList(data_);
                     self.setState({
                         open:true

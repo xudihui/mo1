@@ -575,7 +575,7 @@ export const dataBrand = ["国产", "Aprilia", "Benelli", "BMW", "Buell", "Cagiv
  * @export
  * @class data
  */
-export const dataCityNo ={"100000":"中国",
+export const dataCityNo ={
     "110000":"北京",
     "110100":"北京市",
     "110101":"东城区",

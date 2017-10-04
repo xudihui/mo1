@@ -6,7 +6,7 @@ import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 import ImageChoose from './ImageChoose';
 import $ from './common/Jquery';
-import { history,dataBrand,dataModel,dataCity } from './common/index';
+import { history,dataBrand,dataModel,dataCity,dataCityNo } from './common/index';
 import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
 import { district} from 'antd-mobile-demo-data';
@@ -47,7 +47,35 @@ const years = [
         }
     ]
 ];
-
+var keys_dataCityNo = Object.keys(dataCityNo);
+var arr_dataCityNo = [];
+var m = 0;
+for(let i in keys_dataCityNo){
+    if(isNaN(i)){
+        continue;
+    }
+    var temp = {
+        label:dataCityNo[keys_dataCityNo[i]],
+        value:keys_dataCityNo[i],
+        children:[]
+    }
+    if(keys_dataCityNo[i].indexOf('0000') > -1){
+        if(m != 0){
+            arr_dataCityNo.push(m);
+        }
+        m = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i],
+            children:[]
+        }
+    }else{
+        var temp = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i]
+        }
+        m.children.push(temp)
+    }
+}
 const dataBrand_ = [dataBrand.map(i => {
     var temp = {};
     temp.label = i;
@@ -294,9 +322,9 @@ class TextareaItemExample extends Component {
                     </Picker>
                     <Picker
                         {...getFieldProps('area', {
-                            initialValue: ['340000', '341500'],
+                            initialValue: ['110000', '110100'],
                         })}
-                        data={district}
+                        data={arr_dataCityNo}
                         onOk={e => console.log('ok', e)}
                         onDismiss={e => console.log('dismiss', e)}
                         extra="请选择(可选)"

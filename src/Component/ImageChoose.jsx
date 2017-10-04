@@ -85,7 +85,9 @@ class Main extends React.Component {
         var x = 0;
         var y = -(self.state.crop.y||0)*2*oColorImg.offsetHeight/100;//相对于y轴的比例
         oCtx.drawImage(oColorImg,x,y,oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5);
-        var pngData = oCanvas.toDataURL('image/png');
+        var pngData_png = oCanvas.toDataURL('image/png');
+        var pngData = oCanvas.toDataURL('image/jpeg');
+        console.log('png长度：',pngData_png.length+'；jpg长度:'+pngData.length)
        // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
         var x = document.querySelectorAll('.am-list-body');
         for(let i in x){
