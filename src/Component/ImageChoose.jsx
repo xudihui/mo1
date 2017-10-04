@@ -34,9 +34,6 @@ class Main extends React.Component {
             winWidth:window.innerWidth+'px'
         })
     }
-    onImageLoaded(crop){
-        console.log('Image was loaded. Crop:', crop);
-    }
     onCropComplete(crop, pixelCrop){
         console.log('Crop move complete:', crop, pixelCrop);
         this.setState({
@@ -115,6 +112,7 @@ class Main extends React.Component {
                     }catch(e){
                     }
                 }
+                alert('成功了');
                 this.refs.wrap.style.position = 'static';
                 this.setState({
                     src:e2.target.result
@@ -144,7 +142,6 @@ class Main extends React.Component {
                             crop={this.state.crop}
                             minWidth={100}
                             src={this.state.src}
-                            onImageLoaded={this.onImageLoaded}
                             onComplete={this.onCropComplete.bind(this)}
                         />
                     }

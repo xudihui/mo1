@@ -5,8 +5,8 @@ import action from '../../Action/Index';
 import { Tool, merged } from '../../Tool';
 import GetData from './GetData';
 import GetNextPage from './GetNextPage';
-import { Toast } from 'antd-mobile-web';
-
+import { Toast,Popover  } from 'antd-mobile-web';
+const Item = Popover.Item;
 
 
 export { GetData, GetNextPage }
@@ -390,11 +390,32 @@ export class TabIcon extends Component {
 export class TopNavBar extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            visible: false,
+            selected: '',
+        };
     }
+    onSelect(opt){
+        SHARE_(parseInt(opt.props.value),'send-link-thumb-remote');
+        this.setState({
+            visible: false,
+            selected: opt.props.value,
+        });
+    };
+    handleVisibleChange(visible){
+        this.setState({
+            visible,
+        });
+    };
     handlerShare(){
         SHARE_(1,'send-link-thumb-remote');
     }
     render() {
+        let offsetX = -16; // just for pc demo
+        if (/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent)) {
+            offsetX = -12;
+        }
+
         const { title,handlerClick,transparent,share } = this.props;
         const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory
         var self = this;
@@ -408,8 +429,31 @@ export class TopNavBar extends Component {
                     </span>
                 <span>{title || '暂无标题'}</span>
                 {
-                   share && <i onClick={self.handlerShare} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'25px'}}></i>
+                   share && <i onClick={()=>{
+                     this.setState({
+                         visible:true
+                     })
+                   }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'25px'}}></i>
                 }
+                <Popover mask
+                         overlayClassName="fortest"
+                         overlayStyle={{ color: 'currentColor' }}
+                         visible={this.state.visible}
+                         overlay={[
+                             (<Item key="1" value="0" icon={<i className="iconfont icon-pyq"></i>} >微信好友</Item>),
+                             (<Item key="2" value="1" icon={<i className="iconfont icon-weixinhaoyou"></i>} >微信朋友圈</Item>),
+                             (<Item key="3" value="2" icon={<i className="iconfont icon-weixinshoucang"></i>} >微信收藏</Item>)
+                         ]}
+                         align={{
+                             overflow: { adjustY: 0, adjustX: 0 },
+                             offset: [offsetX, 15],
+                         }}
+                         onVisibleChange={this.handleVisibleChange.bind(this)}
+                         onSelect={this.onSelect.bind(this)}
+                >
+                    <div>
+                    </div>
+                </Popover>
             </div>
         );
     }
