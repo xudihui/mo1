@@ -97,7 +97,7 @@ class Main extends React.Component {
          */
         const imageType = /^image\//;
         const fileInput = this.refs.enter;
-
+        var self = this;
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files.item(0);
             if (!file || !imageType.test(file.type)) {
@@ -112,11 +112,28 @@ class Main extends React.Component {
                     }catch(e){
                     }
                 }
-                alert('成功了');
                 this.refs.wrap.style.position = 'static';
-                this.setState({
-                    src:e2.target.result
-                });
+                var img = document.createElement("img");
+                document.body.appendChild(img);
+                img.setAttribute('src',e2.target.result);
+
+                //先进行一次大范围的缩放
+                img.onload = function(){
+                    var canvas = document.createElement("canvas");
+                    var ctx=canvas.getContext("2d");
+                    var w = img.offsetWidth;
+                    var h = img.offsetHeight;
+                    canvas.setAttribute('width',window.innerWidth*2);
+                    canvas.setAttribute('height',window.innerWidth*2*h/w);
+                    canvas.style.width = window.innerWidth + 'px';
+                    canvas.style.height = window.innerWidth*h/w + 'px';
+                    ctx.drawImage(img,0,0,window.innerWidth*2,window.innerWidth*2*h/w);
+                    var pngData = canvas.toDataURL('image/jpeg');
+                    document.body.removeChild(img);
+                    self.setState({
+                        src:pngData
+                    });
+                }
             };
             reader.readAsDataURL(file);
         });

@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
-import { history,TopNavBar,dataCityNo } from './common/index';
+import { history,TopNavBar,dataCityNo,getDateDiff } from './common/index';
 import { Toast ,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,Modal,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import Rows from './Rows';
 import a1 from '../Images/01.jpg';
@@ -89,11 +89,12 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.id = props.location.query.id;
-        var data_ = props['state']['data']['data'];
+        var data_ =location.href.indexOf('myown')>-1 ? props['state']['myown'] : props['state']['data']['data'];
         var data_moto = {};
         for(let i in data_){
-            data_[i]['id'] == this.id ? data_moto = data_[i] : null
+            data_[i]['id'] == this.id ? data_moto = data_[i] : {}
         }
+        props.setViewList(data_moto);
         console.log('MMMWWW,',data_moto);
 
         const footer = [
@@ -174,7 +175,19 @@ class Main extends Component {
         })
     }
     componentDidMount() {
-        document.body.scrollTop = 0
+        var self = this;
+        document.body.scrollTop = 0;
+        Tool.post($extEvaluateFindPageByMo,{pid:self.state.motoData.id},function(data){
+            if(data.code == '0'){
+                Toast.info('评论载入成功', .5);
+                var talks_ = data.response.searchData;
+                self.setState({talks:talks_ || []});
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
+
     }
     render() {
         var self = this;
@@ -204,7 +217,7 @@ class Main extends Component {
                         <div >
                             {this.state.motoData.title}
                             {
-                                this.state.motoData.status == !'edit' ?  <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                                this.state.motoData.status == !'edit' ?  <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
                             }
                         </div>
                         <div data-flex="main:justify">
@@ -221,10 +234,7 @@ class Main extends Component {
                                                 if(data.code == '0'){
                                                     Toast.success('恭喜您，发布成功', 1);
                                                     var talks_ = self.state.talks;
-                                                    talks_.unshift({
-                                                        name:self.props.tel,
-                                                        text:value
-                                                    });
+                                                    talks_.unshift(data.response);
                                                     self.setState({talks:talks_});
                                                 }
                                                 else{
@@ -278,11 +288,18 @@ class Main extends Component {
                         this.state.talks.map((item,index) =>{
                             return(
                                 <div className="talk">
-                                    <div className="name">{item.name} 说:</div>
-                                    <div className="text">{item.text}</div>
+                                    <div className="name" data-flex="main:justify">
+                                        <span>{item.tel}说:</span>
+                                        <span>{getDateDiff(item.createTime)}</span>
+
+                                    </div>
+                                    <div className="text">{item.content}</div>
                                 </div>
                             )
                         })
+                    }
+                    {
+                        this.state.talks.length == 0 && <div style={{margin:'.2rem',color:'#bbb'}}>暂无，快来成为第一个砍价的人吧！</div>
                     }
                 </div>
 

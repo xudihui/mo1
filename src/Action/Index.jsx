@@ -8,6 +8,8 @@ export default (_ID) => {
         'pushData',
         'setData',
         'setCity',//切换城市
+        'setOwn',//设置收藏等信息
+        'setViewList',//设置浏览记录
     ];
     for (let i = 0; i < arr.length; i++) {
         action[arr[i]] = (target) => {

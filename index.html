@@ -22,7 +22,23 @@
         var $extMotorFindPage = BASE + 'extMotorFindPage.ext'; //查询
         var $extCollectAdd = BASE + 'extCollectAdd.ext'; //添加收藏
         var $extCollectDelete = BASE + 'extCollectDelete.ext'; //删除收藏
+        var $extCollectFindPage = BASE + 'extCollectFindPage.ext'; //我收藏过的摩托车列表
         var $extEvaluateAdd = BASE + 'extEvaluateAdd.ext'; //添加评价
+        var $extEvaluateFindPageByMo = BASE + 'extEvaluateFindPageByMo.ext'; //车辆的评价
+        var $extEvaluateFindPageByUser = BASE + 'extEvaluateFindPageByUser.ext'; //我评价过的摩托车列表
+
+
+        Array.prototype.unique = function(){
+            var res = [];
+            var json = {};
+            for(var i = 0; i < this.length; i++){
+                if(!json[this[i]['id']]){
+                    res.push(this[i]);
+                    json[this[i]['id']] = 1;
+                }
+            }
+            return res;
+        }
 
 
 

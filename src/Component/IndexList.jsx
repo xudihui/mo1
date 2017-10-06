@@ -74,6 +74,7 @@ class TabBarExample extends Component {
         });
         var onError = function(){
             Toast.offline('定位失败',1)
+            sessionStorage.setItem('city','done');
         }
 
         var onComplete = function(data) {
@@ -95,7 +96,6 @@ class TabBarExample extends Component {
                             var city = y[1].split('市')[0] + '市'
                         }
                         if(localStorage.getItem('city') != city){
-                            sessionStorage.setItem('city','done');
                             alert('定位提示', '我们发现您正在'+city+'是否立即切换', [
                                 { text: '不用了', onPress: () => console.log('cancel')},
                                 { text: '立即切换', onPress: () => {
@@ -103,13 +103,9 @@ class TabBarExample extends Component {
                                 }},
                             ])
                         }
-                        //获得了有效的地址信息:
-                        //即，result.regeocode.formattedAddress
+                        sessionStorage.setItem('city','done');
                     }
-                    // else{
-                    //     Toast.offline(result.info)
-                    //     //获取地址失败
-                    // }
+
                 });
             })
 

@@ -42,25 +42,6 @@ const indexData = [
         "type":"S" //商业险，J为交强险
     }
 ];
-/**
- * 存储的首页保险信息，暂时只有一个平安保险，只做静态呈现，不从服务器获取。
- *
- * @param {Array} [state=[{},{},{}]]
- * @param {Object} action
- * @returns Object
- */
-const IndexList = (state = indexData, action) => {
-    switch (action.type) {
-        case 'pushData': //列表页面内容
-            var temp = state.listData || [];
-            return Object.assign({},state,{listData:temp.concat( action.target )});
-        case 'clearData': //清空
-            return [];
-        default:
-            return state;
-    }
-}
-
 
 const DB = (_ID = '', seting = {}) => {
     const cb = {
@@ -75,6 +56,8 @@ const DB = (_ID = '', seting = {}) => {
             }, seting);
             return {
                 defaults,
+                myViewList:JSON.parse(localStorage.getItem('myViewList')||'[]'),
+                hotList:[],
                 path: {}
             };
         },
@@ -82,10 +65,18 @@ const DB = (_ID = '', seting = {}) => {
         setState: (state, target) => {
             state.path[target.path] = target;
             state.data = target;
-            console.log('传给store的action[target]:',target);
-            console.log('输出的state:',merged(state))
             return merged(state);
-        }
+        },
+        setOwn: (state, target) => {
+            state.myown = target;
+            return merged(state);
+        },
+        setViewList:(state, target) => {
+            state.myViewList.push(target);
+            state.myViewList = state.myViewList.unique();
+            localStorage.setItem('myViewList',JSON.stringify(state.myViewList))
+            return merged(state);
+        },
     }
     return (state = {}, action = {}) => {
         if (action._ID && action._ID !== _ID || action.type=='setTime' ) {
@@ -102,4 +93,4 @@ const DB = (_ID = '', seting = {}) => {
 }
 
 const MyList = DB('MyList', { page:  1, nextBtn: true, mdrender: false, data: [],page:  1, rows: 10, }); //保单列表,含翻页
-export default { IndexList,MyList,User }
+export default { MyList,User }

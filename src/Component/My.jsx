@@ -70,7 +70,7 @@ class My extends Component {
                       columnNum={4}
                       hasLine={false}
                       renderItem={dataItem => (
-                          <Link to={`/myOwn?type=${dataItem.title}&icon=${dataItem.icon}`}>
+                          <Link to={`/myown?type=${dataItem.title}&icon=${dataItem.icon}`}>
                               <div style={{ padding: '0.25rem', }}>
                                   <i className={'iconfont '+dataItem.icon} ></i>
                                   <div style={{ color: '#888', fontSize: '0.28rem', marginTop: '0.24rem' }}>

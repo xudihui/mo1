@@ -144,9 +144,10 @@ class TextareaItemExample extends Component {
             if(data.code == '0'){
                 console.log(data);
                 alert('恭喜你，发布成功！', '',[
-                    { text: '立即查看', onPress: () => {changeTab_();
-                        location.href = location.origin;
-                } },
+                    { text: '立即查看', onPress: () => {
+                        changeTab_();
+                        history.replace(`/?all`)
+                }},
                 ])
             }
             else{

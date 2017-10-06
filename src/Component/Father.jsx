@@ -12,7 +12,6 @@ const alert = Modal.alert;
 class Main extends Component {
     constructor(props) {
         super(props);
-
     }
 
     componentDidMount(){

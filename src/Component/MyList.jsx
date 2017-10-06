@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
-
+import ListMoto from './common/ListMoto';
 import { history,dataBrand,dataModel,formatParams } from './common/index';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, GetData,GetNextPage,TopNavBar } from './common/index';
 import a2 from '../Images/02.jpg';
@@ -23,57 +23,7 @@ import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder,Tag } from 'antd-mob
  * @extends {Component}
  */
 var tempFun = null;
-class List extends Component {
-    render() {
-        var self = this;
-        return (
-            <ul className="index-list">
-                {
-                    this.props.list.map((item, index) => {
-                        return <ListItem {...this.props} key={index} data={item} />
-                    })
-                }
-            </ul>
-        );
-    }
-}
 
-class ListItem extends Component {
-    render() {
-        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs} = this.props.data;
-        let {showType} = this.props;
-        var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
-        return (
-            <div>
-                <Link to={`motoDetail?id=${id}`}>
-                    <div className="rowMoto">
-                        <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left`}>
-                            <img src={imgUrls.split(',')[0]} alt="icon" data-flex-box="0" style={imgS}/>
-                            <div className="rowMotoText" >
-                                <div >
-                                    {title}
-                                    {
-                                        status == !'edit' ? <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-information"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
-                                    }
-                                </div>
-                                <div>
-                                    {`${mileage}公里/${createTime}年/${hasAbs!='false'?'ABS':''}`}
-                                </div>
-                                <div>
-                                    ￥<span >{price/100}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Link>
-                <div style={{background:'#eee',height:'1px'}}></div>
-            </div>
-        );
-    }
-    shouldComponentUpdate(np) {
-        return true;
-    }
-}
 
 class Main extends Component {
     render() {
@@ -230,16 +180,16 @@ class Content extends Component {
                                              location.reload();
                                          }}>
                                         {
-                                            query[i]
+                                            (i == 'brand' ? '品牌：' : '关键字：') +  query[i]
                                         }
                                     </Tag> : ''
                             );
                         })
                     }
                 </div>
-                <div className="index-list-box" style={{paddingTop:'104px'}}>
+                <div className="index-list-box" style={{paddingTop:queryKeys.join('').indexOf('brand')>-1 || queryKeys.join('').indexOf('title')>-1 ? '104px' : '74px'}}>
                     {
-                        data.length > 0 ? <List {...this.props} showType={this.state.showType} list={data} /> : null
+                        data.length > 0 ? <ListMoto {...this.props} showType={this.state.showType} list={data} /> : null
                     }
                 </div>
             </div>
