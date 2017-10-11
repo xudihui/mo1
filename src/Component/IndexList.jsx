@@ -30,6 +30,7 @@ class TabBarExample extends Component {
         sessionStorage.setItem('selectedTab',el || 'Buy');
     }
     renderContent(pageText,m) {
+
         return (
             <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
                 {
@@ -194,10 +195,18 @@ class TabBarExample extends Component {
                     key="卖车"
                     selected={this.state.selectedTab === 'Sell'}
                     onPress={() => {
-                        sessionStorage.setItem('selectedTab','Sell');
-                        this.setState({
-                            selectedTab: 'Sell',
-                        });
+                        if (!localStorage.getItem('userInfo')) {
+                            history.push({ pathname: '/Login' });
+                            Toast.info('只有登录才能查看哦！',1)
+                        }
+                        else{
+                            sessionStorage.setItem('selectedTab','Sell');
+                            this.setState({
+                                selectedTab: 'Sell',
+                            });
+                        }
+
+
                     }}
                 >
                     {this.renderContent('卖车','Sell')}

@@ -7,7 +7,7 @@ import { Tool, merged } from '../Tool';
  * @returns Object
  */
 var userDefault = {
-    userInfo:JSON.parse(localStorage.getItem('userInfo'))||'',
+    userInfo:JSON.parse(localStorage.getItem('userInfo')||null)||'',
     city:localStorage.getItem('city') || '全国'
 }
 const User = (state = userDefault, action) => {

@@ -91,7 +91,9 @@ class Main extends React.Component {
         var y = -(self.state.crop.y||0)*2*oColorImg.offsetHeight/100;//相对于y轴的比例
         oCtx.drawImage(oColorImg,x,y,oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5);
         water.style.display = 'inline-block';
-        oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
+        //pc上传需要*2
+      //  oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
+        oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oCanvas.offsetHeight*2-30);
         water.style.display = 'none';
             var pngData = oCanvas.toDataURL('image/jpeg');
             // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值

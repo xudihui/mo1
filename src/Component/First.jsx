@@ -11,6 +11,15 @@ import Rows from './Rows';
 import a1 from '../Images/banner01.jpg';
 import a2 from '../Images/banner02.jpg';
 
+import bmw from '../Images/bmw.jpg';
+import honda from '../Images/honda.jpg';
+import cq from '../Images/cq.jpg';
+import ducati from '../Images/ducati.jpg';
+import ktm from '../Images/ktm.jpg';
+import halei from '../Images/halei.jpg';
+import benelli from '../Images/benelli.jpg';
+import cf from '../Images/cf.jpg';
+
 /**
  * 买车模块入口
  *
@@ -157,7 +166,6 @@ class Main extends Component {
                         2~4万
                     </Link>
                     <Link className="p1" onClick={() => {
-
                         var target = Object.assign({},{maxPrice:6000000,minPrice:4000000})
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
@@ -173,37 +181,79 @@ class Main extends Component {
                     }>
                         6万以上
                     </Link>
+
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{brand:'Indian'});
-                        this.props.changeTab_('Buy');
-                        history.replace(`/?${formatParams(target)}`);
+                        var target = Object.assign({},{brand:'BMW'});
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        Indian
+                        <img src={bmw} />
+                        <span>宝马</span>
                     </Link>
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{brand:'Buell'});
-                        this.props.changeTab_('Buy');
-                        history.replace(`/?${formatParams(target)}`);
+                        var target = Object.assign({},{brand:'Honda'});
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        Buell
+                        <img src={honda} />
+                        <span>本田</span>
                     </Link>
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{brand:'Cagiva'});
-                        this.props.changeTab_('Buy');
-                        history.replace(`/?${formatParams(target)}`);
+
+                        var target = Object.assign({},{brand:'Kawasaki'});
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        Cagiva
+                        <img src={cq} />
+                        <span>川崎</span>
                     </Link>
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{brand:'GASGAS'});
+                        var target = Object.assign({},{brand:'Ducati'});
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
+                    }
+                    }>
+                        <img src={ducati} />
+                        <span>杜卡迪</span>
+                    </Link>
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'KTM'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
                     }>
-                        GASGAS
+                        <img src={ktm} />
+                        <span>KTM</span>
+                    </Link>
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'Harley-Davidson'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        <img src={halei} />
+                        <span>哈雷</span>
+                    </Link>
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'Benelli'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        <img src={benelli} />
+                        <span>贝纳利</span>
+                    </Link>
+                    <Link className="p1" onClick={() => {
+                        var target = Object.assign({},{brand:'Cf'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        <img src={cf} />
+                        <span>春风</span>
                     </Link>
                 </div>
                 <div className="btnWrap">

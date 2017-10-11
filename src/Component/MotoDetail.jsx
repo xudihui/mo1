@@ -297,7 +297,7 @@ class Main extends Component {
                             return(
                                 <div className="talk">
                                     <div className="name" data-flex="main:justify">
-                                        <span>{item.tel}说:</span>
+                                        <span>{item.tel.slice(0,3)+'****'+item.tel.slice(-4)}说:</span>
                                         <span>{getDateDiff(item.createTime)}</span>
 
                                     </div>
