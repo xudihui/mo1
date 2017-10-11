@@ -22,7 +22,8 @@ class ListItem extends Component {
         var path = pathname + search;
         var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
         return (
-            <div>
+            <div className="index-list-panel">
+                <div style={{background:'#f1f1f1',height:'7px'}} className="blank"></div>
                 <Link to={`motoDetail?id=${id}&from=${from||'data'}`} onClick={(e)=>{
                     if(edit){
                         e.preventDefault()
@@ -115,7 +116,7 @@ class ListItem extends Component {
                         </div>
                     </div>
                 </Link>
-                <div style={{background:'#eee',height:'1px'}}></div>
+
             </div>
         );
     }

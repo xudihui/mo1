@@ -5,6 +5,9 @@ import '../Style/imageChoose.less'; //加载图片选择样式
 import { List, InputItem, Toast,Button, WhiteSpace, WingBlank,ActivityIndicator,Modal } from 'antd-mobile-web';
 import { Tool, merged } from '../Tool';
 
+//添加水印图片
+import water from '../Images/water.png';
+
 
 
 class Main extends React.Component {
@@ -68,6 +71,7 @@ class Main extends React.Component {
     onDone(){
         var self = this;
         var oColorImg = this.refs.img,
+            water = this.refs.water,
             oCanvas = this.refs.c,
             wrap = this.refs.wrap,
             oCtx = oCanvas.getContext('2d');
@@ -82,39 +86,42 @@ class Main extends React.Component {
         var y = -document.querySelector('.ReactCrop__crop-selection').offsetTop
         var x = -document.querySelector('.ReactCrop__crop-selection').offsetLeft
          */
+
         var x = 0;
         var y = -(self.state.crop.y||0)*2*oColorImg.offsetHeight/100;//相对于y轴的比例
         oCtx.drawImage(oColorImg,x,y,oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5);
-        var pngData_png = oCanvas.toDataURL('image/png');
-        var pngData = oCanvas.toDataURL('image/jpeg');
-        console.log('png长度：',pngData_png.length+'；jpg长度:'+pngData.length)
-       // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
-        var x = document.querySelectorAll('.am-list-body');
-        for(let i in x){
-            try{
-                x[i].style.position = 'relative'
-            }catch(e){
+        water.style.display = 'inline-block';
+        oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
+        water.style.display = 'none';
+            var pngData = oCanvas.toDataURL('image/jpeg');
+            // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
+            var x = document.querySelectorAll('.am-list-body');
+            for(let i in x){
+                try{
+                    x[i].style.position = 'relative'
+                }catch(e){
+                }
             }
-        }
-        wrap.setAttribute('class','imageChoose imageChooseDone');
-        wrap.style.position = 'relative';
-        Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
-            if(data.code == '0'){
-                Toast.info('图片成功上传一张！',.5);
-                console.log(data.response.fileRdfUrl+data.response.fileUrl);
-                oColorImg.src = pngData;
-                wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
-                self.props.onDone(data.response.fileRdfUrl+'/'+data.response.fileUrl)
-            }
-            else{
-                Toast.offline(data.msg);
-                self.onInit();
-            }
-        })
-        this.setState({
-            done:true,
-            winWidth:'100%'
-        });
+            wrap.setAttribute('class','imageChoose imageChooseDone');
+            wrap.style.position = 'relative';
+            Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
+                if(data.code == '0'){
+                    Toast.info('图片成功上传一张！',.5);
+                    console.log(data.response.fileRdfUrl+data.response.fileUrl);
+                    oColorImg.src = pngData;
+                    wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
+                    self.props.onDone(data.response.fileRdfUrl+'/'+data.response.fileUrl)
+                }
+                else{
+                    Toast.offline(data.msg);
+                    self.onInit();
+                }
+            })
+            self.setState({
+                done:true,
+                winWidth:'100%'
+            });
+
     }
     componentDidMount(){
        if(this.props.src){
@@ -178,6 +185,7 @@ class Main extends React.Component {
 
                 }}></i>
                 <img src={this.state.src} ref="img" style={{width:this.state.winWidth,display:'none'}} alt=""/>
+                <img src={water} ref="water" style={{width:'100px',height:'10px',display:'none'}} alt=""/>
                 <div className="imageChooseWorkSpace" style={{display:this.state.done ? 'none' : 'block'}}>
                     <p style={{display:this.state.src == 0 ? 'none' : 'block'}}  onClick={()=>{
                         this.onDone();

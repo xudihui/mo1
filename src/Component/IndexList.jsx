@@ -21,7 +21,7 @@ class TabBarExample extends Component {
         super(props);
         this.changeTab.bind(this);
         this.state = {
-            selectedTab: props.location.query['type'] || sessionStorage.getItem('selectedTab') || 'Buy',
+            selectedTab: props.location.query['type'] || sessionStorage.getItem('selectedTab') || 'First',
             hidden: false
         };
     }

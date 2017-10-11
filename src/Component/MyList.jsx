@@ -103,8 +103,7 @@ class Content extends Component {
                 <TopNavBar handlerClick={() => {alert(1)}} />
                 <div className='topWrap'>
                     <div>
-                        <div className="top"  data-flex="dir:left box:justify" >
-                            <div className="logo"></div>
+                        <div className="top"  data-flex="dir:left box:last" >
                             <div>
                                 <SearchBar onFocus={() => {
                                     var target = Object.assign({},query);

@@ -47,7 +47,7 @@ class Banner extends Component {
                         });
                     }
                     resizeWaiter = false;
-                }, 70);
+                }, 30);
             }
         }
         window.addEventListener('scroll',this.scroll);

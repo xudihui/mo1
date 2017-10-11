@@ -502,7 +502,7 @@ export class TopNavBar extends Component {
                      this.setState({
                          visible:true
                      })
-                   }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'25px'}}></i>
+                   }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'65px',color:'#ff5b05'}}> 分享</i>
                 }
                 <Popover mask
                          overlayClassName="fortest"
@@ -566,7 +566,7 @@ export const dataModel = ["公路", "街车", "越野", "拉力", "踏板", "弯
  * @export
  * @class data
  */
-export const dataBrand = ["国产", "Aprilia", "Benelli", "BMW", "Buell", "Cagiva", "Can-Am", "Ducati", "GASGAS", "Harley-Davidson", "Honda", "Husaberg", "Husqvarna", "Indian", "Kawasaki", "KTM", "Moto Guzzi", "MV Agusta", "Piaggio", "Suzuki", "Triumph", "Vespa", "Yamaha", "其他", "汽车", "VICTORY"];
+export const dataBrand = ["国产", "Aprilia", "Benelli", "BMW", "Buell", "Cagiva", "Can-Am", "Ducati", "GASGAS", "Harley-Davidson", "Honda", "Husaberg", "Husqvarna", "Indian", "Kawasaki", "KTM", "Moto Guzzi", "MV Agusta", "Piaggio", "Suzuki", "Triumph", "Vespa", "Yamaha", "VICTORY", "其他"];
 
 
 /**

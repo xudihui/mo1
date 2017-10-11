@@ -6,7 +6,7 @@ import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import ImageChoose from './ImageChoose';
 import { history,dataBrand,dataModel,dataCity,TopNavBar,dataCityNo } from './common/index';
-import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch } from 'antd-mobile-web';
+import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch,TextareaItem } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
 import { district} from 'antd-mobile-demo-data';
 const alert = Modal.alert;
@@ -20,6 +20,10 @@ const data = [
 ];
 const years = [
     [
+        {
+            label: '2010',
+            value: '2010',
+        },
         {
             label: '2011',
             value: '2011',
@@ -43,6 +47,10 @@ const years = [
         {
             label: '2016',
             value: '2016',
+        },
+        {
+            label: '2017',
+            value: '2017',
         }
     ]
 ];
@@ -283,11 +291,6 @@ class TextareaItemExample extends Component {
                         clear
                         placeholder="请输入标题"
                     >车辆标题</InputItem>
-                    <InputItem
-                        {...getFieldProps('content')}
-                        clear
-                        placeholder="请输入文字简介"
-                    >车辆简介</InputItem>
                     <List.Item
                         extra={<Switch
                             {...getFieldProps('hasAbs', {
@@ -333,7 +336,7 @@ class TextareaItemExample extends Component {
                     >联系方式</InputItem>
 
                 </List>
-                <List renderHeader={() => '车辆图片(最多上传10张)'}>
+                <List renderHeader={() => '车辆图片(请您裁切成16:9的图片上传哦)'}>
                     <div ref="imgUrls">
                         <ImageChoose src={this.state.data.imgUrls} length="10" />
                     </div>
@@ -381,6 +384,15 @@ class TextareaItemExample extends Component {
                     >
                         <List.Item arrow="horizontal">品牌车型</List.Item>
                     </Picker>
+                </List>
+                <List renderHeader={() => '请在下方简单地介绍下购买时间、使用状况等'}>
+                    <TextareaItem
+                        {...getFieldProps('content', {
+                            initialValue: '',
+                        })}
+                        rows={5}
+                        count={100}
+                    />
                 </List>
                 <WhiteSpace />
                 <div className="btnWrap">

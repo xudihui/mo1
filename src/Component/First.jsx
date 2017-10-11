@@ -123,8 +123,7 @@ class Main extends Component {
         return (
             <div>
                 <div className='topWrap'>
-                    <div className="top" onClick={(e) => {this.handleClick(e)}} data-flex="dir:left box:justify" >
-                        <div className="logo"></div>
+                    <div className="top" onClick={(e) => {this.handleClick(e)}} data-flex="dir:left box:last" >
                         <div>
                             <SearchBar onFocus={() => {
                                 history.push('/SearchHistory');
