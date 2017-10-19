@@ -197,7 +197,7 @@ class TabBarExample extends Component {
                     onPress={() => {
                         if (!localStorage.getItem('userInfo')) {
                             history.push({ pathname: '/Login' });
-                            Toast.info('只有登录才能查看哦！',1)
+                            Toast.info('只有登录才能卖车哦！',1)
                         }
                         else{
                             sessionStorage.setItem('selectedTab','Sell');

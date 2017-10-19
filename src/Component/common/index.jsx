@@ -136,9 +136,9 @@ var SHARE_ = function (scene, id) {
     }
 
     Wechat.share(params, function () {
-        alert("Success");
+        Toast.info("操作成功！",1);
     }, function (reason) {
-        alert("Failed: " + reason);
+        Toast.info("取消分享",1);
     });
     return true;
 };

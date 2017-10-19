@@ -5,7 +5,7 @@ import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import MyHotList from './common/MyHotList';
 import { history,formatParams} from './common/index';
-import { Drawer,List ,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import { Drawer,List ,NoticeBar, Toast,WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
 import Rows from './Rows';
 import a1 from '../Images/banner01.jpg';
@@ -263,7 +263,15 @@ class Main extends Component {
                     } }>查看全部优质车源</Button>
                 </div>
                 <div className="btnWrap">
-                    <Button className="btn" type="primary"  onClick={() => this.props.changeTab_('Sell')}>立即免费卖车</Button>
+                    <Button className="btn" type="primary"  onClick={() => {
+                        if (!localStorage.getItem('userInfo')) {
+                            history.push({ pathname: '/Login' });
+                            Toast.info('只有登录才能卖车哦！',1)
+                        }
+                        else{
+                            this.props.changeTab_('Sell')
+                        }
+                    }}>立即免费卖车</Button>
                 </div>
                 <MyHotList data={this.props.state.myHotList} paddingBottom="50px"/>
             </div>
