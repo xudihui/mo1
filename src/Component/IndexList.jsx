@@ -50,7 +50,7 @@ class TabBarExample extends Component {
         );
     }
     componentDidMount(){
-        var {myHotList} = this.props;
+        var {myHotList,setCity} = this.props;
         var self = this;
         console.log('冷却成都',myHotList)
         if(myHotList.length == 0){
@@ -70,79 +70,21 @@ class TabBarExample extends Component {
         if(sessionStorage.getItem('city') == 'done'){
             return;
         }
-        var geolocation;
-        var MGeocoder;
-        var geocoder;
-        var map;
-        var {setCity} = this.props;
-        //初始化地图
-        map = new AMap.Map('amap', {
-            resizeEnable: true,
-            mapStyle:'fresh',
-            zooms: [15, 15],
-            //缩放范围
-            view: AMap.View2D({
-                zoom: 15
-            }) //center: [120.195805, 30.231164]
-        });
-        var onError = function(){
-            Toast.offline('定位失败',1)
+        var myFun = function(result){
+            var city = result.name;
+            if(localStorage.getItem('city') != city){
+                alert('定位提示', '我们发现您正在'+city+'是否立即切换', [
+                    { text: '不用了', onPress: () => console.log('cancel')},
+                    { text: '立即切换', onPress: () => {
+                        setCity(city)
+                    }},
+                ])
+            }
             sessionStorage.setItem('city','done');
         }
 
-        var onComplete = function(data) {
-            var str = ['定位成功'];
-            var lnglatXY = new AMap.LngLat(data.position.getLng(), data.position.getLat());
-            AMap.service('AMap.Geocoder',function(){//回调函数
-                //实例化Geocoder
-                geocoder = new AMap.Geocoder({
-                    // city: "010"//城市，默认：“全国”
-                });
-                geocoder.getAddress(lnglatXY, function(status, result) {
-                    if (status === 'complete' && result.info === 'OK') {
-                        var x = result.regeocode.formattedAddress;
-                        if(x.indexOf('省') > -1){
-                            var y = x.split('省');
-                            var city = y[1].split('市')[0] + '市'
-                        }
-                        else{
-                            var city = y[1].split('市')[0] + '市'
-                        }
-                        if(localStorage.getItem('city') != city){
-                            alert('定位提示', '我们发现您正在'+city+'是否立即切换', [
-                                { text: '不用了', onPress: () => console.log('cancel')},
-                                { text: '立即切换', onPress: () => {
-                                    setCity(city)
-                                }},
-                            ])
-                        }
-                        sessionStorage.setItem('city','done');
-                    }
-
-                });
-            })
-
-        }
-
-
-        let getLocation = function() {
-            geolocation = new AMap.Geolocation({
-                enableHighAccuracy: true,
-                //是否使用高精度定位，默认:true
-                timeout: 10000,
-                //超过10秒后停止定位，默认：无穷大
-                buttonOffset: new AMap.Pixel(10, 20),
-                //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-                zoomToAccuracy: true,
-                //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-                buttonPosition: 'LB'
-            });
-            map.addControl(geolocation); //不加的话，不能执行zoomToAccuracy
-            geolocation.getCurrentPosition(); //触发获取定位的方法
-            AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
-            AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
-        }
-        map.plugin('AMap.Geolocation', getLocation);
+        var myCity = new BMap.LocalCity();
+        myCity.get(myFun);
 
     }
     render() {

@@ -138,7 +138,7 @@ class Main extends Component {
                                 history.push('/SearchHistory');
                             }} placeholder="请输入车系/车型" />
                         </div>
-                        <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.state.city||'全国'}
+                        <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.city||'全国'}
                             <i className="iconfont icon-shouhuodizhi"></i>
                         </div>
                     </div>
@@ -278,4 +278,4 @@ class Main extends Component {
         );
     }
 }
-export default connect((state) => {return{state:state['MyList']}},action())(Main);
+export default connect((state) => {return{state:state['MyList'],city:state['User']['city']}},action())(Main);
