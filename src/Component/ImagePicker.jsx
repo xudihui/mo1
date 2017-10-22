@@ -177,7 +177,6 @@ class Main extends React.Component {
 
     }
     render() {
-        var {title} = this.props;
         return (
             <div className="imageChoose" style={{display:this.props.display}} ref="wrap" >
                 <i className="iconfont icon-shanchu" onClick={()=>{
@@ -201,13 +200,11 @@ class Main extends React.Component {
                             onComplete={this.onCropComplete.bind(this)}
                         />
                     }
-                    <i className="iconfont icon-lnicon12">
-                    </i>
+                    <i className="iconfont icon-icon_pic_add"></i>
                     <input ref="enter" type="file"  />
                     <canvas ref="c" style={{width:this.state.winWidth}} />
                 </div>
 
-                <span className="title">{title}</span>
             </div>
         );
     }
@@ -245,29 +242,32 @@ export default class ImageChoose extends Component {
     render() {
         var self = this;
         var {src,length} = this.state;
-        var titles = this.props.titles;
         var arr = [];
         for(let i = 0;i<length;i++){
             arr.push(
                 {
                     display:'',
-                    src:'',
-                    title:''
+                    src:''
                 }
             )
         }
         for(let i in arr){
             arr[i]['src'] = src[i] || '';
-            if(src[i] == 'null'){
-                arr[i]['src'] = '';
+            if(arr[i]['src'] =='' && i!=src.length){
+                arr[i]['display'] = 'none'
             }
-            arr[i]['title'] = titles[i] || '';
         }
-
+        if(length == 1){
+            arr[0]['display'] = '';
+            arr = arr.slice(0,1)
+        }
+        else if(src.length < length){
+            arr[src.length]['display'] = '';
+        }
         return (
             <div className="cropWrap"  >
                 {
-                    arr.map((i,index)=><Main src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
+                    arr.map((i,index)=><Main src={i.src} index={index} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
                 }
             </div>
         );

@@ -140,6 +140,11 @@ class TextareaItemExample extends Component {
         temp_['brand'] = this.makeArr(temp_['brand']);
        // temp_['mileage'] = this.makeArr(temp_['mileage']);
         temp_['productDate'] = this.makeArr(temp_['productDate'].slice(0,4));
+        temp_['License'] = [];
+        temp_['License'].push(temp_['driLicense'])
+        temp_['License'].push(temp_['invoice'])
+        temp_['License'].push(temp_['certificate'])
+        temp_['License'] = temp_['License'].join(',');
         console.log('最终数据:,',temp_)
         this.state = {
             focused: false,
@@ -160,11 +165,12 @@ class TextareaItemExample extends Component {
             imgUrls:'',//车辆图片
             driLicense:'',//行驶证
             invoice:'',//购车发票
+            certificate:''//合格证
 
         };
-        var imgUrls = this.refs.imgUrls.querySelectorAll('.imageChooseDone');
-        var invoice = this.refs.invoice.querySelector('.imageChooseDone');
-        var driLicense = this.refs.driLicense.querySelector('.imageChooseDone');
+        var imgUrls = this.refs.imgUrls.querySelectorAll('.imageChoose');
+        var License = this.refs.License.querySelectorAll('.imageChoose');
+        console.log('License',License)
         var changeTab_ = this.props.changeTab_;
         for(let i in imgUrls){
             if(!isNaN(i)){
@@ -172,15 +178,22 @@ class TextareaItemExample extends Component {
                     images['imgUrls'] = imgUrls[i].getAttribute('src');
                 }
                 else{
-                    images['imgUrls'] = images['imgUrls'] +','+imgUrls[i].getAttribute('src');
+                    images['imgUrls'] = images['imgUrls'] +','+ imgUrls[i].getAttribute('src');
                 }
             }
         }
-        if(invoice){
-            images['invoice'] = invoice.getAttribute('src')
-        }
-        if(driLicense){
-            images['driLicense'] = driLicense.getAttribute('src')
+        for(let i in License){
+            if(!isNaN(i)){
+                if(i == 0){
+                    images['driLicense'] = License[i].getAttribute('src');
+                }
+                if(i == 1){
+                    images['invoice'] = License[i].getAttribute('src');
+                }
+                if(i == 2){
+                    images['certificate'] = License[i].getAttribute('src');
+                }
+            }
         }
 
         console.log(Object.assign({},x,images));
@@ -211,21 +224,26 @@ class TextareaItemExample extends Component {
                 return Toast.info('请补全信息！')
             }
         }
-        if(images['imgUrls'] == ''){
+        if(this.refs.imgUrls.querySelectorAll('.imageChooseDone').length ==0){
             return Toast.info('请至少上传一张车辆照片！')
         }
         if(isNaN(x['mileage'])){
             return Toast.info('请输入正确的公里数！')
         }
+        if(isNaN(x['displacement'])){
+            return Toast.info('请输入正确的排量！')
+        }
         if(!/^1[3|4|5|7|8][0-9]{9}$/.test(x['tel'])){
             return Toast.info('请输入正确的手机号码！')
         }
+
 
         var self = this;
         //更新state数据
         self.normal['data'][self.current] = Object.assign({},x,images,{id:this.state.data.id,status:'edit'})
         console.log(Object.assign({},x,images));
-
+        console.log(Object.assign({},x,images,{id:this.state.data.id}))
+      //  return;
         Tool.post($extMotorUpdate,Object.assign({},x,images,{id:this.state.data.id}),function(data){
             if(data.code == '0'){
                 console.log(data);
@@ -246,33 +264,6 @@ class TextareaItemExample extends Component {
     }
     onChange(val){
         console.log(val);
-    }
-    autoFillInput(){
-
-        this.props.form.setFieldsValue(
-            {
-                "title": "丽水小霸王",
-                "weight": "80",
-                "hasAbs": "true",
-                "content": "TTR 系，动力强，高速稳高速稳高速稳高速稳",
-                "oriPrice": "88883",
-                "productDate": [
-                    "2011"
-                ],
-                "area": [
-                    "330000",
-                    "331100"
-                ],
-                "brand": [
-                    "国产"
-                ],
-                "mileage": [
-                    "2011"
-                ],
-                "price": "123213",
-                "tel": "15067425400"
-            }
-        );
     }
     componentDidMount(){
         this.props.form.setFieldsValue(this.state.data)
@@ -300,6 +291,13 @@ class TextareaItemExample extends Component {
                             onClick={(checked) => { console.log(checked); }}
                         />}
                     >是否含有ABS</List.Item>
+                    <InputItem
+                        {...getFieldProps('displacement')}
+                        clear
+                        placeholder="排量"
+                        extra="ML"
+                        maxLength="7"
+                    >排量</InputItem>
                     <InputItem
                         {...getFieldProps('weight')}
                         clear
@@ -338,19 +336,30 @@ class TextareaItemExample extends Component {
                 </List>
                 <List renderHeader={() => '车辆图片(请您裁切成16:9的图片上传哦)'}>
                     <div ref="imgUrls">
-                        <ImageChoose src={this.state.data.imgUrls} length="10" />
+                        <ImageChoose src={this.state.data.imgUrls} titles={[
+                            '左侧车身',
+                            '右侧车身',
+                            '仪表盘',
+                            '车把',
+                            '车头',
+                            '车尾',
+                            '坐垫',
+                            '减震',
+                            '排气',
+                            '底部',
+                            '发动机',
+                            '发动机左',
+                            '发动机右',
+                            '前轮胎',
+                            '后轮胎',
+                        ]} length="15" />
                     </div>
 
 
                 </List>
-                <List renderHeader={() => '车辆行驶证(可选)'}>
-                    <div ref="driLicense">
-                        <ImageChoose src={this.state.data.driLicense} length="1" />
-                    </div>
-                </List>
-                <List renderHeader={() => '购车发票(可选)'}>
-                    <div ref="invoice">
-                        <ImageChoose src={this.state.data.invoice}  length="1" />
+                <List renderHeader={() => '基本证件(可选)'}>
+                    <div ref="License" >
+                        <ImageChoose src={this.state.data.License} titles={['车辆行驶证','购车发票','合格证']} length="3" />
                     </div>
                 </List>
                 <List renderHeader={() => '基本信息'}>

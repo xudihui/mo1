@@ -194,7 +194,7 @@ export const getDateDiff = function(dateStr) {
     d_minutes = parseInt(d/60);
     d_seconds = parseInt(d);
 
-    if(d_days > 0 && d_days < 3){
+    if(d_days > 0){
         return d_days + '天前';
     }else if(d_days <= 0 && d_hours > 0){
         return d_hours + '小时前';

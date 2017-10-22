@@ -6,6 +6,7 @@ import { Tool, merged } from '../Tool';
 
 import MyHotList from './common/MyHotList';
 import { history,TopNavBar,dataCityNo,getDateDiff } from './common/index';
+import Discuss from './common/Discuss';
 import { Toast ,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,Modal,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import Rows from './Rows';
 import a1 from '../Images/01.jpg';
@@ -61,6 +62,14 @@ class Banner extends Component {
         if(data.length == 1){
             data[1] = data[0];
         }
+        var data_ = [];
+        for(let i in data){
+            if(!isNaN(i)){
+                if(data[i] !=  '' && data[i] !=  'null'){
+                    data_.push(data[i]);
+                }
+            }
+        }
         return (
             <div >
                 <TopNavBar title='车辆详情' transparent={this.state.transparent} share={true} />
@@ -71,7 +80,7 @@ class Banner extends Component {
                     selectedIndex={1}
                     swipeSpeed={25}
                 >
-                    {data.map((ii,index) => (
+                    {data_.map((ii,index) => (
                         <Link  key={ii} style={hProp}>
                             <img
                                 src={ii}
@@ -90,6 +99,7 @@ class Banner extends Component {
         );
     }
 }
+
 
 class Main extends Component {
     constructor(props) {
@@ -198,7 +208,17 @@ class Main extends Component {
     }
     render() {
         var self = this;
-        console.log('火焰山',this.props.state.myHotList)
+        console.log('火焰山',this.props);
+        var imgUrls = this.state.motoData.imgUrls.split(',');
+        var data_ = [];
+        for(let i in imgUrls){
+            if(!isNaN(i)){
+                if(imgUrls[i] !=  '' && imgUrls[i] !=  'null'){
+                    data_.push(imgUrls[i]);
+                }
+            }
+        }
+
         var data1 = [
             {
                 title:'出厂时间',
@@ -215,7 +235,12 @@ class Main extends Component {
             {
                 title:'行驶里程',
                 value:this.state.motoData.mileage+'公里',
+            },
+            {
+                title:'排量',
+                value:(this.state.motoData.displacement || '未知')+'ML',
             }
+
         ];
         return (
             <div className="moto-detail" >
@@ -238,7 +263,7 @@ class Main extends Component {
                                             if(value == ''){
                                                 return Toast.fail('不能发布空内容！', 1);
                                             }
-                                            Tool.post($extEvaluateAdd,{pid:self.state.motoData.id,content:value,tel:self.props.tel},function(data){
+                                            Tool.post($extEvaluateAdd,{pid:self.state.motoData.id,content:value,tel:self.props.tel+'$'+self.props.city},function(data){
                                                 if(data.code == '0'){
                                                     Toast.success('恭喜您，发布成功', 1);
                                                     var talks_ = self.state.talks;
@@ -283,32 +308,17 @@ class Main extends Component {
                 <div className="content">
                     <p>{this.state.motoData.content}</p>
                     {
-                        this.state.motoData.imgUrls.split(',').map(i =>{
+                        data_.map(i =>{
                             return <img src={i} />
                         })
                     }
+
+
                 </div>
 
                 <div className="sub-title">大家在说</div>
                 <div className="content">
-
-                    {
-                        this.state.talks.map((item,index) =>{
-                            return(
-                                <div className="talk">
-                                    <div className="name" data-flex="main:justify">
-                                        <span>{item.tel.slice(0,3)+'****'+item.tel.slice(-4)}说:</span>
-                                        <span>{getDateDiff(item.createTime)}</span>
-
-                                    </div>
-                                    <div className="text">{item.content}</div>
-                                </div>
-                            )
-                        })
-                    }
-                    {
-                        this.state.talks.length == 0 && <div style={{margin:'.2rem',color:'#bbb'}}>暂无，快来成为第一个砍价的人吧！</div>
-                    }
+                    <Discuss list={ this.state.talks} />
                 </div>
                 <MyHotList {...this.props} data={this.props.state.myHotList}  paddingBottom="50px"/>
 
@@ -335,7 +345,7 @@ class Main extends Component {
 }
 
 
-export default connect((state) => { return { state: state['MyList'],tel:state['User']['userInfo']['tel']} }, action())(Main);
+export default connect((state) => { return { state: state['MyList'],tel:state['User']['userInfo']['tel'],city:state['User']['city']} }, action())(Main);
 
 
 

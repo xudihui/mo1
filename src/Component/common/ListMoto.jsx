@@ -21,6 +21,16 @@ class ListItem extends Component {
         var {pathname, search} = location || {};
         var path = pathname + search;
         var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
+        var img_show = '';
+        var img_source = imgUrls.split(',');
+        for(let i in img_source){
+            if(!isNaN(i)){
+                if(img_source[i] !=  '' && img_source[i] !=  'null'){
+                    img_show = img_source[i];
+                    break;
+                }
+            }
+        }
         return (
             <div className="index-list-panel">
                 <div style={{background:'#f1f1f1',height:'7px'}} className="blank"></div>
@@ -37,7 +47,7 @@ class ListItem extends Component {
                 }}>
                     <div className="rowMoto">
                         <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left`}>
-                            <img src={imgUrls.split(',')[0]} alt="icon" data-flex-box="0" style={imgS}/>
+                            <img src={img_show} alt="icon" data-flex-box="0" style={imgS}/>
                             <div className="rowMotoText" data-flex="main:justify dir:top">
                                 <div >
                                     {title}
