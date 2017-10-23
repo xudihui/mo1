@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
+import { history } from './common/index';
 import { Drawer,List ,Grid,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import myHead from '../Images/head.svg';
 const data1 = [
@@ -50,6 +51,7 @@ class My extends Component {
 
     }
     render() {
+        var {userInfo} = this.props;
         return (
             <div style={{paddingBottom:'2px'}}>
                 <div className="myTop">
@@ -62,9 +64,14 @@ class My extends Component {
                        !this.props.userInfo && <Link to="/login">立即登录</Link>
                     }
                     </p>
-                    <Link to="/mysetting">
-                        <i className="iconfont icon-shezhi"></i>
-                    </Link>
+                        <i className="iconfont icon-shezhi" onClick={
+                            ()=>{
+                                if(!userInfo){
+                                    return Toast.offline('请先点击头像下方的登录！',1)
+                                }
+                                history.push('/mysetting');
+                            }
+                        }></i>
 
                 </div>
                 <div className="sub-title">买家中心</div>
@@ -98,17 +105,12 @@ class My extends Component {
                       )}
                 />
 
-                <List className="my-list"  >
+                <List className="my-list" style={{paddingBottom:'40px'}} >
                     <List.Item extra="" arrow="horizontal" onClick={() => {location.href='tel:15067425400'}}>联系客服</List.Item>
                     <Link  to="/help">
                         <List.Item extra="" arrow="horizontal" onClick={() => {}}>关于我们</List.Item>
                     </Link>
                 </List>
-                <div className="btnWrap" style={{paddingBottom:'50px'}}>
-                    {
-                        this.props.userInfo && <Button className="btn" type="primary"  onClick={() => {this.props.login('')}}>退出登录</Button>
-                    }
-                </div>
             </div>
         );
     }

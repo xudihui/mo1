@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { List, InputItem, Toast,Button, WhiteSpace, WingBlank,ActivityIndicator } from 'antd-mobile-web';
 import { connect } from 'react-redux';
-import {  browserHistory, hashHistory } from 'react-router';
+import { history } from './common/index';
 import {ajaxFetch} from '../Config/Store';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
@@ -57,7 +57,6 @@ class Main extends Component {
         */
         Tool.post($extTelMsgLogin,{tel:sessionStorage.getItem('tel'),code:code},function(data){
             if(data.code == '0'){
-                var history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory;
                 sessionStorage.setItem('selectedTab','My');
                 history.replace('/');
                 Toast.info('登录成功！');
