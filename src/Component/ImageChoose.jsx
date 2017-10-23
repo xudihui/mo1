@@ -61,7 +61,7 @@ class Main extends React.Component {
         wrap.setAttribute('class','imageChoose imageChooseDone');
         wrap.style.position = 'relative';
         oColorImg.src = this.props.src;
-        oColorImg.style.display = 'inline-block';
+        oColorImg.style.display = 'block';
         wrap.setAttribute('src',self.props.src);//从服务器拿图片
         this.setState({
             done:true,

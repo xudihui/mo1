@@ -3,8 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Drawer,List ,Grid,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
-import myHead from '../Images/myHead.gif';
-
+import myHead from '../Images/head.svg';
 const data1 = [
     {
         title:'买到车辆',
@@ -48,6 +47,7 @@ const data2 = [
 class My extends Component {
     constructor(props) {
         super(props);
+
     }
     render() {
         return (
@@ -62,7 +62,10 @@ class My extends Component {
                        !this.props.userInfo && <Link to="/login">立即登录</Link>
                     }
                     </p>
-                     <i className="iconfont icon-shezhi"></i>
+                    <Link to="/mysetting">
+                        <i className="iconfont icon-shezhi"></i>
+                    </Link>
+
                 </div>
                 <div className="sub-title">买家中心</div>
                 <Grid data={data1}

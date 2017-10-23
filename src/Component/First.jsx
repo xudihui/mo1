@@ -31,17 +31,28 @@ class Banner extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: ['', ''],
-            initialHeight: '85px',
+            data: [],
+            initialHeight: window.innerWidth*171/640+'px',
         }
     }
     componentDidMount() {
-        // simulate img loading
-        setTimeout(() => {
-            this.setState({
-                data: [a1,a2],
-            });
-        }, 100);
+        var arr = [];
+        var self = this;
+        Tool.post($extGetAdvert,{},function(data){ //广告位更新
+            if(data.code == '0'){
+                for(let i in data.response){
+                    if(data.response[i]['status'] == 'on'){
+                        arr.push('http://www.mo1.cn/'+data.response[i]['imgUrl'])
+                    }
+                    self.setState({
+                        data: arr,
+                    });
+                }
+            }
+            else{
+                Toast.info('公告图获取失败！');
+            }
+        })
     }
     render() {
         const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
@@ -61,15 +72,7 @@ class Banner extends Component {
                         <Link to="/" key={ii} style={hProp}>
                             <img
                                 src={ii}
-                                alt="icon"
-                                onLoad={(e) => {
-                                    console.log(e.currentTarget.offsetHeight)
-                                    window.dispatchEvent(new Event('resize'));
-                                    self.setState({
-                                       // initialHeight: e.currentTarget.naturalHeight,
-                                        initialHeight: e.currentTarget.offsetHeight
-                                    });
-                                }}
+                                alt="摩一广告图"
                             />
                         </Link>
                     ))}

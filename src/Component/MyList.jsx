@@ -186,10 +186,11 @@ class Content extends Component {
                         })
                     }
                 </div>
-                <div className="index-list-box" style={{paddingTop:queryKeys.join('').indexOf('brand')>-1 || queryKeys.join('').indexOf('title')>-1 ? '104px' : '74px'}}>
+                <div className="index-list-box" style={{paddingTop:'34px'}}>
                     {
                         data.length > 0 ? <ListMoto {...this.props} showType={this.state.showType} list={data} /> : null
                     }
+
                 </div>
             </div>
         );

@@ -489,6 +489,7 @@ export class TopNavBar extends Component {
         const history = process.env.NODE_ENV !== 'production' ? browserHistory : hashHistory
         var self = this;
         return (
+        <div>
             <div data-flex="dir:left box:first cross:center" className={`topNavBar ${transparent == '0' ? 'transparent' : ''}`}  style={{background:`rgba(255,255,255,${transparent == 'none' ? 1 : transparent})`}}>
                     <span data-flex="dir:left" onClick={() => {
                         !handlerClick ?  history.goBack() : handlerClick()
@@ -524,9 +525,12 @@ export class TopNavBar extends Component {
                     </div>
                 </Popover>
             </div>
+            <div style={{height:'38px'}}></div>
+        </div>
         );
     }
 }
+
 var formatParams_ = function(data) {
     var arr = [];
     for (var name in data) {
