@@ -238,7 +238,7 @@ class Main extends Component {
             },
             {
                 title:'排量',
-                value:(this.state.motoData.displacement || '未知')+'ML',
+                value:(this.state.motoData.displacement || '未知')+'CC',
             }
 
         ];

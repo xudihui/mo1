@@ -100,7 +100,6 @@ class Content extends Component {
         var self = this;
         return (
             <div>
-                <TopNavBar handlerClick={() => {alert(1)}} />
                 <div className='topWrap'>
                     <div>
                         <div className="top"  data-flex="dir:left box:last" >
@@ -161,6 +160,10 @@ class Content extends Component {
                         </div>
                     </div>
                 </div>
+                {
+
+                }
+                <div style={{height:(queryKeys.indexOf('brand')>-1 || queryKeys.indexOf('title')>-1 ) ? '70px' : '40px'}}></div>
                 <div className="tag-container">
                     {
                         queryKeys.map(i =>{

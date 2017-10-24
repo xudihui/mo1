@@ -241,7 +241,7 @@ class TextareaItemExample extends Component {
                         {...getFieldProps('displacement')}
                         clear
                         placeholder="排量"
-                        extra="ML"
+                        extra="CC"
                         maxLength="7"
                     >排量</InputItem>
                     <InputItem

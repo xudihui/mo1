@@ -505,27 +505,27 @@ export class TopNavBar extends Component {
                      })
                    }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'65px',color:'#ff5b05'}}> 分享</i>
                 }
-                <Popover mask
-                         overlayClassName="fortest"
-                         overlayStyle={{ color: 'currentColor' }}
-                         visible={this.state.visible}
-                         overlay={[
-                             (<Item key="1" value="0" icon={<i className="iconfont icon-pyq"></i>} >微信好友</Item>),
-                             (<Item key="2" value="1" icon={<i className="iconfont icon-weixinhaoyou"></i>} >微信朋友圈</Item>),
-                             (<Item key="3" value="2" icon={<i className="iconfont icon-weixinshoucang"></i>} >微信收藏</Item>)
-                         ]}
-                         align={{
-                             overflow: { adjustY: 0, adjustX: 0 },
-                             offset: [offsetX, 15],
-                         }}
-                         onVisibleChange={this.handleVisibleChange.bind(this)}
-                         onSelect={this.onSelect.bind(this)}
-                >
-                    <div>
-                    </div>
-                </Popover>
             </div>
             <div style={{height:'38px'}}></div>
+            <Popover mask
+                     overlayClassName="fortest"
+                     overlayStyle={{ color: 'currentColor' }}
+                     visible={this.state.visible}
+                     overlay={[
+                         (<Item key="1" value="0" icon={<i className="iconfont icon-pyq"></i>} >微信好友</Item>),
+                         (<Item key="2" value="1" icon={<i className="iconfont icon-weixinhaoyou"></i>} >微信朋友圈</Item>),
+                         (<Item key="3" value="2" icon={<i className="iconfont icon-weixinshoucang"></i>} >微信收藏</Item>)
+                     ]}
+                     align={{
+                         overflow: { adjustY: 0, adjustX: 0 },
+                         offset: [offsetX, 15],
+                     }}
+                     onVisibleChange={this.handleVisibleChange.bind(this)}
+                     onSelect={this.onSelect.bind(this)}
+            >
+                <div>
+                </div>
+            </Popover>
         </div>
         );
     }

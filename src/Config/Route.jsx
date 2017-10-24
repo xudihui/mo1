@@ -6,6 +6,7 @@ import ImageChoose from '../Component/ImageChoose'; //保单详情
 import MyList from '../Component/MyList'; //主题详情
 import MySellList from '../Component/MySellList'; //主题详情
 import MySetting from '../Component/MySetting'; //个人中心设置
+import MyCenter from '../Component/MyCenter'; //个人信息编辑
 import Help from '../Component/Help'; //保单详情
 import Login from '../Component/Login'; //登录
 import Vcode from '../Component/Vcode'; //登录
@@ -54,6 +55,8 @@ const RouteConfig = (
             <Route path="choose" component={Choose} />
             <Route path="MySelling" component={MySelling} />
             <Route path="MySetting" component={MySetting} />
+            <Route path="MyCenter" component={MyCenter} />
+
             <Route path="SellEdit" component={SellEdit} />
             <Route path="Building" component={Building} />
             <Route path="ImageChoose" component={ImageChoose} />

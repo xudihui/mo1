@@ -16,7 +16,7 @@ class Main extends React.Component {
         this.state = {
             crop: {
                 width: 100,
-                aspect: 16/9
+                aspect: props.aspect || 1.78
             },
             keepSelection:true,
             minWidth:100,
@@ -75,7 +75,7 @@ class Main extends React.Component {
             oCanvas = this.refs.c,
             wrap = this.refs.wrap,
             oCtx = oCanvas.getContext('2d');
-        oCanvas.style.height = oCanvas.offsetWidth*9/16 + 'px';
+        oCanvas.style.height = oCanvas.offsetWidth*1/self.state.crop.aspect + 'px';
         oCanvas.setAttribute('width',oCanvas.offsetWidth*2); //让绘图更加清晰
         oCanvas.setAttribute('height',oCanvas.offsetHeight*2);//让绘图更加清晰
         oColorImg.style.display= 'block';
@@ -106,6 +106,7 @@ class Main extends React.Component {
             }
             wrap.setAttribute('class','imageChoose imageChooseDone');
             wrap.style.position = 'relative';
+
             Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
                 if(data.code == '0'){
                     Toast.info('图片成功上传一张！',.5);
@@ -267,7 +268,7 @@ export default class ImageChoose extends Component {
         return (
             <div className="cropWrap"  >
                 {
-                    arr.map((i,index)=><Main src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
+                    arr.map((i,index)=><Main aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
                 }
             </div>
         );

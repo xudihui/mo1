@@ -8,8 +8,6 @@ import { history,formatParams} from './common/index';
 import { Drawer,List ,NoticeBar, Toast,WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
 import Rows from './Rows';
-import a1 from '../Images/banner01.jpg';
-import a2 from '../Images/banner02.jpg';
 
 import bmw from '../Images/bmw.jpg';
 import honda from '../Images/honda.jpg';

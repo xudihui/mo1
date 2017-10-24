@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { history } from './common/index';
-import { Drawer,List ,Grid,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import { Toast,List ,Grid,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import myHead from '../Images/head.svg';
 const data1 = [
     {
@@ -55,19 +55,24 @@ class My extends Component {
         return (
             <div style={{paddingBottom:'2px'}}>
                 <div className="myTop">
-                     <img className="myImg" src={myHead} />
+                     <img className="myImg" src={userInfo.headUrl || myHead} />
                     <p>
                     {
-                        this.props.userInfo && JSON.parse(localStorage.userInfo).tel
+                        userInfo && <span>
+                            <p onClick={()=>{
+                                history.push('/mycenter');
+                            }}><i className="iconfont icon-edit">编辑</i></p>
+                            {JSON.parse(localStorage.userInfo).tel}
+                        </span>
                     }
                     {
-                       !this.props.userInfo && <Link to="/login">立即登录</Link>
+                       !userInfo && <Link to="/login">立即登录</Link>
                     }
                     </p>
                         <i className="iconfont icon-shezhi" onClick={
                             ()=>{
                                 if(!userInfo){
-                                    return Toast.offline('请先点击头像下方的登录！',1)
+                                    return Toast.offline('请先点击头像下方的登录按钮，进行登录/注册！',4)
                                 }
                                 history.push('/mysetting');
                             }
@@ -104,13 +109,6 @@ class My extends Component {
                           </Link>
                       )}
                 />
-
-                <List className="my-list" style={{paddingBottom:'40px'}} >
-                    <List.Item extra="" arrow="horizontal" onClick={() => {location.href='tel:15067425400'}}>联系客服</List.Item>
-                    <Link  to="/help">
-                        <List.Item extra="" arrow="horizontal" onClick={() => {}}>关于我们</List.Item>
-                    </Link>
-                </List>
             </div>
         );
     }

@@ -210,13 +210,6 @@ class Main extends Component {
         console.log('火焰山',this.props)
         var imgUrls = this.state.motoData.imgUrls.split(',');
         var data_ = [];
-        for(let i in imgUrls){
-            if(!isNaN(i)){
-                if(imgUrls[i] !=  '' && imgUrls[i] !=  'null'){
-                    data_.push(imgUrls[i]);
-                }
-            }
-        }
         var data1 = [
             {
                 title:'出厂时间',
@@ -236,7 +229,7 @@ class Main extends Component {
             },
             {
                 title:'排量',
-                value:(this.state.motoData.displacement || '未知')+'ML',
+                value:(this.state.motoData.displacement || '未知')+'CC',
             }
         ];
         return (

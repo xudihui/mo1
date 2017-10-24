@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
-import { DataLoad, Footer, UserHeadImg, TabIcon, GetNextPage } from './common/index';
+import { DataLoad, Footer, UserHeadImg, TabIcon,TopNavBar, GetNextPage } from './common/index';
 const style = `
     .collapse-anim {
       transition: height .3s ease-out;
@@ -16,7 +16,7 @@ const style = `
 `;
 const data = [
     {
-        title:'什么是摩易二手车平台？',
+        title:'什么是摩一二手车平台？',
         content:'*******。'
     },
     {
@@ -32,6 +32,7 @@ class Main extends Component {
     render() {
         return (
             <div >
+                <TopNavBar title="关于摩一二手车"/>
                 <style dangerouslySetInnerHTML={{ __html: style }}></style>
                 <Accordion defaultActiveKey="0" accordion  openAnimation={{}} className="my-accordion" >
                     {
