@@ -53,11 +53,8 @@ class Main extends Component {
                 text = '您太忙了，还没去砍价哦';
                 break;
             case '降价提醒':
-                text = '暂无降价信息，快去选车吧！';
-                break;
-            case '收藏车辆':
                 this.queryUrl = $extCollectFindPage;
-                text = '暂无收藏车辆，快去选车吧！';
+                text = '暂无降价信息，快去选车吧！';
                 break;
             case '浏览记录':
                 text = '哎呀，您居然没有浏览过车辆！';

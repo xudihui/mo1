@@ -19,10 +19,6 @@ const data1 = [
         icon:'icon-tongzhi',
     },
     {
-        title:'收藏车辆',
-        icon:'icon-shoucang1',
-    },
-    {
         title:'浏览记录',
         icon:'icon-jingdianwanfa',
     },

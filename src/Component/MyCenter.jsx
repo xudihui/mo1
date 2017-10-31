@@ -26,7 +26,7 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: props.state.userInfo.idCard,
+            edit: props.state.userInfo.realName,
         }
     }
     handlerClick(){
@@ -34,7 +34,7 @@ class Main extends Component {
         var self = this;
         var {login} = this.props;
         if(this.state.edit){
-            alert('提示','更新用户信息将重置身份证号码和用户姓名，确认更新？', [
+            alert('提示','确认更新？', [
                 { text: '朕再想想', onPress: () => {
 
                 } },
@@ -48,12 +48,6 @@ class Main extends Component {
         }
         var headUrl = this.refs.headUrl.querySelector('.imageChoose').getAttribute('src');
         x.headUrl = headUrl;
-        if(!/(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$)/.test(x.idCard)){
-           return Toast.offline('请输入正确的身份证号码')
-        }
-        if(!/^[\u4E00-\u9FA5]{1,4}$/.test(x.realName)){
-            return Toast.offline('请输入中文姓名')
-        }
         console.log(x)
         Tool.post($extUpdateUserInfo,x,function(data){ //用户信息更新
             if(data.code == '0'){
@@ -81,7 +75,7 @@ class Main extends Component {
             <div className="mySetting" >
                 {
                     !userInfo.idCard && <NoticeBar  mode="closable"  marqueeProps={{ loop: true,fps: 25, style: { padding: '0 7.5px' } }}>
-                        尊敬的摩一二手车用户，您的账户还未实名，请完善信息。真实的个人信息有助于提高交易成功率哦！
+                        尊敬的摩一二手车用户，您的账户还未取网名，请完善信息。响亮的网名有助于提高交易成功率哦！
                     </NoticeBar>
                 }
                 {
@@ -110,47 +104,27 @@ class Main extends Component {
                     {
                         this.state.edit && <div>
                             <InputItem
-                                {...getFieldProps('idCard_', {
-                                    initialValue: userInfo.idCard.slice(0,4)+'*******'+userInfo.idCard.slice(-4),
-                                })}
-                                type='text'
-                                placeholder="请输入身份证号码"
-                                maxLength="18"
-                                disabled
-                                clear
-                            >身份证号码</InputItem>
-                            <InputItem
                                 {...getFieldProps('realName_', {
-                                    initialValue: userInfo.realName.slice(0,1)+'*'+userInfo.realName.slice(2,3),
+                                    initialValue: userInfo.realName,
                                 })}
                                 type='text'
-                                placeholder="请输入您的真实姓名"
                                 clear
                                 disabled
                                 maxLength="4"
-                            >姓名</InputItem>
+                            >网名</InputItem>
                         </div>
                     }
                     {
                         !this.state.edit && <div>
                             <InputItem
-                                {...getFieldProps('idCard', {
-                                    initialValue: userInfo.idCard || '',
-                                })}
-                                type='text'
-                                placeholder="请输入身份证号码"
-                                maxLength="18"
-                                clear
-                            >身份证号码</InputItem>
-                            <InputItem
                                 {...getFieldProps('realName', {
                                     initialValue: userInfo.realName || '',
                                 })}
                                 type='text'
-                                placeholder="请输入您的真实姓名"
+                                placeholder="为自己取一个响亮的名字吧"
                                 clear
-                                maxLength="4"
-                            >姓名</InputItem>
+                                maxLength="8"
+                            >网名</InputItem>
                         </div>
                     }
 

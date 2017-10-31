@@ -8,7 +8,16 @@ import { Tool, merged } from '../Tool';
 //添加水印图片
 import water from '../Images/water.png';
 
-
+/**
+ * (图片裁切组件)
+ *
+ * @class ImageChoose
+ * @extends {Component}
+ * @aspect 裁切比例
+ * @src 初始化图片
+ * @titles 每张图片的默认标题
+ * @length 长度
+ */
 
 class Main extends React.Component {
     constructor(props) {
@@ -16,7 +25,7 @@ class Main extends React.Component {
         this.state = {
             crop: {
                 width: 100,
-                aspect: props.aspect || 1.78
+                aspect: props.aspect || 1.33 //默认4：3，通过属性取比例
             },
             keepSelection:true,
             minWidth:100,
@@ -75,21 +84,27 @@ class Main extends React.Component {
             oCanvas = this.refs.c,
             wrap = this.refs.wrap,
             oCtx = oCanvas.getContext('2d');
-        oCanvas.style.height = oCanvas.offsetWidth*1/self.state.crop.aspect + 'px';
-        oCanvas.setAttribute('width',oCanvas.offsetWidth*2); //让绘图更加清晰
-        oCanvas.setAttribute('height',oCanvas.offsetHeight*2);//让绘图更加清晰
-        oColorImg.style.display= 'block';
-        /*
-        var x = -self.state.crop.x*oCanvas.offsetWidth/100;
-        var y = -self.state.crop.y*oCanvas.offsetWidth/100
-
-        var y = -document.querySelector('.ReactCrop__crop-selection').offsetTop
-        var x = -document.querySelector('.ReactCrop__crop-selection').offsetLeft
-         */
-
-        var x = 0;
-        var y = -(self.state.crop.y||0)*2*oColorImg.offsetHeight/100;//相对于y轴的比例
-        oCtx.drawImage(oColorImg,x,y,oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5);
+            oCanvas.style.height = oCanvas.offsetWidth*1/self.state.crop.aspect + 'px';
+            oCanvas.setAttribute('width',oCanvas.offsetWidth*2); //让绘图更加清晰
+            oCanvas.setAttribute('height',oCanvas.offsetHeight*2);//让绘图更加清晰
+            oColorImg.style.display= 'block';
+            var oColorImgWidth = oColorImg.offsetWidth;//被裁切的图片宽度;
+            var oColorImgHeight = oColorImg.offsetHeight;//被裁切的图片高度;
+            console.log('图片宽度：',oColorImg.offsetWidth,'X轴偏移量：',self.state.crop.x)
+        if(oColorImg.offsetWidth/oColorImg.offsetHeight > self.state.crop.aspect){ //高度小于传入比例
+            var changeWidth = oCanvas.offsetHeight*oColorImgWidth/oColorImgHeight;//放大后的图片宽度
+            var y = 0;
+            var x = -(self.state.crop.x||0)*2*changeWidth/100;//相对于x 轴的比例
+            oCtx.drawImage(oColorImg,x,y,changeWidth*2,oCanvas.offsetHeight*2);
+        }
+        else{
+            var x = 0;
+            var y = -(self.state.crop.y||0)*2*oColorImg.offsetHeight/100;//相对于y 轴的比例
+            oCtx.drawImage(oColorImg,x,y,oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5);
+        }
+        console.log('正式比例：',oColorImgWidth,oColorImgHeight)
+        console.log('XY：',x,y,changeWidth)
+        console.log('XXX：',oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5)
         water.style.display = 'inline-block';
         //pc上传需要*2
       //  oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
@@ -106,10 +121,17 @@ class Main extends React.Component {
             }
             wrap.setAttribute('class','imageChoose imageChooseDone');
             wrap.style.position = 'relative';
-
+/*
+        oColorImg.src = pngData;
+        self.setState({
+            done:true,
+            winWidth:'100%'
+        });
+        return;
+*/
             Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
                 if(data.code == '0'){
-                    Toast.info('图片成功上传一张！',.5);
+                    Toast.info('图片上传成功！',.5);
                     console.log(data.response.fileRdfUrl+data.response.fileUrl);
                     oColorImg.src = pngData;
                     wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
@@ -137,12 +159,14 @@ class Main extends React.Component {
         const fileInput = this.refs.enter;
         var self = this;
         fileInput.addEventListener('change', (e) => {
+            Toast.loading('图片准备裁切中...',0);
             const file = e.target.files.item(0);
             if (!file || !imageType.test(file.type)) {
                 return;
             }
             const reader = new FileReader();
             reader.onload = (e2) => {
+                Toast.hide();
                 var x = document.querySelectorAll('.am-list-body');
                 for(let i in x){
                     try{

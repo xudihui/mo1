@@ -122,13 +122,6 @@ class Main extends Component {
                 title:'降价提醒',
                 icon:'icon-tongzhi',
                 background:'#e1e1e1',
-                checked:false,
-                backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
-            },
-            {
-                title:'收藏车辆',
-                icon:'icon-shoucang1',
-                background:'#eaeaea',
                 checked:data_moto.isCollect == 1 ? true : false,
                 backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
             },
@@ -151,12 +144,12 @@ class Main extends Component {
         var self = this;
         var footer_ = this.state.footer;
 
-        //收藏 方法
-        if(index == 1){
+        //降价提醒 方法
+        if(index == 0){
             Tool.post(this.state.motoData.isCollect == 1 ? $extCollectDelete : $extCollectAdd,{pid:this.state.motoData.id},function(data){
                 if(data.code == '0'){
 
-                    Toast.success(self.state.motoData.isCollect == 1 ? '取消收藏！':'成功收藏！','1.5');
+                    Toast.success(self.state.motoData.isCollect == 1 ? '取消降价提醒！':'成功加入降价提醒！','1.5');
                     footer_[index].checked = !footer_[index].checked;
                     var motoData = self.state.motoData;
                     motoData.isCollect = self.state.motoData.isCollect == 1 ? 0 : 1
@@ -171,15 +164,9 @@ class Main extends Component {
             })
             return;
         }
-        if(index == 2){
+        if(index == 1){
             location.href = 'tel:'+this.state.motoData.tel;
             return;
-        }
-        if(!footer_[index].checked){
-            Toast.success(footer_[index]['title'] + '成功！','1');
-        }
-        else{
-            Toast.info( '取消' + footer_[index]['title'],'1' );
         }
         footer_[index].checked = !footer_[index].checked;
         this.setState({

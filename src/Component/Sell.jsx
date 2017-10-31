@@ -279,7 +279,7 @@ class TextareaItemExample extends Component {
                         maxLength="11"
                     >联系方式</InputItem>
                 </List>
-                <List renderHeader={() => '车辆图片(请您裁切成16:9的图片上传哦)'}>
+                <List renderHeader={() => '车辆图片(请您裁切成4:3的图片上传哦)'}>
                     <div ref="imgUrls">
                         <ImageChoose src=',,,,,,,,,,,,,,' titles={[
                             '左侧车身',
@@ -339,7 +339,7 @@ class TextareaItemExample extends Component {
                     </Picker>
                 </List>
 
-            <List renderHeader={() => '请在下方简单地介绍下购买时间、使用状况等'}>
+            <List renderHeader={() => '请在下方介绍车辆使用状况'}>
             <TextareaItem
                 {...getFieldProps('content', {
                     initialValue: '',

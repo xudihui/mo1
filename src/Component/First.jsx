@@ -151,36 +151,61 @@ class Main extends Component {
                 <div className="sub-title">快速选车</div>
                 <div className="content">
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{maxPrice:2000000})
+                        var target = Object.assign({},{maxPrice:5000000})
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        2万以下
+                        5万以下
                     </Link>
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{maxPrice:4000000,minPrice:2000000})
+                        var target = Object.assign({},{maxPrice:10000000,minPrice:5000000})
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        2~4万
+                        5~10万
                     </Link>
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{maxPrice:6000000,minPrice:4000000})
+                        var target = Object.assign({},{maxPrice:15000000,minPrice:10000000})
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        4~6万
+                        10~15万
                     </Link>
                     <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{minPrice:6000000})
+                        var target = Object.assign({},{minPrice:15000000})
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        6万以上
+                        15万以上
+                    </Link>
+
+                    <Link className="p1" onClick={() => {
+                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
+                    }
+                    }>
+                        跑车
+                    </Link>
+                    <Link className="p1" onClick={() => {
+                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
+                    }
+                    }>
+                        拉力
+                    </Link>
+                    <Link className="p1" onClick={() => {
+                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
+                    }
+                    }>
+                        街车
+                    </Link>
+                    <Link className="p1" onClick={() => {
+                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
+                    }
+                    }>
+                        巡航
                     </Link>
 
                     <Link className="p1" onClick={() => {
