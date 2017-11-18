@@ -562,7 +562,7 @@ export const history = process.env.NODE_ENV !== 'production' ? browserHistory : 
  * @export
  * @class data
  */
-export const dataModel = ["公路", "街车", "越野", "拉力", "踏板", "弯梁", "巡航", "太子", "复古", "三轮", "ATV", "攀爬", "迷你", "电摩", "拖车", "汽车", "其他"];
+export const dataModel = ["跑车","公路", "街车", "越野", "拉力", "踏板", "弯梁", "巡航", "太子", "复古", "三轮", "ATV", "攀爬", "迷你", "电摩", "拖车","其他"];
 
 /**
  * 摩托品牌 数据

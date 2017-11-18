@@ -54,7 +54,7 @@ class Banner extends Component {
         window.addEventListener('scroll',this.scroll);
     }
     componentWillUnmount(){
-
+        window.removeEventListener('scroll',this.scroll);
     }
     render() {
         const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
@@ -127,6 +127,13 @@ class Main extends Component {
                 backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
             },
             {
+                title:'立即收藏',
+                icon:'icon-tongzhi',
+                background:'#f1f1f1',
+                checked:data_moto.isCollected == 1 ? true : false,
+                backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+            },
+            {
                 title:'联系车主',
                 icon:'icon-iconfonta',
                 background:'#f8f8f8',
@@ -136,7 +143,6 @@ class Main extends Component {
         ];
         this.state = {
             motoData:data_moto,
-            a:222,
             talks:talks,
             footer:footer
         };
@@ -166,12 +172,23 @@ class Main extends Component {
             return;
         }
         if(index == 1){
-            alert('提示','在线对话系统正在开发初期阶段，您进入后将无法退出，确定进去吗？', [
+            alert('提示','确认收藏该车吗？', [
                 { text: '朕再想想', onPress: () => {
 
                 } },
-                { text: '无所谓，朕不怕', onPress: () =>{
-                    location.href = 'build/index.html?user=test&pass=test';
+                { text: '确认', onPress: () =>{
+                   // location.href = 'build/index.html?user=test&pass=test';
+                }}
+            ])
+
+            return;
+        }if(index == 2){
+            alert('提示',`确定给手机号为${self.state.motoData.tel}的车主打电话吗？`, [
+                { text: '朕再想想', onPress: () => {
+
+                } },
+                { text: '确认', onPress: () =>{
+                    location.href = 'tel:' + self.state.motoData.tel;
                 }}
             ])
 
@@ -322,11 +339,10 @@ class Main extends Component {
                         this.state.footer.map((dataItem,index) => (
                                 <div className={dataItem.checked ? 'bgWhite' : ''} data-flex-box="1" onClick={() => {
                                     self.handlerChecked(index,dataItem.background);
-                                }} style={{ padding: '0.15rem .05rem',textAlign:'center',background:(dataItem.checked ? dataItem.backgroundChecked : dataItem.background) }}>
-                                    <i style={{ color: '#ff3300',fontSize: '0.48rem',display:'block', textAlign: 'center' }} className={'iconfont '+dataItem.icon} ></i>
-                                    <div style={{ color: '#888', fontSize: '0.28rem',marginTop:'3px',padding:'0 .15rem' }}>
-                                        <span>{dataItem.title}</span>
-                                    </div>
+                                }} style={{ padding: '0.25rem .05rem',textAlign:'center',background:(dataItem.checked ? dataItem.backgroundChecked : dataItem.background) }}>
+                                    <i style={{ color: '#ff3300',fontSize: '0.25rem',display:'block', textAlign: 'center' }} className={'iconfont '+dataItem.icon} >
+                                        {' '+dataItem.title}
+                                    </i>
                                 </div>
                         ))
                     }

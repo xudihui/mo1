@@ -24,7 +24,9 @@ class ListItem extends Component {
         return (
             <div className="talk">
                 <div className="name" data-flex="main:justify">
-                    <span>{city}{item.tel.slice(0,3)+'****'+item.tel.slice(7,11)}说:</span>
+                    <span onClick={()=>{
+                        history.push(`personcenter/${item.tel}`)
+                    }}>{city}{item.tel.slice(0,3)+'****'+item.tel.slice(7,11)}说:</span>
                     <span>{getDateDiff(item.createTime)}</span>
                 </div>
                 <div className="text">{item.content}</div>

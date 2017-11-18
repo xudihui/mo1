@@ -292,7 +292,7 @@ export default class ImageChoose extends Component {
         return (
             <div className="cropWrap"  >
                 {
-                    arr.map((i,index)=><Main aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
+                    arr.map((i,index)=><Main key={index} aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
                 }
             </div>
         );

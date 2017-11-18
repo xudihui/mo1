@@ -111,7 +111,16 @@ class Main extends Component {
                                 clear
                                 disabled
                                 maxLength="4"
-                            >网名</InputItem>
+                            >用户名</InputItem>
+                            <InputItem
+                                {...getFieldProps('test_', {
+                                    initialValue: userInfo.realName,
+                                })}
+                                type='text'
+                                clear
+                                disabled
+                                maxLength="4"
+                            >个性签名</InputItem>
                         </div>
                     }
                     {
@@ -124,7 +133,16 @@ class Main extends Component {
                                 placeholder="为自己取一个响亮的名字吧"
                                 clear
                                 maxLength="8"
-                            >网名</InputItem>
+                            >用户名</InputItem>
+                            <InputItem
+                                {...getFieldProps('test', {
+                                    initialValue: userInfo.test || '',
+                                })}
+                                type='text'
+                                placeholder="为自己取一个响亮的签名吧"
+                                clear
+                                maxLength="8"
+                            >个性签名</InputItem>
                         </div>
                     }
 

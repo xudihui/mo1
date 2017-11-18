@@ -197,6 +197,7 @@ class TextareaItemExample extends Component {
         if(!/^1[3|4|5|7|8][0-9]{9}$/.test(x['tel'])){
             return Toast.info('请输入正确的手机号码！')
         }
+        x.title='_';//title必须要有值，否则接口报错
         Tool.post($extMotorAdd,Object.assign({},x,images),function(data){
             if(data.code == '0'){
                 console.log(data);
@@ -223,11 +224,43 @@ class TextareaItemExample extends Component {
             <div>
 
                 <List renderHeader={() => '完善车辆信息能增加价格哦'}>
+                    <Picker
+                        {...getFieldProps('productDate')}
+                        data={years}
+                        cascade={false}
+                        extra="请选择(可选)"
+                    >
+                        <List.Item arrow="horizontal">出厂年份</List.Item>
+                    </Picker>
+                    <Picker
+                        {...getFieldProps('area111')}
+                        data={dataModel_}
+                        cascade={false}
+                        extra="请选择(可选)"
+
+                    >
+                        <List.Item arrow="horizontal">车型类别</List.Item>
+                    </Picker>
+                    <Picker
+                        {...getFieldProps('brand')}
+                        data={dataBrand_}
+                        cascade={false}
+                        extra="请选择(可选)"
+                    >
+                        <List.Item arrow="horizontal">品牌</List.Item>
+                    </Picker>
                     <InputItem
-                        {...getFieldProps('title')}
+                        {...getFieldProps('displacement_')}
                         clear
-                        placeholder="请输入标题"
-                    >车辆标题</InputItem>
+                        placeholder="没有找到，请在此输入"
+                        maxLength="11"
+                    >其它品牌</InputItem>
+                    <InputItem
+                        {...getFieldProps('displacement__')}
+                        clear
+                        placeholder="请输入所选品牌的型号"
+                        maxLength="11"
+                    >型号</InputItem>
                     <List.Item
                         extra={<Switch
                             {...getFieldProps('hasAbs', {
@@ -236,7 +269,7 @@ class TextareaItemExample extends Component {
                             })}
                             onClick={(checked) => { console.log(checked); }}
                         />}
-                    >是否含有ABS</List.Item>
+                    >是否急售</List.Item>
                     <InputItem
                         {...getFieldProps('displacement')}
                         clear
@@ -244,13 +277,6 @@ class TextareaItemExample extends Component {
                         extra="CC"
                         maxLength="7"
                     >排量</InputItem>
-                    <InputItem
-                        {...getFieldProps('weight')}
-                        clear
-                        placeholder="车重"
-                        extra="KG"
-                        maxLength="9"
-                    >车重</InputItem>
                     <InputItem
                         {...getFieldProps('mileage')}
                         clear
@@ -278,6 +304,19 @@ class TextareaItemExample extends Component {
                         placeholder="联系方式"
                         maxLength="11"
                     >联系方式</InputItem>
+                    <Picker
+                        {...getFieldProps('area', {
+                            initialValue: ['110000', '110100'],
+                        })}
+                        data={arr_dataCityNo}
+                        onOk={e => console.log('ok', e)}
+                        onDismiss={e => console.log('dismiss', e)}
+                        extra="请选择(可选)"
+                        cols = '2'
+
+                    >
+                        <List.Item arrow="horizontal">车牌所在地区</List.Item>
+                    </Picker>
                 </List>
                 <List renderHeader={() => '车辆图片(请您裁切成4:3的图片上传哦)'}>
                     <div ref="imgUrls">
@@ -306,37 +345,6 @@ class TextareaItemExample extends Component {
                     <div ref="License" >
                         <ImageChoose src='' titles={['车辆行驶证','购车发票','合格证']} length="3" />
                     </div>
-                </List>
-                <List renderHeader={() => '基本信息'}>
-                    <Picker
-                        {...getFieldProps('productDate')}
-                        data={years}
-                        cascade={false}
-                        extra="请选择(可选)"
-                    >
-                        <List.Item arrow="horizontal">出厂年份</List.Item>
-                    </Picker>
-                    <Picker
-                        {...getFieldProps('area', {
-                            initialValue: ['110000', '110100'],
-                        })}
-                        data={arr_dataCityNo}
-                        onOk={e => console.log('ok', e)}
-                        onDismiss={e => console.log('dismiss', e)}
-                        extra="请选择(可选)"
-                        cols = '2'
-
-                    >
-                        <List.Item arrow="horizontal">所在地区</List.Item>
-                    </Picker>
-                    <Picker
-                        {...getFieldProps('brand')}
-                        data={dataBrand_}
-                        cascade={false}
-                        extra="请选择(可选)"
-                    >
-                        <List.Item arrow="horizontal">品牌车型</List.Item>
-                    </Picker>
                 </List>
 
             <List renderHeader={() => '请在下方介绍车辆使用状况'}>

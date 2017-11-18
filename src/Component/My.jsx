@@ -23,7 +23,7 @@ const data1 = [
         icon:'icon-jingdianwanfa',
     },
     {
-        title:'订阅车源',
+        title:'收藏车源',
         icon:'icon-bangdan',
     }
 ];
