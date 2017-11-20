@@ -17,7 +17,7 @@ export default class MyHotList extends Component {
         return (
             <div>
                 {
-                    this.props.data.length > 0 && <div style={{paddingBottom:this.props.paddingBottom || 0}}><div className="sub-title">{this.props.title || '为您推荐'}</div><ListMoto showType="icon-viewlist" from="myHotList" list={this.props.data} /></div>
+                    this.props.data.length > 0 && <div style={{paddingBottom:this.props.paddingBottom || 0}}><div className="sub-title">{this.props.title || '为您推荐'}</div><ListMoto showType="icon-viewlist" from={this.props.from || 'myHotList'} list={this.props.data} /></div>
                 }
             </div>
         );

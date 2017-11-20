@@ -53,14 +53,15 @@ class Main extends Component {
                 text = '您太忙了，还没去砍价哦';
                 break;
             case '降价提醒':
-                this.queryUrl = $extCollectFindPage;
+                this.queryUrl = $extNotifyFindPage;
                 text = '暂无降价信息，快去选车吧！';
                 break;
             case '浏览记录':
                 text = '哎呀，您居然没有浏览过车辆！';
                 break;
-            case '订阅车源':
-                text = '哎呀，您还没有订阅心仪的爱车';
+            case '收藏车源':
+                this.queryUrl = $extCollectFindPage;
+                text = '哎呀，您还没有收藏心仪的爱车';
                 break;
             default:
                 text = '****';
@@ -86,6 +87,7 @@ class Main extends Component {
         if(this.type=='浏览记录'){
             from = 'myViewList';
         }
+        console.log('浏览记录',this.state.data)
         return (
             <div className="my-own">
                 <TopNavBar title={this.type} />

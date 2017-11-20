@@ -208,7 +208,7 @@ body{
     &:after{
         #line_bottom() //向下细线
     }
-    div:nth-child(4){
+    div:nth-child(5){
         width:50px;
         position:relative;
         &:after{
@@ -397,6 +397,7 @@ div.car{
 }
 .rowMotoText{
     text-align:left;
+    width:100%;
     p{
         padding:.1rem .5rem 0 0;
     }
@@ -405,7 +406,8 @@ div.car{
     }
     div:nth-child(1){
         color:#444;
-        font-size:.3rem
+        font-size:.3rem;
+        word-break: break-all;
     }
     div:nth-child(2){
         color:#888;

@@ -5,7 +5,7 @@ import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import MyHotList from './common/MyHotList';
 import { history,formatParams} from './common/index';
-import { Drawer,List ,NoticeBar, Toast,WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import { Tabs, WhiteSpace, Toast, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
 import Rows from './Rows';
 
@@ -17,6 +17,24 @@ import ktm from '../Images/ktm.jpg';
 import halei from '../Images/halei.jpg';
 import benelli from '../Images/benelli.jpg';
 import cf from '../Images/cf.jpg';
+const tabs = [
+    { title: <Badge text={'3'}>First Tab</Badge> },
+    { title: <Badge text={'今日(20)'}>Second Tab</Badge> },
+    { title: <Badge dot>Third Tab</Badge> },
+];
+const TabLine = () => (
+    <Tabs tabs={tabs} initialPage={2} animated={false} useOnPan={false}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+            Content of first tab
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+            Content of second tab
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
+            Content of third tab
+        </div>
+    </Tabs>
+);
 
 /**
  * 买车模块入口

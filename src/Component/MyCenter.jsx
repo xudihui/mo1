@@ -26,13 +26,16 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            edit: props.state.userInfo.realName,
+            edit: props.state.userInfo.userName,
         }
     }
     handlerClick(){
         var x = this.props.form.getFieldsValue();
         var self = this;
         var {login} = this.props;
+        if(x.userName == ''){
+            return Toast.offline('请输入用户名！')
+        }
         if(this.state.edit){
             alert('提示','确认更新？', [
                 { text: '朕再想想', onPress: () => {
@@ -74,7 +77,7 @@ class Main extends Component {
         return (
             <div className="mySetting" >
                 {
-                    !userInfo.idCard && <NoticeBar  mode="closable"  marqueeProps={{ loop: true,fps: 25, style: { padding: '0 7.5px' } }}>
+                    !userInfo.userName && <NoticeBar  mode="closable"  marqueeProps={{ loop: true,fps: 25, style: { padding: '0 7.5px' } }}>
                         尊敬的摩一二手车用户，您的账户还未取网名，请完善信息。响亮的网名有助于提高交易成功率哦！
                     </NoticeBar>
                 }
@@ -104,8 +107,8 @@ class Main extends Component {
                     {
                         this.state.edit && <div>
                             <InputItem
-                                {...getFieldProps('realName_', {
-                                    initialValue: userInfo.realName,
+                                {...getFieldProps('userName_', {
+                                    initialValue: userInfo.userName,
                                 })}
                                 type='text'
                                 clear
@@ -113,8 +116,8 @@ class Main extends Component {
                                 maxLength="4"
                             >用户名</InputItem>
                             <InputItem
-                                {...getFieldProps('test_', {
-                                    initialValue: userInfo.realName,
+                                {...getFieldProps('sign_', {
+                                    initialValue: userInfo.sign,
                                 })}
                                 type='text'
                                 clear
@@ -126,8 +129,8 @@ class Main extends Component {
                     {
                         !this.state.edit && <div>
                             <InputItem
-                                {...getFieldProps('realName', {
-                                    initialValue: userInfo.realName || '',
+                                {...getFieldProps('userName', {
+                                    initialValue: userInfo.userName || '',
                                 })}
                                 type='text'
                                 placeholder="为自己取一个响亮的名字吧"
@@ -135,8 +138,8 @@ class Main extends Component {
                                 maxLength="8"
                             >用户名</InputItem>
                             <InputItem
-                                {...getFieldProps('test', {
-                                    initialValue: userInfo.test || '',
+                                {...getFieldProps('sign', {
+                                    initialValue: userInfo.sign || '',
                                 })}
                                 type='text'
                                 placeholder="为自己取一个响亮的签名吧"

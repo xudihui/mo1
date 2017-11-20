@@ -104,6 +104,7 @@ class Content extends Component {
                         <div className="match" data-flex="dir:left box:last">
                             <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{this.handlerSetMatch(e,1)}}>品牌<i className="iconfont icon-xiangxiajiantou"></i></div>
+                            <div onClick={(e)=>{this.handlerSetMatch(e,2)}}>车型<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{
                                 var target = Object.assign({},query);
                                 history.push(`/Choose?${formatParams(target)}`);
@@ -140,7 +141,10 @@ class Content extends Component {
                             <ul style={{display:this.state.matchIndex == 2 ? 'block' : 'none'}}>
                                 {
                                     dataModel.map((item) =>(
-                                        <li data-query="123321" onClick={this.handleCheck}>{item}</li>
+                                        <li onClick={()=>{
+                                            var target = Object.assign({},query,{motorType:item})
+                                            history.replace(`/?${formatParams(target)}`)
+                                        }}>{item}</li>
                                     ))
                                 }
                             </ul>

@@ -57,8 +57,8 @@ class My extends Component {
                         userInfo && <span>
                             <p onClick={()=>{
                                 history.push('/mycenter');
-                            }}><i className="iconfont icon-edit">编辑</i></p>
-                            {JSON.parse(localStorage.userInfo).tel}
+                            }}>{JSON.parse(localStorage.userInfo).userName}<i className="iconfont icon-edit">编辑</i></p>
+                            {JSON.parse(localStorage.userInfo).sign || JSON.parse(localStorage.userInfo).tel}
                         </span>
                     }
                     {

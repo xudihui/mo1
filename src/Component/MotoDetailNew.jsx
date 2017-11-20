@@ -105,32 +105,20 @@ class Main extends Component {
     constructor(props) {
         super(props);
         this.id = props.location.query.id;
-        this.from = props.location.query.from;
-        var data_ = props['state'][this.from];
-        if(this.from == 'data'){
-            data_ = props['state']['data']['data'];
-        }
-
         var data_moto = {};
-        for(let i in data_){
-            data_[i]['id'] == this.id ? data_moto = data_[i] : {}
-        }
-        props.setViewList(data_moto);
-        console.log('MMMWWW,',data_moto);
-
         const footer = [
             {
                 title:'降价提醒',
                 icon:'icon-tongzhi',
                 background:'#e1e1e1',
-                checked:data_moto.isNotify == 1 ? true : false,
+                checked:data_moto.isCollect == 1 ? true : false,
                 backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
             },
             {
                 title:'立即收藏',
                 icon:'icon-shoucang1',
                 background:'#f1f1f1',
-                checked:data_moto.isCollect == 1 ? true : false,
+                checked:data_moto.isCollected == 1 ? true : false,
                 backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
             },
             {
@@ -153,29 +141,10 @@ class Main extends Component {
 
         //降价提醒 方法
         if(index == 0){
-            Tool.post(this.state.motoData.isNotify == 1 ? $extNotifyDelete : $extNotifyAdd,{pid:this.state.motoData.id},function(data){
-                if(data.code == '0'){
-                    Toast.success(self.state.motoData.isNotify == 1 ? '取消降价提醒！':'加入降价提醒！','1.5');
-                    footer_[index].checked = !footer_[index].checked;
-                    var motoData = self.state.motoData;
-                    motoData.isNotify = self.state.motoData.isNotify == 1 ? 0 : 1
-                    self.setState({
-                        footer:footer_,
-                        motoData:motoData
-                    })
-                }
-                else{
-                    Toast.offline(data.msg)
-                }
-            })
-            return;
-        }
-        //收藏 方法
-        if(index == 1){
             Tool.post(this.state.motoData.isCollect == 1 ? $extCollectDelete : $extCollectAdd,{pid:this.state.motoData.id},function(data){
                 if(data.code == '0'){
 
-                    Toast.success(self.state.motoData.isCollect == 1 ? '取消收藏！':'成功加入收藏！','1.5');
+                    Toast.success(self.state.motoData.isCollect == 1 ? '取消降价提醒！':'成功加入降价提醒！','1.5');
                     footer_[index].checked = !footer_[index].checked;
                     var motoData = self.state.motoData;
                     motoData.isCollect = self.state.motoData.isCollect == 1 ? 0 : 1
@@ -188,6 +157,18 @@ class Main extends Component {
                     Toast.offline(data.msg)
                 }
             })
+            return;
+        }
+        if(index == 1){
+            alert('提示','确认收藏该车吗？', [
+                { text: '朕再想想', onPress: () => {
+
+                } },
+                { text: '确认', onPress: () =>{
+                   // location.href = 'build/index.html?user=test&pass=test';
+                }}
+            ])
+
             return;
         }if(index == 2){
             alert('提示',`确定给手机号为${self.state.motoData.tel}的车主打电话吗？`, [
@@ -209,7 +190,7 @@ class Main extends Component {
     componentDidMount() {
         var self = this;
         document.body.scrollTop = 0;
-        Tool.post($extEvaluateFindPageByMo,{pid:self.state.motoData.id},function(data){
+        Tool.post($extEvaluateFindPageByMo,{pid:self.id},function(data){
             if(data.code == '0'){
                 Toast.info('评论载入成功', .5);
                 var talks_ = data.response.searchData;
@@ -224,10 +205,56 @@ class Main extends Component {
             }
         })
 
+
+        //请求用户在售车辆
+        Tool.post($extMotorFindPage,{id:self.id},function(data){
+            if(data.code == '0'){
+                var data_moto = data.response.searchData[0];
+                var footer = [
+                    {
+                        title:'降价提醒',
+                        icon:'icon-tongzhi',
+                        background:'#e1e1e1',
+                        checked:data_moto.isCollect == 1 ? true : false,
+                        backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+                    },
+                    {
+                        title:'立即收藏',
+                        icon:'icon-tongzhi',
+                        background:'#f1f1f1',
+                        checked:data_moto.isCollected == 1 ? true : false,
+                        backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+                    },
+                    {
+                        title:'联系车主',
+                        icon:'icon-iconfonta',
+                        background:'#f8f8f8',
+                        checked:false,
+                        backgroundChecked:'-webkit-linear-gradient(left,#ff5b05,#d34b03)'
+                    }
+                ];
+                self.setState({
+                    motoData:data_moto,
+                    footer:footer
+                });
+            }
+            else if(data.code == '-1001'){
+                Toast.offline(data.msg);
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
+
     }
     render() {
         var self = this;
-        console.log('火焰山',this.props);
+        var motoData = this.state.motoData;
+        if(JSON.stringify(motoData)=="{}"){
+            return(
+                <div className="data-load data-load-true"><div className="msg">正在加载中...</div></div>
+            );
+        }
         var imgUrls = this.state.motoData.imgUrls.split(',');
         var data_ = [];
         for(let i in imgUrls){

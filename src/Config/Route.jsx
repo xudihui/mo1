@@ -15,6 +15,7 @@ import SearchHistory from '../Component/SearchHistory'; //登录
 import MyOwn from '../Component/MyOwn'; //买家中心
 import MotoDetail from '../Component/MotoDetail'; //摩托详情页
 import MotoDetailHot from '../Component/MotoDetailHot'; //摩托详情页
+import MotoDetailNew from '../Component/MotoDetailNew'; //摩托详情页
 import Choose from '../Component/Choose'; //摩托详情页
 import MySelling from '../Component/MySelling'; //摩托详情页
 import SellEdit from '../Component/SellEdit'; //卖车编辑页
@@ -53,6 +54,8 @@ const RouteConfig = (
             <Route path="myOwn" component={MyOwn} />
             <Route path="motoDetail" component={MotoDetail} onEnter={requireLogin}/>
             <Route path="motoDetailHot" component={MotoDetailHot} onEnter={requireLogin}/>
+            <Route path="MotoDetailNew" component={MotoDetailNew} onEnter={requireLogin}/>
+
             <Route path="choose" component={Choose} />
             <Route path="MySelling" component={MySelling} />
             <Route path="MySetting" component={MySetting} />

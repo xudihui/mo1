@@ -181,7 +181,7 @@ class TextareaItemExample extends Component {
                     x[i] = x[i].join();
                 }
             }
-            else if(!x[i]){
+            else if(!x[i] && i!='brand_'){
                 return Toast.info('请补全信息！')
             }
         }
@@ -197,7 +197,10 @@ class TextareaItemExample extends Component {
         if(!/^1[3|4|5|7|8][0-9]{9}$/.test(x['tel'])){
             return Toast.info('请输入正确的手机号码！')
         }
-        x.title='_';//title必须要有值，否则接口报错
+        if(x['brand'] == '未知' && x['brand_'] == ''){
+            return Toast.info('没有找到您的爱车品牌，请在输入框中填入！',3)
+        }
+        x.title =`${x.productDate.slice(0,4)}年 ${x.brand=='未知' ? x.brand_ : x.brand} ${x.motorType} ${x.motorModel}`;//title必须要有值，否则接口报错
         Tool.post($extMotorAdd,Object.assign({},x,images),function(data){
             if(data.code == '0'){
                 console.log(data);
@@ -233,11 +236,10 @@ class TextareaItemExample extends Component {
                         <List.Item arrow="horizontal">出厂年份</List.Item>
                     </Picker>
                     <Picker
-                        {...getFieldProps('area111')}
+                        {...getFieldProps('motorType')}
                         data={dataModel_}
                         cascade={false}
                         extra="请选择(可选)"
-
                     >
                         <List.Item arrow="horizontal">车型类别</List.Item>
                     </Picker>
@@ -250,20 +252,20 @@ class TextareaItemExample extends Component {
                         <List.Item arrow="horizontal">品牌</List.Item>
                     </Picker>
                     <InputItem
-                        {...getFieldProps('displacement_')}
+                        {...getFieldProps('brand_')}
                         clear
                         placeholder="没有找到，请在此输入"
                         maxLength="11"
                     >其它品牌</InputItem>
                     <InputItem
-                        {...getFieldProps('displacement__')}
+                        {...getFieldProps('motorModel')}
                         clear
                         placeholder="请输入所选品牌的型号"
                         maxLength="11"
                     >型号</InputItem>
                     <List.Item
                         extra={<Switch
-                            {...getFieldProps('hasAbs', {
+                            {...getFieldProps('urgent', {
                                 initialValue: false,
                                 valuePropName: 'checked',
                             })}

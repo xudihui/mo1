@@ -29,37 +29,59 @@ class Main extends Component {
         console.log('个人中心：',props.params.userId)
         this.state = {
             edit: props.state.userInfo.realName,
+            userId:props.params.userId,
+            userInfo:'',
+            data:'loading'
         }
     }
     componentDidMount() {
         document.body.scrollTop = 0;
+        var self = this;
 
-
+        //请求用户信息
+        Tool.post($extGetUserInfoById,{userId:self.state.userId},function(data){
+            if(data.code == '0'){
+                self.setState({userInfo:data.response || {}});
+            }
+            else if(data.code == '-1001'){
+                Toast.offline(data.msg);
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
+        //请求用户在售车辆
+        Tool.post($extMotorFindPage,{userId:self.state.userId,rows:100},function(data){
+            if(data.code == '0'){
+                self.setState({data:data.response.searchData || []});
+            }
+            else if(data.code == '-1001'){
+                Toast.offline(data.msg);
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
     }
     render() {
-        const { getFieldProps,getFieldError } = this.props.form;
-        const {userInfo} = this.props.state;
-        const {login} = this.props;
-        console.log('个人信息：',userInfo)
+        const {userInfo,data} = this.state;
         return (
             <div className="mySetting" >
-                <TopNavBar title={this.props.params.userId}/>
+                <TopNavBar title='卖家个人主页'/>
                 <div className="myTop">
                     <img className="myImg" src={userInfo.headUrl || myHead} />
                     <p>
-                        {userInfo.realName}
+                        {userInfo.userName}
                     </p>
                     <p>
-                       我就是我不一样的烟火！
+                        {userInfo.sign || '该用户暂无个性签名'}
                     </p>
                 </div>
                 <WhiteSpace />
-                <MyHotList title="在售车辆" data={this.props.MyList.myHotList} paddingBottom="50px"/>
-                <div className="btnWrap">
-                    <Button className="btn" type="primary"  onClick={() => {
+                {
+                    data == 'loading' ? <div className="data-load data-load-true"><div className="msg">正在加载中...</div></div> : <MyHotList title="在售车辆" from="new" data={data} paddingBottom="50px"/>
+                }
 
-                    }}>查看全部</Button>
-                </div>
             </div>
         );
     }

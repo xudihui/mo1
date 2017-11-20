@@ -16,16 +16,15 @@ import { Toast } from 'antd-mobile-web';
 class ListItem extends Component {
     render() {
         var {item} = this.props;
-        var city = '';
-        if(item.tel.split('$')[1] && item.tel.split('$')[1] != '全国'){
-            city = '[' + item.tel.split('$')[1] + ']';
+        var city = item.cityName || '';
+        if(city){
+            city = '[' + city + ']';
         }
-
         return (
             <div className="talk">
                 <div className="name" data-flex="main:justify">
                     <span onClick={()=>{
-                        history.push(`personcenter/${item.tel}`)
+                        history.push(`personcenter/${item.userId}`)
                     }}>{city}{item.tel.slice(0,3)+'****'+item.tel.slice(7,11)}说:</span>
                     <span>{getDateDiff(item.createTime)}</span>
                 </div>

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory,hashHistory, Link } from 'react-router';
 
-import { history,formatParams} from './index';
+import { history,formatParams,dataCityNo} from './index';
 
 import { Tool, merged } from '../../Tool';
 import { Toast } from 'antd-mobile-web';
@@ -15,7 +15,7 @@ import { Toast } from 'antd-mobile-web';
  */
 class ListItem extends Component {
     render() {
-        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs,productDate} = this.props.data;
+        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs,productDate,area} = this.props.data;
         let {from,showType,location,setState,state} = this.props;
         let edit = this.props.edit || false;
         var {pathname, search} = location || {};
@@ -34,14 +34,17 @@ class ListItem extends Component {
         return (
             <div className="index-list-panel">
                 <div style={{background:'#f1f1f1',height:'7px'}} className="blank"></div>
-                <Link to={`motoDetail?id=${id}&from=${from||'data'}`} onClick={(e)=>{
+                <Link to={`/motoDetail?id=${id}&from=${from||'data'}`} onClick={(e)=>{
                     if(edit){
                         e.preventDefault()
                         return
                     }
                     if(from == 'myHotList'){
                         e.preventDefault();
-                        history.push(`motoDetailHot?id=${id}&from=${from||'data'}`)
+                        history.push(`/motoDetailHot?id=${id}&from=${from}`)
+                    }else if(from == 'new'){
+                        e.preventDefault();
+                        history.push(`/motoDetailNew?id=${id}&from=${from}`)
                     }
 
                 }}>
@@ -66,8 +69,8 @@ class ListItem extends Component {
                                 </div>
                                 <div>
                                     {
-                                        !edit && <div>
-                                            {`${mileage}公里/${productDate?productDate.slice(0,4) : '未知'}年/${hasAbs!='false'?'ABS':''}`}
+                                        !edit && <div style={{display:'none'}}>
+
                                         </div>
                                     }
                                     {
@@ -119,8 +122,10 @@ class ListItem extends Component {
                                         </div>
                                     }
                                 </div>
-                                <div>
-                                    ￥{price/100}元
+                                <div  data-flex="main:justify">
+                                    <span>￥{price/100}元</span>
+                                    <span style={{color:'#aaa',fontSize:'.25rem'}}><i className="iconfont icon-shouhuodizhi"></i>{dataCityNo[area.split(',')[1]]}</span>
+
                                 </div>
                             </div>
                         </div>
@@ -142,7 +147,10 @@ export default class ListMoto extends Component {
             <ul className="index-list">
                 {
                     this.props.list.map((item, index) => {
-                        return <ListItem {...this.props} key={index} data={item} />
+                        if(JSON.stringify(item)!="{}"){
+                            return <ListItem {...this.props} key={index} data={item} />
+                        }
+
                     })
                 }
             </ul>
