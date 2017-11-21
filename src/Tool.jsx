@@ -114,7 +114,7 @@ Tool.post = function (pathname, data, success, error) {
         type: 'POST', //请求的方式
         data: {request:JSON.stringify(data)}, //发给服务器的数据
         success: success || function () { }, //请求成功执行方法
-        error: error || function () {alert('error')} //请求失败执行方法
+        error: error || function () {Toast.offline('哎呀，人气太火爆了，当前服务器繁忙，请稍后再试！',4)} //请求失败执行方法
     };
     return Tool.ajax(setting);
 };

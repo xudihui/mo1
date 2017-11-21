@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
-import { history,dataBrand,dataModel,dataCity,TopNavBar,dataCityNo } from './common/index';
+import { history,dataBrand,dataModel,dataCity,TopNavBar,Empty } from './common/index';
 import { Modal,List ,InputItem,Grid,NoticeBar, WhiteSpace,Toast, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import ImageChoose from './ImageChoose';
 import { createForm } from 'rc-form';
@@ -71,15 +71,18 @@ class Main extends Component {
                 <div className="myTop">
                     <img className="myImg" src={userInfo.headUrl || myHead} />
                     <p>
-                        {userInfo.userName}
+                        {userInfo.userName || '无名先生'}
                     </p>
                     <p>
-                        {userInfo.sign || '该用户暂无个性签名'}
+                        {userInfo.sign || ''}
                     </p>
                 </div>
                 <WhiteSpace />
                 {
                     data == 'loading' ? <div className="data-load data-load-true"><div className="msg">正在加载中...</div></div> : <MyHotList title="在售车辆" from="new" data={data} paddingBottom="50px"/>
+                }
+                {
+                    data.length == 0 && <Empty text="该用户暂无出售中的车辆！" />
                 }
 
             </div>

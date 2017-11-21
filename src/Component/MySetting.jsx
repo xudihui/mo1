@@ -40,7 +40,7 @@ class Main extends Component {
 
                 </div>
                 <List className="my-list">
-                    <List.Item extra="v0.1.2" arrow="horizontal"  onClick={() => {Toast.success('已是最新版本')}}>检查更新</List.Item>
+                    <List.Item extra="v0.1.4" arrow="horizontal"  onClick={() => {Toast.success('已是最新版本')}}>检查更新</List.Item>
                     <List.Item extra="" arrow="horizontal" onClick={() => {location.href='tel:15067425400'}}>联系客服</List.Item>
                     <Link  to="/help">
                         <List.Item extra="" arrow="horizontal" onClick={() => {}}>关于我们</List.Item>

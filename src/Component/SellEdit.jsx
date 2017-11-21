@@ -112,7 +112,6 @@ for(let i in keys_dataCityNo){
 class TextareaItemExample extends Component {
     constructor(props) {
         super(props);
-        console.log('摩托车编辑页：',props);
         var queryKeys = Object.keys(props.state.path);
         var id = props.location.query.id;
         var current = '';
@@ -221,7 +220,7 @@ class TextareaItemExample extends Component {
                     x[i] = x[i].join();
                 }
             }
-            else if(!x[i]){
+            else if(!x[i] && i!='brand_'){
                 return Toast.info('请补全信息！')
             }
         }
@@ -245,10 +244,9 @@ class TextareaItemExample extends Component {
 
 
         var self = this;
-        //更新state数据
+        x.lastPrice = self.state.data.price*100;
+        //直接修改state数据，谨慎使用
         self.normal['data'][self.current] = Object.assign({},x,images,{id:this.state.data.id,status:'edit'})
-        console.log(Object.assign({},x,images));
-        console.log(Object.assign({},x,images,{id:this.state.data.id}))
       //  return;
         Tool.post($extMotorUpdate,Object.assign({},x,images,{id:this.state.data.id}),function(data){
             if(data.code == '0'){
@@ -281,7 +279,6 @@ class TextareaItemExample extends Component {
         return (
             <div style={{overflowX:'hidden'}}>
                 <TopNavBar title="编辑车辆信息"  />
-                <div style={{height:'30px'}}></div>
                 <List renderHeader={() => '完善车辆信息能增加价格哦'}>
                     <Picker
                         {...getFieldProps('productDate')}

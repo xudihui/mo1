@@ -31,7 +31,7 @@ const data2 = [
     {
         title:'已售车辆',
         icon:'icon-wancheng',
-        url:"/building"
+        url:"/steps"
     },
     {
         title:'在售车辆',
@@ -51,7 +51,7 @@ class My extends Component {
         return (
             <div style={{paddingBottom:'2px'}}>
                 <div className="myTop">
-                     <img className="myImg" src={userInfo.headUrl || myHead} />
+                     <img className="myImg animated jackInTheBox" src={userInfo.headUrl || myHead} />
                     <p>
                     {
                         userInfo && <span>

@@ -4,37 +4,49 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import MyHotList from './common/MyHotList';
-import { history,formatParams} from './common/index';
-import { Tabs, WhiteSpace, Toast, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
+import { history,formatParams,DataLoad,dataCityNo} from './common/index';
+import { Tabs, WhiteSpace, Toast, Icon,Menu, ActivityIndicator, Picker,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
-import Rows from './Rows';
+import bmw from '../Images/logo/bmw.jpg';
+import dkd from '../Images/logo/dkd.jpg';
+import hl from '../Images/logo/hl.jpg';
+import cq from '../Images/logo/cq.jpg';
+import ktm from '../Images/logo/ktm.jpg';
+import bt from '../Images/logo/bt.jpg';
+import ymh from '../Images/logo/ymh.jpg';
+import lm from '../Images/logo/lm.jpg';
+import bnl from '../Images/logo/bnl.jpg';
+import cf from '../Images/logo/cf.jpg';
 
-import bmw from '../Images/bmw.jpg';
-import honda from '../Images/honda.jpg';
-import cq from '../Images/cq.jpg';
-import ducati from '../Images/ducati.jpg';
-import ktm from '../Images/ktm.jpg';
-import halei from '../Images/halei.jpg';
-import benelli from '../Images/benelli.jpg';
-import cf from '../Images/cf.jpg';
-const tabs = [
-    { title: <Badge text={'3'}>First Tab</Badge> },
-    { title: <Badge text={'今日(20)'}>Second Tab</Badge> },
-    { title: <Badge dot>Third Tab</Badge> },
-];
-const TabLine = () => (
-    <Tabs tabs={tabs} initialPage={2} animated={false} useOnPan={false}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-            Content of first tab
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-            Content of second tab
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-            Content of third tab
-        </div>
-    </Tabs>
-);
+var keys_dataCityNo = Object.keys(dataCityNo);
+var arr_dataCityNo = [];
+var m = 0;
+for(let i in keys_dataCityNo){
+    if(isNaN(i)){
+        continue;
+    }
+    var temp = {
+        label:dataCityNo[keys_dataCityNo[i]],
+        value:keys_dataCityNo[i],
+        children:[]
+    }
+    if(keys_dataCityNo[i].indexOf('0000') > -1){
+        if(m != 0){
+            arr_dataCityNo.push(m);
+        }
+        m = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i],
+            children:[]
+        }
+    }else{
+        var temp = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i]
+        }
+        m.children.push(temp)
+    }
+}
 
 /**
  * 买车模块入口
@@ -60,10 +72,10 @@ class Banner extends Component {
                     if(data.response[i]['status'] == 'on'){
                         arr.push('http://www.mo1.cn/'+data.response[i]['imgUrl'])
                     }
-                    self.setState({
-                        data: arr,
-                    });
                 }
+                self.setState({
+                    data: arr
+                });
             }
             else{
                 Toast.info('公告图获取失败！');
@@ -72,16 +84,17 @@ class Banner extends Component {
     }
     render() {
         const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
-        console.log(hProp)
         var self = this;
+        if(this.state.data.length == 0){
+            return(<DataLoad />)
+        }
         return (
             <div >
-
                 <Carousel
                     className="my-carousel"
                     autoplay={true}
+                    selectedIndex={0}
                     infinite
-                    selectedIndex={1}
                     swipeSpeed={25}
                 >
                     {this.state.data.map((ii,index) => (
@@ -106,7 +119,9 @@ class Main extends Component {
         this.handleCheck.bind(this);
         this.state = {
             open: false,
-            matchIndex:-1
+            matchIndex:-1,
+            urgent:[],
+            visible:false
         }
     }
     handlerSetMatch(e,index){
@@ -134,20 +149,77 @@ class Main extends Component {
         //doQuery width queryData
 
     }
+    makePrice(datas){
+        return(
+            <div>
+                {
+                    datas.map((i,index)=>{
+                      return <Link key={index} className="p2" onClick={() => {
+                          var target = Object.assign({},datas[index]['search'])
+                          this.props.changeTab_('Buy')
+                          history.replace(`/?${formatParams(target)}`)
+                      }
+                      }>
+                          {
+                              datas[index]['title']
+                          }
+                      </Link>
+                    })
+                }
+            </div>
+        )
+    }
+    makeModel(datas){
+        return(
+            <div>
+                {
+                    datas.map((i,index)=>{
+                        return <Link key={index} className="p1" onClick={() => {
+                            var target = Object.assign({},datas[index]['search'])
+                            this.props.changeTab_('Buy')
+                            history.replace(`/?${formatParams(target)}`)
+                        }
+                        }>
+                            {
+                                datas[index]['title']
+                            }
+                        </Link>
+                    })
+                }
+            </div>
+        )
+    }
     handleClick(e){
 // 阻止合成事件与最外层document上的事件间的冒泡
         e.nativeEvent.stopImmediatePropagation();
     }
     componentDidMount(){
+        document.body.scrollTop = 0;
         var self = this;
         document.addEventListener('click', () => { //遮罩类的组件最好把事件都绑定在doc上进行阻止冒泡
             console.log('document');
             self.handlerSetMatch(false,-1);
         });
 
+        //请求急售车辆
+        Tool.post($extMotorFindPage,{urgent:true,rows:3},function(data){
+            if(data.code == '0'){
+                self.setState({
+                    urgent:data.response.searchData
+                });
+            }
+            else if(data.code == '-1001'){
+                Toast.offline(data.msg);
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
+
     }
 
     render() {
+        var {setCity} = this.props;
         return (
             <div>
                 <div className='topWrap'>
@@ -157,9 +229,27 @@ class Main extends Component {
                                 history.push('/SearchHistory');
                             }} placeholder="请输入车系/车型" />
                         </div>
-                        <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.city||'全国'}
-                            <i className="iconfont icon-shouhuodizhi"></i>
-                        </div>
+                        <Picker
+                            visible={this.state.visible}
+                            data={arr_dataCityNo}
+                            value={['110000', '110100']}
+                            onChange={v =>{
+                                console.log('所选城市：',dataCityNo[v[1]]);
+                                setCity(dataCityNo[v[1]]);
+                                Toast.success('已切换至'+dataCityNo[v[1]],1)
+                            } }
+                            onOk={() =>{
+                                this.setState({ visible: false });
+                            }}
+                            onDismiss={() => this.setState({ visible: false })}
+                            extra="请选择(可选)"
+                            cols = '2'
+                        >
+                            <div className="city"  data-flex="main:center cross:center" onClick={() => this.setState({ visible: true })}>{this.props.city||'全国'}
+                                <i className="iconfont icon-shouhuodizhi"></i>
+                            </div>
+                        </Picker>
+
                     </div>
                 </div>
                 <div style={{paddingTop:'40px'}}>
@@ -168,65 +258,53 @@ class Main extends Component {
 
                 <div className="sub-title">快速选车</div>
                 <div className="content">
-                    <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{maxPrice:5000000})
-                        this.props.changeTab_('Buy')
-                        history.replace(`/?${formatParams(target)}`)
+                    {
+                        this.makePrice([
+                            {
+                                search:{maxPrice:5000000},
+                                title:'5万以下'
+                            },
+                            {
+                                search:{maxPrice:10000000,minPrice:5000000},
+                                title:'5~10万'
+                            },
+                            {
+                                search:{maxPrice:15000000,minPrice:10000000},
+                                title:'10~15万'
+                            },
+                            {
+                                search:{minPrice:15000000},
+                                title:'15万以上'
+                            },
+                        ])
                     }
-                    }>
-                        5万以下
-                    </Link>
-                    <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{maxPrice:10000000,minPrice:5000000})
-                        this.props.changeTab_('Buy')
-                        history.replace(`/?${formatParams(target)}`)
+                    {
+                        this.makeModel([
+                            {
+                                search:{motorType:'跑车'},
+                                title:'跑车'
+                            },
+                            {
+                                search:{motorType:'拉力'},
+                                title:'拉力'
+                            },
+                            {
+                                search:{motorType:'街车'},
+                                title:'街车'
+                            },
+                            {
+                                search:{motorType:'巡航'},
+                                title:'巡航'
+                            },,
+                            {
+                                search:{motorType:'踏板'},
+                                title:'踏板'
+                            }
+                        ])
                     }
-                    }>
-                        5~10万
-                    </Link>
-                    <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{maxPrice:15000000,minPrice:10000000})
-                        this.props.changeTab_('Buy')
-                        history.replace(`/?${formatParams(target)}`)
-                    }
-                    }>
-                        10~15万
-                    </Link>
-                    <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{minPrice:15000000})
-                        this.props.changeTab_('Buy')
-                        history.replace(`/?${formatParams(target)}`)
-                    }
-                    }>
-                        15万以上
-                    </Link>
 
-                    <Link className="p1" onClick={() => {
-                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
-                    }
-                    }>
-                        跑车
-                    </Link>
-                    <Link className="p1" onClick={() => {
-                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
-                    }
-                    }>
-                        拉力
-                    </Link>
-                    <Link className="p1" onClick={() => {
-                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
-                    }
-                    }>
-                        街车
-                    </Link>
-                    <Link className="p1" onClick={() => {
-                        Toast.info('周总新需求，正在迁移数据和重构数据接口，敬请期待！',4)
-                    }
-                    }>
-                        巡航
-                    </Link>
 
-                    <Link className="p1" onClick={() => {
+                    <Link className="p1 animated swing" onClick={() => {
                         var target = Object.assign({},{brand:'BMW'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
@@ -235,17 +313,26 @@ class Main extends Component {
                         <img src={bmw} />
                         <span>宝马</span>
                     </Link>
-                    <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{brand:'Honda'});
+                    <Link className="p1 animated swing" onClick={() => {
+                        var target = Object.assign({},{brand:'Ducati'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
                     }>
-                        <img src={honda} />
-                        <span>本田</span>
+                        <img src={dkd} />
+                        <span>杜卡迪</span>
                     </Link>
-                    <Link className="p1" onClick={() => {
+                    <Link className="p1 animated swing" onClick={() => {
 
+                        var target = Object.assign({},{brand:'Harley-Davidson'});
+                        this.props.changeTab_('Buy')
+                        history.replace(`/?${formatParams(target)}`)
+                    }
+                    }>
+                        <img src={hl} />
+                        <span>哈雷</span>
+                    </Link>
+                    <Link className="p1 animated swing" onClick={() => {
                         var target = Object.assign({},{brand:'Kawasaki'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
@@ -254,16 +341,7 @@ class Main extends Component {
                         <img src={cq} />
                         <span>川崎</span>
                     </Link>
-                    <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{brand:'Ducati'});
-                        this.props.changeTab_('Buy')
-                        history.replace(`/?${formatParams(target)}`)
-                    }
-                    }>
-                        <img src={ducati} />
-                        <span>杜卡迪</span>
-                    </Link>
-                    <Link className="p1" onClick={() => {
+                    <Link className="p1 animated swing" onClick={() => {
                         var target = Object.assign({},{brand:'KTM'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
@@ -272,25 +350,45 @@ class Main extends Component {
                         <img src={ktm} />
                         <span>KTM</span>
                     </Link>
-                    <Link className="p1" onClick={() => {
-                        var target = Object.assign({},{brand:'Harley-Davidson'});
+                    <Link className="p1 animated swing" onClick={() => {
+                        var target = Object.assign({},{brand:'Honda'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
                     }>
-                        <img src={halei} />
-                        <span>哈雷</span>
+                        <img src={bt} />
+                        <span>本田</span>
                     </Link>
-                    <Link className="p1" onClick={() => {
+                    <Link className="p1 animated swing" onClick={() => {
+                        var target = Object.assign({},{brand:'Yamaha'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        <img src={ymh} />
+                        <span>雅马哈</span>
+                    </Link>
+
+
+                    <Link className="p1 animated swing" onClick={() => {
+                        var target = Object.assign({},{brand:'Suzuki'});
+                        this.props.changeTab_('Buy');
+                        history.replace(`/?${formatParams(target)}`);
+                    }
+                    }>
+                        <img src={lm} />
+                        <span>铃木</span>
+                    </Link>
+                    <Link className="p1 animated swing" onClick={() => {
                         var target = Object.assign({},{brand:'Benelli'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
                     }>
-                        <img src={benelli} />
+                        <img src={bnl} />
                         <span>贝纳利</span>
                     </Link>
-                    <Link className="p1" onClick={() => {
+                    <Link className="p1 animated swing" onClick={() => {
                         var target = Object.assign({},{brand:'Cf'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
@@ -317,6 +415,7 @@ class Main extends Component {
                         }
                     }}>立即免费卖车</Button>
                 </div>
+                <MyHotList data={this.state.urgent} title="急售车源" from="new" />
                 <MyHotList data={this.props.state.myHotList} paddingBottom="50px"/>
             </div>
         );

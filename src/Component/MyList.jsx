@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import ListMoto from './common/ListMoto';
-import { history,dataBrand,dataModel,formatParams } from './common/index';
+import { history,dataBrand,dataModel,formatParams,dataCityNo } from './common/index';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, GetData,GetNextPage,TopNavBar } from './common/index';
 import a2 from '../Images/02.jpg';
-import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder,Tag } from 'antd-mobile-web';
+import { SearchBar,Badge, Button,Toast,Picker,PlaceHolder,Tag } from 'antd-mobile-web';
 
 /**
  * 模块入口
@@ -24,6 +24,35 @@ import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder,Tag } from 'antd-mob
  */
 var tempFun = null;
 
+var keys_dataCityNo = Object.keys(dataCityNo);
+var arr_dataCityNo = [];
+var m = 0;
+for(let i in keys_dataCityNo){
+    if(isNaN(i)){
+        continue;
+    }
+    var temp = {
+        label:dataCityNo[keys_dataCityNo[i]],
+        value:keys_dataCityNo[i],
+        children:[]
+    }
+    if(keys_dataCityNo[i].indexOf('0000') > -1){
+        if(m != 0){
+            arr_dataCityNo.push(m);
+        }
+        m = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i],
+            children:[]
+        }
+    }else{
+        var temp = {
+            label:dataCityNo[keys_dataCityNo[i]],
+            value:keys_dataCityNo[i]
+        }
+        m.children.push(temp)
+    }
+}
 
 class Main extends Component {
     render() {
@@ -48,7 +77,8 @@ class Content extends Component {
             open: false,
             city:props.city || '全国',
             matchIndex:-1,
-            showType:'icon-viewlist'
+            showType:'icon-viewlist',
+            visible:false
         }
     }
     handlerSetMatch(e,index){
@@ -94,6 +124,7 @@ class Content extends Component {
     }
     render() {
         var {data,loadAnimation} = this.props.state;
+        var {setCity} = this.props;
         var query = this.props.location.query;
         var queryKeys = Object.keys(query);
         console.log('queryKeys,',queryKeys,'query,',query)
@@ -109,9 +140,25 @@ class Content extends Component {
                                     history.push(`/SearchHistory?${formatParams(target)}`);
                                 }} placeholder="请输入车系/车型" />
                             </div>
-                            <div className="city"  data-flex="main:center cross:center" onClick={() => {}}>{this.props.city || '全国'}
-                                <i className="iconfont icon-shouhuodizhi"></i>
-                            </div>
+                            <Picker
+                                visible={this.state.visible}
+                                data={arr_dataCityNo}
+                                value={['110000', '110100']}
+                                onChange={v =>{
+                                    setCity(dataCityNo[v[1]]);
+                                    Toast.success('已切换至'+dataCityNo[v[1]],1)
+                                } }
+                                onOk={() =>{
+                                    this.setState({ visible: false });
+                                }}
+                                onDismiss={() => this.setState({ visible: false })}
+                                extra="请选择(可选)"
+                                cols = '2'
+                            >
+                                <div className="city"  data-flex="main:center cross:center" onClick={() => this.setState({ visible: true })}>{this.props.city||'全国'}
+                                    <i className="iconfont icon-shouhuodizhi"></i>
+                                </div>
+                            </Picker>
                         </div>
                         <div className="match" data-flex="dir:left box:last">
                             <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>
@@ -168,14 +215,14 @@ class Content extends Component {
                 {
 
                 }
-                <div style={{height:(queryKeys.indexOf('brand')>-1 || queryKeys.indexOf('title')>-1 ) ? '70px' : '40px'}}></div>
+                <div style={{height:(queryKeys.indexOf('brand')>-1 || queryKeys.indexOf('title')>-1 || queryKeys.indexOf('motorType')>-1 ) ? '70px' : '40px'}}></div>
                 <div className="tag-container">
                     {
                         queryKeys.map(i =>{
                             console.log('queryKeys',i);
 
                             return(
-                                i == 'brand' || i == 'title' ?
+                                i == 'brand' || i == 'title' || i == 'motorType' ?
                                     <Tag closable
                                          onClose={() => {
                                              console.log('onClose');
@@ -187,8 +234,15 @@ class Content extends Component {
                                              location.reload();
                                          }}>
                                         {
-                                            (i == 'brand' ? '品牌：' : '关键字：') +  query[i]
+                                            i == 'brand' && '品牌'
                                         }
+                                        {
+                                            i == 'title' && '关键字'
+                                        }
+                                        {
+                                            i == 'motorType' && '车型'
+                                        }
+                                        {':'+query[i]}
                                     </Tag> : ''
                             );
                         })
@@ -218,8 +272,8 @@ export default GetNextPage({
     data: (props, state) => { //发送给服务器的数据
         console.log('$$$$',props)
         var {rows,page } = state;
-        var {orderKey,brand,title,area,maxPrice,minPrice,userId} = props.location.query;
-        var obj = {rows,page,orderKey,brand,title,area,maxPrice,minPrice,userId};
+        var {orderKey,brand,title,area,maxPrice,minPrice,userId,motorType,urgent} = props.location.query;
+        var obj = {rows,page,orderKey,brand,title,area,maxPrice,minPrice,userId,motorType,urgent};
         return {
             "request":JSON.stringify(obj),
             page

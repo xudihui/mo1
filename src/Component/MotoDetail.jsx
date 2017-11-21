@@ -25,7 +25,7 @@ class Banner extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            initialHeight: 200,
+            initialHeight: window.innerWidth/1.33,
             transparent: 0
         }
     }
@@ -76,6 +76,7 @@ class Banner extends Component {
                 <Carousel
                     className="my-carousel"
                     autoplay={true}
+                    easing="easeInQuad"
                     infinite
                     selectedIndex={1}
                     swipeSpeed={25}

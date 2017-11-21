@@ -16,6 +16,8 @@ import MyOwn from '../Component/MyOwn'; //买家中心
 import MotoDetail from '../Component/MotoDetail'; //摩托详情页
 import MotoDetailHot from '../Component/MotoDetailHot'; //摩托详情页
 import MotoDetailNew from '../Component/MotoDetailNew'; //摩托详情页
+import Steps from '../Component/Steps'; //摩托详情页
+
 import Choose from '../Component/Choose'; //摩托详情页
 import MySelling from '../Component/MySelling'; //摩托详情页
 import SellEdit from '../Component/SellEdit'; //卖车编辑页
@@ -61,6 +63,7 @@ const RouteConfig = (
             <Route path="MySetting" component={MySetting} />
             <Route path="MyCenter" component={MyCenter} />
             <Route path="PersonCenter/:userId" component={PersonCenter} />
+            <Route path="Steps" component={Steps} />
 
             <Route path="SellEdit" component={SellEdit} />
             <Route path="Building" component={Building} />

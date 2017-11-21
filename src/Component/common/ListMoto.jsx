@@ -15,7 +15,7 @@ import { Toast } from 'antd-mobile-web';
  */
 class ListItem extends Component {
     render() {
-        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs,productDate,area} = this.props.data;
+        let {title,status,price,mileage,id,createTime,imgUrls,hasAbs,productDate,area,lastPrice} = this.props.data;
         let {from,showType,location,setState,state} = this.props;
         let edit = this.props.edit || false;
         var {pathname, search} = location || {};
@@ -49,7 +49,7 @@ class ListItem extends Component {
 
                 }}>
                     <div className="rowMoto">
-                        <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left`}>
+                        <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left cross:center`}>
                             <img src={img_show} alt="icon" data-flex-box="0" style={imgS}/>
                             <div className="rowMotoText" data-flex="main:justify dir:top">
                                 <div >
@@ -127,11 +127,17 @@ class ListItem extends Component {
                                     <span style={{color:'#aaa',fontSize:'.25rem'}}><i className="iconfont icon-shouhuodizhi"></i>{dataCityNo[area.split(',')[1]]}</span>
 
                                 </div>
+                                {
+
+                                    lastPrice-price > 0 && <span className="animated lightSpeedIn"  style={{color:'#ff3300',textAlign:'right',fontSize:'.25rem',paddingTop:'.1rem'}}>
+                                        <i className="iconfont icon-jiangjia"></i>
+                                        {lastPrice!=price ? `${(lastPrice-price)/100000}千` : ''}
+                                        </span>
+                                }
                             </div>
                         </div>
                     </div>
                 </Link>
-
             </div>
         );
     }

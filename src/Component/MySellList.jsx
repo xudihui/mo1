@@ -198,10 +198,9 @@ export default GetNextPage({
     //url: '/api/v1/topics',
     url:$extMotorFindPage,
     data: (props, state) => { //发送给服务器的数据
-        console.log('$$$$',props)
         var {rows,page } = state;
-        var {orderKey,brand,title,area,maxPrice,minPrice,userId} = props.location.query;
-        var obj = {rows,page,orderKey,brand,title,area,maxPrice,minPrice,userId};
+        var {orderKey,brand,title,area,maxPrice,minPrice,userId,motorType} = props.location.query;
+        var obj = {rows,page,orderKey,brand,title,area,maxPrice,minPrice,userId,motorType};
         return {
             "request":JSON.stringify(obj),
             page

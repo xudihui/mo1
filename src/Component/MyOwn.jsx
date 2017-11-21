@@ -79,8 +79,6 @@ class Main extends Component {
         if(this.queryUrl){
             this.queryData(this.queryUrl);
         }
-
-
     }
     render() {
         var from = 'myown';

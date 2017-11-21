@@ -25,7 +25,7 @@ class Banner extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            initialHeight: 200,
+            initialHeight: window.innerWidth/1.33,
             transparent: 0
         }
     }

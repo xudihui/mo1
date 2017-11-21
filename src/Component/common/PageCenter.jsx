@@ -70,7 +70,7 @@
     GetNextPage.prototype.eachDOM = function() {
 
         if (this.testXhrStart()) return;
-        let length = this.el.length;
+        let length = this.el ? this.el.length : 0;
         for (let i = 0; i < length; i++) {
             if (this.testMeet(this.el[i]) === true) {
                 this.GetNextPageData(this.el[i]);
