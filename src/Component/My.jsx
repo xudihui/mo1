@@ -6,10 +6,12 @@ import { history } from './common/index';
 import { Toast,List ,Grid,NoticeBar, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 import myHead from '../Images/head.svg';
 const data1 = [
+    /*
     {
         title:'买到车辆',
         icon:'icon-xiangqing',
     },
+    */
     {
         title:'砍价记录',
         icon:'icon-5yongjinzhekou',
@@ -55,9 +57,9 @@ class My extends Component {
                     <p>
                     {
                         userInfo && <span>
-                            <p onClick={()=>{
+                            <p style={{marginLeft:'1.5em'}} onClick={()=>{
                                 history.push('/mycenter');
-                            }}>{JSON.parse(localStorage.userInfo).userName}<i className="iconfont icon-edit">编辑</i></p>
+                            }}>{JSON.parse(localStorage.userInfo).userName}<i style={{paddingLeft:'.5em'}}  className="iconfont icon-edit"></i></p>
                             {JSON.parse(localStorage.userInfo).sign || JSON.parse(localStorage.userInfo).tel}
                         </span>
                     }

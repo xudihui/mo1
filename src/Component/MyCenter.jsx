@@ -59,6 +59,7 @@ class Main extends Component {
                 self.setState({
                     edit:true
                 });
+                history.goBack();
             }
             else{
                 Toast.info(data.msg);
@@ -83,7 +84,7 @@ class Main extends Component {
                 }
                 {
                     this.state.edit && <div className="myTop">
-                        <img className="myImg" src={userInfo.headUrl || myHead} />
+                        <img className="myImg" style={{marginTop:'.5rem'}} src={userInfo.headUrl || myHead} />
                         <p>
                             {userInfo.tel}
                         </p>
@@ -158,10 +159,6 @@ class Main extends Component {
                     {
                         !this.state.edit && <Button className="btn" onClick={() => this.handlerClick()} type="primary">提交修改</Button>
                     }
-                </div>
-
-                <div className="btnWrap">
-                    <Button className="btn" onClick={() => history.goBack()} type="">返回首页</Button>
                 </div>
             </div>
         );

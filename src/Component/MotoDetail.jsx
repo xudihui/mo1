@@ -30,31 +30,7 @@ class Banner extends Component {
         }
     }
     componentDidMount() {
-        var resizeWaiter = false;
-        var self = this;
-        this.scroll = () =>{
-            if(!resizeWaiter){
-                resizeWaiter = true;
-                setTimeout(function(){
 
-                    if(document.body.scrollTop > 200){
-                        self.setState({
-                            transparent: 'none'
-                        });
-                    }
-                    else if(document.body.scrollTop < 200){
-                        self.setState({
-                            transparent: 1/200*document.body.scrollTop
-                        });
-                    }
-                    resizeWaiter = false;
-                }, 30);
-            }
-        }
-        window.addEventListener('scroll',this.scroll);
-    }
-    componentWillUnmount(){
-        window.removeEventListener('scroll',this.scroll);
     }
     render() {
         const hProp = this.state.initialHeight ? { height: this.state.initialHeight } : {};
@@ -72,7 +48,7 @@ class Banner extends Component {
         }
         return (
             <div >
-                <TopNavBar title='车辆详情' transparent={this.state.transparent} share={true} />
+                <TopNavBar title='车辆详情'  share={true} />
                 <Carousel
                     className="my-carousel"
                     autoplay={true}
@@ -272,7 +248,14 @@ class Main extends Component {
         ];
         return (
             <div className="moto-detail" >
-                <Banner data={this.state.motoData.imgUrls.split(',')} />
+                <TopNavBar title='车辆详情'  share={true} />
+
+                {
+                    /*
+                     <Banner data={this.state.motoData.imgUrls.split(',')} />
+                    * */
+                }
+
                 <div className="detail-wrap">
                     <div className="rowMotoTextDetail" >
                         <div >
@@ -331,7 +314,6 @@ class Main extends Component {
                               </div>
                       )}
                 />
-
                 <div className="sub-title">详细内容</div>
                 <div className="content">
                     <p>{this.state.motoData.content}</p>

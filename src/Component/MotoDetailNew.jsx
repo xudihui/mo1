@@ -300,7 +300,8 @@ class Main extends Component {
         ];
         return (
             <div className="moto-detail" >
-                <Banner data={this.state.motoData.imgUrls.split(',')} />
+                <TopNavBar title='车辆详情'  share={true} />
+
                 <div className="detail-wrap">
                     <div className="rowMotoTextDetail" >
                         <div >
