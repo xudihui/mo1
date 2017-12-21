@@ -279,7 +279,7 @@ class TextareaItemExample extends Component {
         return (
             <div style={{overflowX:'hidden'}}>
                 <TopNavBar title="编辑车辆信息"  />
-                <List renderHeader={() => '完善车辆信息能增加价格哦'}>
+                <List >
                     <Picker
                         {...getFieldProps('productDate')}
                         data={years}
@@ -316,15 +316,17 @@ class TextareaItemExample extends Component {
                         placeholder="请输入所选品牌的型号"
                         maxLength="11"
                     >型号</InputItem>
-                    <List.Item
-                        extra={<Switch
-                            {...getFieldProps('urgent', {
-                                initialValue: false,
-                                valuePropName: 'checked',
-                            })}
-                            onClick={(checked) => { console.log(checked); }}
-                        />}
-                    >是否急售</List.Item>
+                    <div className="am-list-item-middle-border">
+                        <List.Item
+                            extra={<Switch
+                                {...getFieldProps('urgent', {
+                                    initialValue: false,
+                                    valuePropName: 'checked',
+                                })}
+                                onClick={(checked) => { console.log(checked); }}
+                            />}
+                        >是否急售</List.Item>
+                    </div>
                     <InputItem
                         {...getFieldProps('displacement')}
                         clear
@@ -373,7 +375,7 @@ class TextareaItemExample extends Component {
                         <List.Item arrow="horizontal">车牌所在地区</List.Item>
                     </Picker>
                 </List>
-                <List renderHeader={() => '车辆图片(请您裁切成4:3的图片上传哦)'}>
+                <List renderHeader={() => '车辆图片(图片会以4:3的尺寸显示，拍照时请选择横屏拍摄.)'}>
                     <div ref="imgUrls">
                         <ImageChoose src={this.state.data.imgUrls} titles={[
                             '左侧车身',
@@ -394,9 +396,9 @@ class TextareaItemExample extends Component {
                         ]} length="15" />
                     </div>
                 </List>
-                <List renderHeader={() => '基本证件(可选)'}>
+                <List renderHeader={() => '改装件(可选)'}>
                     <div ref="License" >
-                        <ImageChoose src={this.state.data.License} titles={['车辆行驶证','购车发票','合格证']} length="3" />
+                        <ImageChoose src={this.state.data.License} titles={['部件01','部件02','部件03','部件04']} length="4" />
                     </div>
                 </List>
                 <List renderHeader={() => '请在下方简单地介绍下购买时间、使用状况等'}>

@@ -61,17 +61,17 @@ var SHARE_ = function (scene, id) {
             case 'send-link-thumb-local':
                 params.message.title = "1";
                 params.message.description = "2";
-                params.message.thumb = "www/img/res2.png";
+                params.message.thumb = "https://mmbiz.qlogo.cn/mmbiz_png/QbXdibkhIGqOwFaicqmOeiau5zRqwezaE5xcoQotbaRtV9Q20h5WuQQsWqclRovgiasKUqr39tnreyGZcrnaJgia7ag/0?wx_fmt=png";
                 params.message.media.type = Wechat.Type.LINK;
-                params.message.media.webpageUrl = "http://tech.qq.com/";
+                params.message.media.webpageUrl = "http://mo1.cn/exthtml/download/";
                 break;
 
             case 'send-link-thumb-remote':
                 params.message.title = "摩一二手车";
                 params.message.description = "最好最全的二手摩托车平台";
-                params.message.thumb = "https://mmbiz.qlogo.cn/mmbiz_png/QbXdibkhIGqM7grEg1icHTU3cuoeicmkCufbgOvS5gZE7jWfByYh4OvX18sP2gZsn5mopS592wVWY3uJKM3pSq6Yw/0?wx_fmt=jpg";
+                params.message.thumb = "https://mmbiz.qlogo.cn/mmbiz_png/QbXdibkhIGqOwFaicqmOeiau5zRqwezaE5xcoQotbaRtV9Q20h5WuQQsWqclRovgiasKUqr39tnreyGZcrnaJgia7ag/0?wx_fmt=png";
                 params.message.media.type = Wechat.Type.LINK;
-                params.message.media.webpageUrl = "http://tech.qq.com/";
+                params.message.media.webpageUrl = "http://mo1.cn/exthtml/download/";
                 break;
 
             case 'send-music':
@@ -494,7 +494,7 @@ export class TopNavBar extends Component {
                     <span data-flex="dir:left" onClick={() => {
                         !handlerClick ?  history.goBack() : handlerClick()
                     }}>
-                        <i className="iconfont icon-xiangzuojiantou"></i>
+                        <i className="iconfont icon-xiangzuojiantou" style={{padding:'10px 20px 10px 5px'}}></i>
                         <b></b>
                     </span>
                 <span>{title || '暂无标题'}</span>
@@ -570,7 +570,43 @@ export const dataModel = ["跑车","公路", "街车", "越野", "拉力", "踏�
  * @export
  * @class data
  */
-export const dataBrand = ["国产", "Aprilia", "Benelli", "BMW", "Buell", "Cagiva", "Can-Am","Cf", "Ducati", "GASGAS", "Harley-Davidson", "Honda", "Husaberg", "Husqvarna", "Indian", "Kawasaki", "KTM", "Moto Guzzi", "MV Agusta", "Piaggio", "Suzuki", "Triumph", "Vespa", "Yamaha", "VICTORY", "未知"];
+export const dataBrand = ["Aprilia阿普利亚",
+    "MV Agusta奥古斯塔",
+    "Honda本田",
+    "BMW宝马",
+    "Benelli贝纳利",
+    "Piaggio比亚乔",
+    "Peugeot标致",
+    "Kawasaki川崎",
+    "CFMOTO春风",
+    "Ducati杜卡迪",
+    "KYMCO光阳",
+    "Harley-Davidson哈雷",
+    "KTM科特姆",
+    "Triumph凯旋",
+    "Suzuki铃木",
+    "Victory胜利",
+    "Vespa",
+    "YAMAHA雅马哈",
+    "LIFAN力帆",
+    "五羊本田",
+    "铃木豪爵",
+    "新大洲本田",
+    "宗申",
+    "奔达",
+    "嘉陵",
+    "隆鑫",
+    "钱江",
+    "飞肯",
+    "古思特机车",
+    "银钢",
+    "三洋机车",
+    "鑫源",
+    "三雅",
+    "劲隆",
+    "轻骑铃木",
+    "大地鹰王",
+    "大阳","未知"];
 
 
 /**

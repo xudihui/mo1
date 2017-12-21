@@ -121,7 +121,8 @@ class Main extends Component {
         this.state = {
             motoData:data_moto,
             talks:talks,
-            footer:footer
+            footer:footer,
+            modal:false
         };
     }
     handlerChecked(index,bk){
@@ -266,6 +267,7 @@ class Main extends Component {
                         </div>
                         <div data-flex="main:justify">
                             <span ><i className="iconfont icon-lichengdixian"></i>{this.state.motoData.price/100}元</span>
+
                             <Button className="btn" type="primary" onClick={() => Modal.prompt('留言/砍价', '',
                                 [
                                     { text: '取消' },
@@ -302,18 +304,17 @@ class Main extends Component {
 
 
                 <div className="sub-title">配置参数</div>
-                <Grid data={data1}
-                      columnNum={4}
-                      hasLine={true}
-                      renderItem={dataItem => (
-                              <div style={{ padding: '0.25rem', }}>
-                                  <div style={{ color: '#333', fontSize: '0.26rem', marginTop: '0.24rem' }}>{dataItem.value}</div>
-                                  <div style={{ color: '#aaa', fontSize: '0.2rem', marginTop: '0.14rem' }}>
-                                      <span>{dataItem.title}</span>
-                                  </div>
-                              </div>
-                      )}
-                />
+                <div style={{marginTop:'-1px'}}>
+                    <List >
+                        {
+                            data1.map((dataItem,index) => {
+                                return <List.Item key={index} extra={dataItem.title}>{dataItem.value}</List.Item>
+                            })
+                        }
+
+                    </List>
+                </div>
+
                 <div className="sub-title">详细内容</div>
                 <div className="content">
                     <p>{this.state.motoData.content}</p>

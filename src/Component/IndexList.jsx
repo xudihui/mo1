@@ -116,10 +116,10 @@ class TabBarExample extends Component {
                     title="买车"
                     key="买车"
                     icon={
-                        <i className="iconfont icon-zuche"></i>
+                        <i className="iconfont icon-motuoche" style={{position:'relative',top:'-2px'}}></i>
                     }
                     selectedIcon={
-                        <i className="iconfont icon-zuche"></i>
+                        <i className="iconfont icon-motuoche" style={{position:'relative',top:'-2px'}}></i>
                     }
                     selected={this.state.selectedTab === 'Buy'}
                     onPress={() => {
