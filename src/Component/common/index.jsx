@@ -61,7 +61,7 @@ var SHARE_ = function (scene, id) {
             case 'send-link-thumb-local':
                 params.message.title = "1";
                 params.message.description = "2";
-                params.message.thumb = "https://mmbiz.qlogo.cn/mmbiz_png/QbXdibkhIGqOwFaicqmOeiau5zRqwezaE5xcoQotbaRtV9Q20h5WuQQsWqclRovgiasKUqr39tnreyGZcrnaJgia7ag/0?wx_fmt=png";
+                params.message.thumb = "http://img4.cache.netease.com/photo/0026/2014-06-26/9VM9H68H43AJ0026.jpg";
                 params.message.media.type = Wechat.Type.LINK;
                 params.message.media.webpageUrl = "http://mo1.cn/exthtml/download/";
                 break;
@@ -69,7 +69,7 @@ var SHARE_ = function (scene, id) {
             case 'send-link-thumb-remote':
                 params.message.title = "摩一二手车";
                 params.message.description = "最好最全的二手摩托车平台";
-                params.message.thumb = "https://mmbiz.qlogo.cn/mmbiz_png/QbXdibkhIGqOwFaicqmOeiau5zRqwezaE5xcoQotbaRtV9Q20h5WuQQsWqclRovgiasKUqr39tnreyGZcrnaJgia7ag/0?wx_fmt=png";
+                params.message.thumb = "http://img4.cache.netease.com/photo/0026/2014-06-26/9VM9H68H43AJ0026.jpg";
                 params.message.media.type = Wechat.Type.LINK;
                 params.message.media.webpageUrl = "http://mo1.cn/exthtml/download/";
                 break;

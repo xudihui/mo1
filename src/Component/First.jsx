@@ -305,7 +305,7 @@ class Main extends Component {
 
 
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'BMW'});
+                        var target = Object.assign({},{brand:'BMW宝马'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -314,7 +314,7 @@ class Main extends Component {
                         <span>宝马</span>
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Ducati'});
+                        var target = Object.assign({},{brand:'Ducati杜卡迪'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -324,7 +324,7 @@ class Main extends Component {
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
 
-                        var target = Object.assign({},{brand:'Harley-Davidson'});
+                        var target = Object.assign({},{brand:'Harley-Davidson哈雷'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -333,7 +333,7 @@ class Main extends Component {
                         <span>哈雷</span>
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Kawasaki'});
+                        var target = Object.assign({},{brand:'Kawasaki川崎'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -342,7 +342,7 @@ class Main extends Component {
                         <span>川崎</span>
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'KTM'});
+                        var target = Object.assign({},{brand:'KTM科特姆'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -351,7 +351,7 @@ class Main extends Component {
                         <span>KTM</span>
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Honda'});
+                        var target = Object.assign({},{brand:'Honda本田'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -360,7 +360,7 @@ class Main extends Component {
                         <span>本田</span>
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Yamaha'});
+                        var target = Object.assign({},{brand:'YAMAHA雅马哈'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -371,7 +371,7 @@ class Main extends Component {
 
 
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Suzuki'});
+                        var target = Object.assign({},{brand:'Suzuki铃木'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -380,7 +380,7 @@ class Main extends Component {
                         <span>铃木</span>
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Benelli'});
+                        var target = Object.assign({},{brand:'Benelli贝纳利'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -389,7 +389,7 @@ class Main extends Component {
                         <span>贝纳利</span>
                     </Link>
                     <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Cf'});
+                        var target = Object.assign({},{brand:'CFMOTO春风'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
