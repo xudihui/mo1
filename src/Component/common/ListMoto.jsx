@@ -16,7 +16,7 @@ import { Toast } from 'antd-mobile-web';
 class ListItem extends Component {
     render() {
         let {title,status,price,mileage,id,createTime,imgUrls,hasAbs,productDate,area,lastPrice} = this.props.data;
-        let {from,showType,location,setState,state} = this.props;
+        let {from,showType,location,setState,state,isHot} = this.props;
         let edit = this.props.edit || false;
         var {pathname, search} = location || {};
         var path = pathname + search;
@@ -33,7 +33,7 @@ class ListItem extends Component {
         }
         return (
             <div className="index-list-panel">
-                <div style={{background:'#f1f1f1',height:'7px'}} className="blank"></div>
+                <div style={{background:'#ddd',height:'5px'}} className="blank"></div>
                 <Link to={`/motoDetail?id=${id}&from=${from||'data'}`} onClick={(e)=>{
                     if(edit){
                         e.preventDefault()
@@ -44,7 +44,7 @@ class ListItem extends Component {
                         history.push(`/motoDetailHot?id=${id}&from=${from}`)
                     }else if(from == 'new'){
                         e.preventDefault();
-                        history.push(`/motoDetailNew?id=${id}&from=${from}`)
+                        history.push(`/motoDetailNew?id=${id}&from=${from}&isHot=${isHot}`)
                     }
 
                 }}>

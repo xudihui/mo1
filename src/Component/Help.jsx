@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import { DataLoad, Footer, UserHeadImg, TabIcon,TopNavBar, GetNextPage } from './common/index';
+import myHead from '../Images/logo.png';
 const style = `
     .collapse-anim {
       transition: height .3s ease-out;
@@ -28,7 +29,7 @@ const data = [
         content:'服务中心联系，客服热线：123456。'
     }
 ];
-class Main extends Component {
+class MainBak extends Component {
     render() {
         return (
             <div >
@@ -45,6 +46,25 @@ class Main extends Component {
                         })
                     }
                 </Accordion>
+            </div>
+        );
+    }
+}
+class Main extends Component {
+    render() {
+        return (
+            <div >
+                <TopNavBar title="关于摩一二手车"/>
+                <div className="myTop">
+                    <img className="myImg" src={myHead} />
+                    <p>
+                       www.mo1.cn
+                    </p>
+
+                </div>
+                <p style={{textIndent:'2em',margin:'1em',lineHeight:'2',fontSize:'15px'}}>
+                    第二好用的摩一二手摩托车信息发布平台，是宁波摩托之旅科技有限公司旗下的摩托车交易平台。
+                </p>
             </div>
         );
     }

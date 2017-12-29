@@ -301,10 +301,24 @@ class Main extends Component {
                         </div>
                     </div>
                 </div>
+                <div className="content">
+                    {
+                        data_.map(i =>{
+                            return <img src={i} />
+                        })
+                    }
+                </div>
+                <div className="sub-title">车况概述</div>
+                <div className="content">
+                    <p>{this.state.motoData.content}</p>
+                </div>
 
-
+                <div className="sub-title">大家在说</div>
+                <div className="content">
+                    <Discuss list={ this.state.talks} />
+                </div>
                 <div className="sub-title">配置参数</div>
-                <div style={{marginTop:'-1px'}}>
+                <div>
                     <List >
                         {
                             data1.map((dataItem,index) => {
@@ -313,23 +327,6 @@ class Main extends Component {
                         }
 
                     </List>
-                </div>
-
-                <div className="sub-title">详细内容</div>
-                <div className="content">
-                    <p>{this.state.motoData.content}</p>
-                    {
-                        data_.map(i =>{
-                            return <img src={i} />
-                        })
-                    }
-
-
-                </div>
-
-                <div className="sub-title">大家在说</div>
-                <div className="content">
-                    <Discuss list={ this.state.talks} />
                 </div>
                 <MyHotList {...this.props} data={this.props.state.myHotList}  paddingBottom="50px"/>
 

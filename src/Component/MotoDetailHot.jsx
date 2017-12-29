@@ -265,35 +265,32 @@ class Main extends Component {
                         </div>
                     </div>
                 </div>
-
-
-                <div className="sub-title">配置参数</div>
-                <Grid data={data1}
-                      columnNum={4}
-                      hasLine={true}
-                      renderItem={dataItem => (
-                              <div style={{ padding: '0.25rem', }}>
-                                  <div style={{ color: '#333', fontSize: '0.26rem', marginTop: '0.24rem' }}>{dataItem.value}</div>
-                                  <div style={{ color: '#aaa', fontSize: '0.2rem', marginTop: '0.14rem' }}>
-                                      <span>{dataItem.title}</span>
-                                  </div>
-                              </div>
-                      )}
-                />
-
-                <div className="sub-title">详细内容</div>
                 <div className="content">
-                    <p>{this.state.motoData.content}</p>
                     {
                         data_.map(i =>{
                             return <img src={i} />
                         })
                     }
                 </div>
+                <div className="sub-title">车况概述</div>
+                <div className="content">
+                    <p>{this.state.motoData.content}</p>
+                </div>
 
                 <div className="sub-title">大家在说</div>
-                <div className="content" style={{marginBottom:'60px'}}>
+                <div className="content">
                     <Discuss list={ this.state.talks} />
+                </div>
+                <div className="sub-title">配置参数</div>
+                <div>
+                    <List >
+                        {
+                            data1.map((dataItem,index) => {
+                                return <List.Item key={index} extra={dataItem.title}>{dataItem.value}</List.Item>
+                            })
+                        }
+
+                    </List>
                 </div>
                 <div style={{position:'fixed',width:'100%',bottom:'0',background:'#fff'}} data-flex="main:justify">
                     {

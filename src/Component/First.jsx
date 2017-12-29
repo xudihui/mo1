@@ -415,10 +415,11 @@ class Main extends Component {
                         }
                     }}>立即免费卖车</Button>
                 </div>
-                <MyHotList data={this.state.urgent} title="急售车源" from="new" />
-                <MyHotList data={this.props.state.myHotList} paddingBottom="50px"/>
+                <MyHotList isHot={true} data={this.state.urgent} title="急售车源" from="new" />
+                <MyHotList isHot={true} data={this.props.state.myHotList} paddingBottom="50px"/>
             </div>
         );
     }
 }
 export default connect((state) => {return{state:state['MyList'],city:state['User']['city']}},action())(Main);
+
