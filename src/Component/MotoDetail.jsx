@@ -308,16 +308,16 @@ class Main extends Component {
                         })
                     }
                 </div>
-                <div className="sub-title">车况概述</div>
+                <div className="am-list-header">车况概述</div>
                 <div className="content">
                     <p>{this.state.motoData.content}</p>
                 </div>
 
-                <div className="sub-title">大家在说</div>
+                <div className="am-list-header">大家在说</div>
                 <div className="content">
                     <Discuss list={ this.state.talks} />
                 </div>
-                <div className="sub-title">配置参数</div>
+                <div className="am-list-header">配置参数</div>
                 <div>
                     <List >
                         {

@@ -68,7 +68,7 @@ var SHARE_ = function (scene, id) {
 
             case 'send-link-thumb-remote':
                 params.message.title = "摩一二手车";
-                params.message.description = "第二好用的摩一二手摩托车信息发布平台";
+                params.message.description = "第二好用的二手摩托车信息发布平台";
                 params.message.thumb = "https://cdnweb04.96225.com/images/logo.jpg";
                 params.message.media.type = Wechat.Type.LINK;
                 params.message.media.webpageUrl = "http://mo1.cn/exthtml/download/";

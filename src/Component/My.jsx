@@ -30,11 +30,13 @@ const data1 = [
     }
 ];
 const data2 = [
+    /*
     {
         title:'已售车辆',
         icon:'icon-wancheng',
         url:"/steps"
     },
+    */
     {
         title:'在售车辆',
         icon:'icon-weiwancheng',

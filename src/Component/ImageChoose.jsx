@@ -7,7 +7,7 @@ import { Tool, merged } from '../Tool';
 
 //添加水印图片
 import water from '../Images/water.png';
-
+var scrollTop = 0
 /**
  * (图片裁切组件)
  *
@@ -159,7 +159,15 @@ class Main extends React.Component {
         const fileInput = this.refs.enter;
         var self = this;
         fileInput.addEventListener('change', (e) => {
-            Toast.loading('图片准备裁切中...',0);
+            Toast.loading('图片准备裁切中...',0)
+            scrollTop = document.body.scrollTop;
+            document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:hidden;height:'+window.innerHeight + 'px');
+            var inputs = document.querySelectorAll('input[type=file]');
+            for(let i in inputs){
+                if(!isNaN(i)){
+                    inputs[i].style.display = 'none'
+                }
+            }
             const file = e.target.files.item(0);
             if (!file || !imageType.test(file.type)) {
                 return;
@@ -251,10 +259,17 @@ export default class ImageChoose extends Component {
     onDone(el){
         var src_ = this.state.src;
         src_.push(el);
-        console.log('上传图片',src_)
         this.setState({
             src:src_
-        })
+        });;
+        document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:auto;height:auto');
+        document.body.scrollTop = scrollTop;
+        var inputs = document.querySelectorAll('input[type=file]');
+        for(let i in inputs){
+            if(!isNaN(i)){
+                inputs[i].style.display = 'block'
+            }
+        }
     }
     onDel(index){
 

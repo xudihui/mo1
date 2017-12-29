@@ -220,7 +220,7 @@ class TextareaItemExample extends Component {
                     x[i] = x[i].join();
                 }
             }
-            else if(!x[i] && i!='brand_'){
+            else if(!x[i] && (i!='brand_' && i!='urgent')){
                 return Toast.info('请补全信息！')
             }
         }
@@ -375,7 +375,7 @@ class TextareaItemExample extends Component {
                         <List.Item arrow="horizontal">车牌所在地区</List.Item>
                     </Picker>
                 </List>
-                <List renderHeader={() => '车辆图片(图片会以4:3的尺寸显示，拍照时请选择横屏拍摄.)'}>
+                <List renderHeader={() => '车辆图片(图片会以4:3显示，拍照时请选择横屏拍摄.)'}>
                     <div ref="imgUrls">
                         <ImageChoose src={this.state.data.imgUrls} titles={[
                             '左侧车身',

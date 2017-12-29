@@ -221,7 +221,7 @@ class Main extends Component {
     render() {
         var {setCity} = this.props;
         return (
-            <div>
+            <div style={{paddingBottom:'50px'}}>
                 <div className='topWrap'>
                     <div className="top" onClick={(e) => {this.handleClick(e)}} data-flex="dir:left box:last" >
                         <div>
@@ -416,7 +416,7 @@ class Main extends Component {
                     }}>立即免费卖车</Button>
                 </div>
                 <MyHotList isHot={true} data={this.state.urgent} title="急售车源" from="new" />
-                <MyHotList isHot={true} data={this.props.state.myHotList} paddingBottom="50px"/>
+                <MyHotList isHot={true} data={this.props.state.myHotList} />
             </div>
         );
     }

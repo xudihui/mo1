@@ -35,12 +35,12 @@ class Main extends Component {
                 <div className="myTop">
                     <img className="myImg" src={myHead} />
                     <p>
-                        <i className="iconfont icon-huo"></i>版本号：v0.1.6
+                        <i className="iconfont icon-huo"></i>版本号：v0.1.6.1
                     </p>
 
                 </div>
                 <List className="my-list">
-                    <List.Item extra="v0.1.6" arrow="horizontal"  onClick={() => {Toast.success('已是最新版本')}}>检查更新</List.Item>
+                    <List.Item extra="v0.1.6.1" arrow="horizontal"  onClick={() => {Toast.success('已是最新版本')}}>检查更新</List.Item>
                     <List.Item extra="" arrow="horizontal" onClick={() => {location.href='tel:15067425400'}}>联系客服</List.Item>
                     <Link  to="/help">
                         <List.Item extra="" arrow="horizontal" onClick={() => {}}>关于我们</List.Item>
