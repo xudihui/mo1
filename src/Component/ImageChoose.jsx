@@ -161,7 +161,7 @@ class Main extends React.Component {
         fileInput.addEventListener('change', (e) => {
             Toast.loading('图片准备裁切中...',0)
             scrollTop = document.body.scrollTop;
-            document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:hidden;height:'+window.innerHeight + 'px');
+            document.querySelector('.am-tab-bar-tabpane-active') && document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:hidden;height:'+window.innerHeight + 'px');
             var inputs = document.querySelectorAll('input[type=file]');
             for(let i in inputs){
                 if(!isNaN(i)){
@@ -262,7 +262,7 @@ export default class ImageChoose extends Component {
         this.setState({
             src:src_
         });;
-        document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:auto;height:auto');
+        document.querySelector('.am-tab-bar-tabpane-active') && document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:auto;height:auto');
         document.body.scrollTop = scrollTop;
         var inputs = document.querySelectorAll('input[type=file]');
         for(let i in inputs){
