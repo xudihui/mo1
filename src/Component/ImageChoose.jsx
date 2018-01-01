@@ -84,13 +84,13 @@ class Main extends React.Component {
             oCanvas = this.refs.c,
             wrap = this.refs.wrap,
             oCtx = oCanvas.getContext('2d');
-            oCanvas.style.height = oCanvas.offsetWidth*1/self.state.crop.aspect + 'px';
-            oCanvas.setAttribute('width',oCanvas.offsetWidth*2); //让绘图更加清晰
-            oCanvas.setAttribute('height',oCanvas.offsetHeight*2);//让绘图更加清晰
-            oColorImg.style.display= 'block';
-            var oColorImgWidth = oColorImg.offsetWidth;//被裁切的图片宽度;
-            var oColorImgHeight = oColorImg.offsetHeight;//被裁切的图片高度;
-            console.log('图片宽度：',oColorImg.offsetWidth,'X轴偏移量：',self.state.crop.x)
+        oCanvas.style.height = oCanvas.offsetWidth*1/self.state.crop.aspect + 'px';
+        oCanvas.setAttribute('width',oCanvas.offsetWidth*2); //让绘图更加清晰
+        oCanvas.setAttribute('height',oCanvas.offsetHeight*2);//让绘图更加清晰
+        oColorImg.style.display= 'block';
+        var oColorImgWidth = oColorImg.offsetWidth;//被裁切的图片宽度;
+        var oColorImgHeight = oColorImg.offsetHeight;//被裁切的图片高度;
+        console.log('图片宽度：',oColorImg.offsetWidth,'X轴偏移量：',self.state.crop.x)
         if(oColorImg.offsetWidth/oColorImg.offsetHeight > self.state.crop.aspect){ //高度小于传入比例
             var changeWidth = oCanvas.offsetHeight*oColorImgWidth/oColorImgHeight;//放大后的图片宽度
             var y = 0;
@@ -107,51 +107,51 @@ class Main extends React.Component {
         console.log('XXX：',oCanvas.offsetWidth/0.5,oColorImg.offsetHeight/0.5)
         water.style.display = 'inline-block';
         //pc上传需要*2
-      //  oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
+        //  oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
         oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oCanvas.offsetHeight*2-30);
         water.style.display = 'none';
-            var pngData = oCanvas.toDataURL('image/jpeg');
-            // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
-            var x = document.querySelectorAll('.am-list-body');
-            for(let i in x){
-                try{
-                    x[i].style.position = 'relative'
-                }catch(e){
-                }
+        var pngData = oCanvas.toDataURL('image/jpeg');
+        // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
+        var x = document.querySelectorAll('.am-list-body');
+        for(let i in x){
+            try{
+                x[i].style.position = 'relative'
+            }catch(e){
             }
-            wrap.setAttribute('class','imageChoose imageChooseDone');
-            wrap.style.position = 'relative';
-/*
-        oColorImg.src = pngData;
+        }
+        wrap.setAttribute('class','imageChoose imageChooseDone');
+        wrap.style.position = 'relative';
+        /*
+         oColorImg.src = pngData;
+         self.setState({
+         done:true,
+         winWidth:'100%'
+         });
+         return;
+         */
+        Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
+            if(data.code == '0'){
+                Toast.info('图片上传成功！',.5);
+                console.log(data.response.fileRdfUrl+data.response.fileUrl);
+                oColorImg.src = pngData;
+                wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
+                self.props.onDone(data.response.fileRdfUrl+'/'+data.response.fileUrl)
+            }
+            else{
+                Toast.offline(data.msg);
+                self.onInit();
+            }
+        })
         self.setState({
             done:true,
             winWidth:'100%'
         });
-        return;
-*/
-            Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
-                if(data.code == '0'){
-                    Toast.info('图片上传成功！',.5);
-                    console.log(data.response.fileRdfUrl+data.response.fileUrl);
-                    oColorImg.src = pngData;
-                    wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
-                    self.props.onDone(data.response.fileRdfUrl+'/'+data.response.fileUrl)
-                }
-                else{
-                    Toast.offline(data.msg);
-                    self.onInit();
-                }
-            })
-            self.setState({
-                done:true,
-                winWidth:'100%'
-            });
 
     }
     componentDidMount(){
-       if(this.props.src){
-           this.onImgDone();
-       }
+        if(this.props.src){
+            this.onImgDone();
+        }
         /**
          * Select an image file.
          */
@@ -227,7 +227,7 @@ class Main extends React.Component {
                         this.onDone();
                     }} >完成</p>
                     {
-                         this.state.src != 0 && <ReactCrop
+                        this.state.src != 0 && <ReactCrop
                             crop={this.state.crop}
                             minWidth={100}
                             src={this.state.src}
@@ -245,6 +245,201 @@ class Main extends React.Component {
         );
     }
 }
+
+
+
+class MainNative extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            crop: {
+                width: 100,
+                aspect: props.aspect || 1.33 //默认4：3，通过属性取比例
+            },
+            keepSelection:true,
+            minWidth:100,
+            pixelCrop_:{},
+            src:0,
+            done:false,
+            winWidth:window.innerWidth+'px'
+        };
+    }
+    //重新上传
+    onInit(){
+        var {index,onDel} = this.props;
+        onDel(index);
+        this.refs.wrap.setAttribute('class','imageChoose');
+        this.refs.img.style.display = 'none';
+        this.setState({
+            pixelCrop_:{},
+            src:0,
+            done:false,
+            winWidth:window.innerWidth+'px'
+        })
+    }
+    onCropComplete(crop, pixelCrop){
+        console.log('Crop move complete:', crop, pixelCrop);
+        this.setState({
+            pixelCrop_:pixelCrop,
+            crop
+        });
+
+    }
+    onImgDone(){
+        var self = this;
+        var oColorImg = this.refs.img;
+        var wrap = this.refs.wrap;
+        var x = document.querySelectorAll('.am-list-body');
+        for(let i in x){
+            try{
+                x[i].style.position = 'relative'
+            }catch(e){
+            }
+        }
+        wrap.setAttribute('class','imageChoose imageChooseDone');
+        wrap.style.position = 'relative';
+        oColorImg.src = this.props.src;
+        oColorImg.style.display = 'block';
+        wrap.setAttribute('src',self.props.src);//从服务器拿图片
+        this.setState({
+            done:true,
+            winWidth:'100%'
+        });
+    }
+    onDone(){
+        var self = this;
+        var oColorImg = this.refs.img,
+            water = this.refs.water,
+            oCanvas = this.refs.c,
+            wrap = this.refs.wrap,
+            oCtx = oCanvas.getContext('2d');
+
+        oColorImg.style.display= 'block';
+        var oColorImgWidth = oColorImg.offsetWidth;//被裁切的图片宽度;
+        var oColorImgHeight = oColorImg.offsetHeight;//被裁切的图片高度;
+        oCanvas.style.height = oColorImgHeight + 'px';
+        oCanvas.setAttribute('width',oColorImgWidth*2); //让绘图更加清晰
+        oCanvas.setAttribute('height',oColorImgHeight*2);//让绘图更加清晰
+        oCtx.drawImage(oColorImg,0,0,oColorImgWidth*2,oColorImgHeight*2);
+        water.style.display = 'inline-block';
+        //pc上传需要*2
+        //  oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
+        oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oCanvas.offsetHeight*2-30);
+        water.style.display = 'none';
+        var pngData = oCanvas.toDataURL('image/jpeg');
+        // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
+        var x = document.querySelectorAll('.am-list-body');
+        for(let i in x){
+            try{
+                x[i].style.position = 'relative'
+            }catch(e){
+            }
+        }
+        wrap.setAttribute('class','imageChoose imageChooseDone');
+        wrap.style.position = 'relative';
+        /*
+         oColorImg.src = pngData;
+         self.setState({
+         done:true,
+         winWidth:'100%'
+         });
+         return;
+         */
+        Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
+            if(data.code == '0'){
+                Toast.info('图片上传成功！',.5);
+                console.log(data.response.fileRdfUrl+data.response.fileUrl);
+                oColorImg.src = pngData;
+                wrap.setAttribute('src',data.response.fileRdfUrl+'/'+data.response.fileUrl);//从服务器拿图片
+                self.props.onDone(data.response.fileRdfUrl+'/'+data.response.fileUrl)
+            }
+            else{
+                Toast.offline(data.msg);
+                self.onInit();
+            }
+        })
+        self.setState({
+            done:true,
+            winWidth:'100%'
+        });
+
+    }
+    componentDidMount(){
+        if(this.props.src){
+            this.onImgDone();
+        }
+        /**
+         * Select an image file.
+         */
+        const imageType = /^image\//;
+        const fileInput = this.refs.enter;
+        var self = this;
+        fileInput.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: 0,
+                allowEdit:true,
+                mediaType:0,
+
+            });
+
+            function onSuccess(imageURL) {
+                var img = document.createElement("img");
+                document.body.appendChild(img);
+                img.src =  "data:image/jpeg;base64," + imageURL;
+                //先进行一次大范围的缩放
+                img.onload = function(){
+                    var canvas = document.createElement("canvas");
+                    var ctx=canvas.getContext("2d");
+                    var w = img.offsetWidth;
+                    var h = img.offsetHeight;
+                    canvas.setAttribute('width',window.innerWidth*2);
+                    canvas.setAttribute('height',window.innerWidth*2*h/w);
+                    canvas.style.width = window.innerWidth + 'px';
+                    canvas.style.height = window.innerWidth*h/w + 'px';
+                    ctx.drawImage(img,0,0,window.innerWidth*2,window.innerWidth*2*h/w);
+                    var pngData = canvas.toDataURL('image/jpeg');
+                    document.body.removeChild(img);
+                    self.setState({
+                        src:pngData
+                    });
+                    self.onDone();
+                }
+
+            }
+            function onFail(message) {
+                Toast.offline('图片上传失败');
+            }
+        });
+
+    }
+    render() {
+        var {title} = this.props;
+        return (
+            <div className="imageChoose" style={{display:this.props.display}} ref="wrap" >
+                <i className="iconfont icon-shanchu" onClick={()=>{
+                    Modal.alert('删除', `确定删除辛辛苦苦上传的图片吗?`, [
+                        { text: '取消', onPress: () => console.log('cancel') },
+                        { text: '确定', onPress: () => this.onInit()},
+                    ])
+
+                }}></i>
+                <img src={this.state.src} ref="img" style={{width:this.state.winWidth,display:'none'}} alt=""/>
+                <img src={water} ref="water" style={{width:'100px',height:'10px',display:'none'}} alt=""/>
+                <div className="imageChooseWorkSpace" style={{display:this.state.done ? 'none' : 'block'}}>
+                    <i className="iconfont icon-lnicon12">
+                    </i>
+                    <input ref="enter" type="file"  />
+                    <canvas ref="c" style={{width:this.state.winWidth}} />
+                </div>
+
+                <span className="title">{title}</span>
+            </div>
+        );
+    }
+}
+
 export default class ImageChoose extends Component {
     constructor(props) {
         super(props);
@@ -261,13 +456,15 @@ export default class ImageChoose extends Component {
         src_.push(el);
         this.setState({
             src:src_
-        });;
-        document.querySelector('.am-tab-bar-tabpane-active') && document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:auto;height:auto');
-        document.body.scrollTop = scrollTop;
-        var inputs = document.querySelectorAll('input[type=file]');
-        for(let i in inputs){
-            if(!isNaN(i)){
-                inputs[i].style.display = 'block'
+        });
+        if(!window.__Native){
+            document.querySelector('.am-tab-bar-tabpane-active') && document.querySelector('.am-tab-bar-tabpane-active').setAttribute('style','overflow:auto;height:auto');
+            document.body.scrollTop = scrollTop;
+            var inputs = document.querySelectorAll('input[type=file]');
+            for(let i in inputs){
+                if(!isNaN(i)){
+                    inputs[i].style.display = 'block'
+                }
             }
         }
     }
@@ -307,8 +504,12 @@ export default class ImageChoose extends Component {
         return (
             <div className="cropWrap"  >
                 {
-                    arr.map((i,index)=><Main key={index} aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
+                   window.__Native && arr.map((i,index)=><MainNative key={index} aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
                 }
+                {
+                    !window.__Native && arr.map((i,index)=><Main key={index} aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
+                }
+
             </div>
         );
     }

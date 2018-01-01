@@ -256,7 +256,7 @@ class Main extends Component {
                     <Banner />
                 </div>
 
-                <div className="sub-title">快速选车</div>
+
                 <div className="content">
                     {
                         this.makePrice([

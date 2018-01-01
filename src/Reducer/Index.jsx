@@ -82,6 +82,10 @@ const DB = (_ID = '', seting = {}) => {
             localStorage.setItem('myViewList',JSON.stringify(state.myViewList))
             return merged(state);
         },
+        setCity:(state, target) => {
+
+            return (state);
+        },
     }
     return (state = {}, action = {}) => {
         if (action._ID && action._ID !== _ID || action.type=='setTime' ) {

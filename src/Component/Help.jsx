@@ -56,7 +56,7 @@ class Main extends Component {
             <div >
                 <TopNavBar title="关于摩一二手车"/>
                 <div className="myTop">
-                    <img className="myImg" src={myHead} />
+                    <img className="myImg"  style={{marginTop:'.45rem'}} src={myHead} />
                     <p>
                        www.mo1.cn
                     </p>
