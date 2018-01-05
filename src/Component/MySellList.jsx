@@ -99,7 +99,7 @@ class Content extends Component {
         return (
             <div>
                 <TopNavBar title="出售中的车辆"  />
-                <div className='topWrap' style={{top:'39px'}}>
+                <div className='topWrap' style={{top:'49px'}}>
                     <div>
                         <div className="match" data-flex="dir:left box:last">
                             <div onClick={(e)=>{this.handlerSetMatch(e,0)}}>排序<i className="iconfont icon-xiangxiajiantou"></i></div>

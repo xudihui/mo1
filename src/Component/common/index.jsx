@@ -494,7 +494,7 @@ export class TopNavBar extends Component {
                     <span data-flex="dir:left" onClick={() => {
                         !handlerClick ?  history.goBack() : handlerClick()
                     }}>
-                        <i className="iconfont icon-xiangzuojiantou" style={{padding:'10px 20px 10px 5px'}}></i>
+                        <i className="iconfont icon-xiangzuojiantou" style={{padding:'15px 20px 15px 5px'}}></i>
                         <b></b>
                     </span>
                 <span>{title || '暂无标题'}</span>
@@ -506,7 +506,7 @@ export class TopNavBar extends Component {
                    }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'65px',color:'#ff5b05'}}> 分享</i>
                 }
             </div>
-            <div style={{height:'38px'}}></div>
+            <div style={{height:'48px'}}></div>
             <Popover mask
                      overlayClassName="fortest"
                      overlayStyle={{ color: 'currentColor' }}
@@ -518,7 +518,7 @@ export class TopNavBar extends Component {
                      ]}
                      align={{
                          overflow: { adjustY: 0, adjustX: 0 },
-                         offset: [offsetX, 15],
+                         offset: [offsetX, 25],
                      }}
                      onVisibleChange={this.handleVisibleChange.bind(this)}
                      onSelect={this.onSelect.bind(this)}
@@ -570,25 +570,25 @@ export const dataModel = ["跑车","公路", "街车", "越野", "拉力", "踏�
  * @export
  * @class data
  */
-export const dataBrand = ["Aprilia阿普利亚",
-    "MV Agusta奥古斯塔",
-    "Honda本田",
-    "BMW宝马",
-    "Benelli贝纳利",
-    "Piaggio比亚乔",
-    "Peugeot标致",
-    "Kawasaki川崎",
-    "CFMOTO春风",
-    "Ducati杜卡迪",
-    "KYMCO光阳",
-    "Harley-Davidson哈雷",
-    "KTM科特姆",
-    "Triumph凯旋",
-    "Suzuki铃木",
-    "Victory胜利",
+export const dataBrand = ["Aprilia",
+    "MV Agusta",
+    "Honda",
+    "BMW",
+    "Benelli",
+    "Piaggio",
+    "Peugeot",
+    "Kawasaki",
+    "CFMOTO",
+    "Ducati",
+    "KYMCO",
+    "Harley-Davidson",
+    "KTM",
+    "Triumph",
+    "Suzuki",
+    "Victory",
     "Vespa",
-    "YAMAHA雅马哈",
-    "LIFAN力帆",
+    "YAMAHA",
+    "LIFAN",
     "五羊本田",
     "铃木豪爵",
     "新大洲本田",

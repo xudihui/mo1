@@ -309,24 +309,10 @@ class MainNative extends React.Component {
     onDone(){
         var self = this;
         var oColorImg = this.refs.img,
-            water = this.refs.water,
-            oCanvas = this.refs.c,
-            wrap = this.refs.wrap,
-            oCtx = oCanvas.getContext('2d');
+            wrap = this.refs.wrap;
 
         oColorImg.style.display= 'block';
-        var oColorImgWidth = oColorImg.offsetWidth;//被裁切的图片宽度;
-        var oColorImgHeight = oColorImg.offsetHeight;//被裁切的图片高度;
-        oCanvas.style.height = oColorImgHeight + 'px';
-        oCanvas.setAttribute('width',oColorImgWidth*2); //让绘图更加清晰
-        oCanvas.setAttribute('height',oColorImgHeight*2);//让绘图更加清晰
-        oCtx.drawImage(oColorImg,0,0,oColorImgWidth*2,oColorImgHeight*2);
-        water.style.display = 'inline-block';
-        //pc上传需要*2
-        //  oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oColorImg.offsetHeight*2-30);
-        oCtx.drawImage(water,oCanvas.offsetWidth*2-220,oCanvas.offsetHeight*2-30);
-        water.style.display = 'none';
-        var pngData = oCanvas.toDataURL('image/jpeg');
+        var pngData = self.state.src;
         // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
         var x = document.querySelectorAll('.am-list-body');
         for(let i in x){
@@ -337,14 +323,6 @@ class MainNative extends React.Component {
         }
         wrap.setAttribute('class','imageChoose imageChooseDone');
         wrap.style.position = 'relative';
-        /*
-         oColorImg.src = pngData;
-         self.setState({
-         done:true,
-         winWidth:'100%'
-         });
-         return;
-         */
         Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
             if(data.code == '0'){
                 Toast.info('图片上传成功！',.5);
@@ -374,6 +352,9 @@ class MainNative extends React.Component {
         const imageType = /^image\//;
         const fileInput = this.refs.enter;
         var self = this;
+        var targetWidth = 800;
+        var targetHeight = 800/self.state.crop.aspect;
+        var water = this.refs.water;
         fileInput.addEventListener('click', (e) => {
             e.preventDefault();
             navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
@@ -381,32 +362,28 @@ class MainNative extends React.Component {
                 sourceType: 0,
                 allowEdit:true,
                 mediaType:0,
-
+                targetWidth: targetWidth,
+                targetHeight: targetHeight
             });
-
             function onSuccess(imageURL) {
-                var img = document.createElement("img");
-                document.body.appendChild(img);
+                var img = new Image();
                 img.src =  "data:image/jpeg;base64," + imageURL;
                 //先进行一次大范围的缩放
                 img.onload = function(){
                     var canvas = document.createElement("canvas");
                     var ctx=canvas.getContext("2d");
-                    var w = img.offsetWidth;
-                    var h = img.offsetHeight;
-                    canvas.setAttribute('width',window.innerWidth*2);
-                    canvas.setAttribute('height',window.innerWidth*2*h/w);
-                    canvas.style.width = window.innerWidth + 'px';
-                    canvas.style.height = window.innerWidth*h/w + 'px';
-                    ctx.drawImage(img,0,0,window.innerWidth*2,window.innerWidth*2*h/w);
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img,0,0, img.width, img.height);
+                    water.style.display = 'inline-block';
+                    ctx.drawImage(water,img.width-220,oCanvas.img.height-30);
+                    water.style.display = 'none';
                     var pngData = canvas.toDataURL('image/jpeg');
-                    document.body.removeChild(img);
                     self.setState({
                         src:pngData
                     });
                     self.onDone();
                 }
-
             }
             function onFail(message) {
                 Toast.offline('图片上传失败');
