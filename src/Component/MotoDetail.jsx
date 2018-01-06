@@ -234,16 +234,12 @@ class Main extends Component {
                 value:this.state.motoData.mileage+'公里',
             },
             {
-                title:'排量',
-                value:(this.state.motoData.displacement || '未知')+'CC',
+                title:'型号排量',
+                value:(this.state.motoData.motorModel || '未知'),
             },
             {
                 title:'车型',
                 value:(this.state.motoData.motorType || '未知车型'),
-            },
-            {
-                title:'型号',
-                value:(this.state.motoData.motorModel || '未知型号'),
             }
 
         ];
