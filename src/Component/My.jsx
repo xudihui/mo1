@@ -55,8 +55,9 @@ class My extends Component {
         return (
             <div style={{paddingBottom:'2px'}}>
                 <div className="myTop">
-                     <img className="myImg animated jackInTheBox" src={userInfo.headUrl || myHead} />
+                     <img className="myImg animated jackInTheBox" src={userInfo.headUrl || myHead} style={{marginTop:!userInfo ? '.45rem' : '.3rem' }} />
                     <p>
+
                     {
                         userInfo && <span>
                             <p style={{marginLeft:'1.5em'}} onClick={()=>{

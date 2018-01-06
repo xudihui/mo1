@@ -357,37 +357,91 @@ class MainNative extends React.Component {
         var water = this.refs.water;
         fileInput.addEventListener('click', (e) => {
             e.preventDefault();
-            navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
-                destinationType: Camera.DestinationType.DATA_URL,
-                sourceType: 0,
-                allowEdit:true,
-                mediaType:0,
-                targetWidth: targetWidth,
-                targetHeight: targetHeight
-            });
-            function onSuccess(imageURL) {
-                var img = new Image();
-                img.src =  "data:image/jpeg;base64," + imageURL;
-                //先进行一次大范围的缩放
-                img.onload = function(){
-                    var canvas = document.createElement("canvas");
-                    var ctx=canvas.getContext("2d");
-                    canvas.width = img.width;
+            var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            function convertImgToBase64(url, callback, outputFormat) {
+                var canvas = document.createElement('canvas'),
+                    ctx = canvas.getContext('2d'),
+                    img = new Image;
+                img.crossOrigin = 'Anonymous';
+                img.onload = function() {
                     canvas.height = img.height;
-                    ctx.drawImage(img,0,0, img.width, img.height);
+                    canvas.width = img.width;
+                    ctx.drawImage(img, 0, 0);
                     water.style.display = 'inline-block';
-                    ctx.drawImage(water,img.width-220,oCanvas.img.height-30);
+                    ctx.drawImage(water,img.width-220,img.height-30);
                     water.style.display = 'none';
-                    var pngData = canvas.toDataURL('image/jpeg');
-                    self.setState({
-                        src:pngData
-                    });
-                    self.onDone();
+                    var dataURL = canvas.toDataURL(outputFormat || 'image/jpeg');
+                    callback(dataURL);
+                    canvas = null;
+                };
+                img.src = url;
+            }
+            if(isAndroid == true){
+                var onSuccess = function(imageURL) {
+                    var options = {
+                        url: imageURL,              // required.
+                        ratio: self.props.ratio || "1/1",               // optional. (here you can define your custom ration) default: 1:1
+                        title: "摩一切图工具",       // optional. android only. (here you can put title of image cropper activity) default: Image Cropper
+                        autoZoomEnabled: true      // optional. android only. for iOS its always true (if it is true then cropper will automatically adjust the view) default: true
+                    }
+                    window.plugins.k.imagecropper.open(options, function(data) {
+
+                        convertImgToBase64(data.imgPath,function(base_){
+                            self.setState({
+                                src:base_
+                            });
+                            self.onDone();
+                        })
+                    }, function(error) {
+                        Toast.offline('图片上传失败！');
+                    })
                 }
+                var onFail = function(message) {
+                    Toast.offline('图片上传失败');
+                }
+                navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                    destinationType: Camera.DestinationType.FILE_URI,
+                    sourceType: 0,
+                    allowEdit:false,
+                    mediaType:0
+                });
             }
-            function onFail(message) {
-                Toast.offline('图片上传失败');
+            else{
+                var onSuccess = function(imageURL) {
+                    var img = new Image();
+                    img.src =  "data:image/jpeg;base64," + imageURL;
+                    //先进行一次大范围的缩放
+                    img.onload = function(){
+                        var canvas = document.createElement("canvas");
+                        var ctx=canvas.getContext("2d");
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        ctx.drawImage(img,0,0, img.width, img.height);
+                        water.style.display = 'inline-block';
+                        ctx.drawImage(water,img.width-220,img.height-30);
+                        water.style.display = 'none';
+                        var pngData = canvas.toDataURL('image/jpeg');
+                        self.setState({
+                            src:pngData
+                        });
+                        self.onDone();
+                    }
+                }
+                var onFail = function(message) {
+                    Toast.offline('图片上传失败');
+                }
+                navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                    destinationType: Camera.DestinationType.DATA_URL,
+                    sourceType: 0,
+                    allowEdit:true,
+                    mediaType:0,
+                    targetWidth: targetWidth,
+                    targetHeight: targetHeight
+                });
+
             }
+
         });
 
     }
@@ -481,7 +535,7 @@ export default class ImageChoose extends Component {
         return (
             <div className="cropWrap"  >
                 {
-                   window.__Native && arr.map((i,index)=><MainNative key={index} aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
+                   window.__Native && arr.map((i,index)=><MainNative key={index} ratio={this.props.ratio} aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)
                 }
                 {
                     !window.__Native && arr.map((i,index)=><Main key={index} aspect={this.props.aspect} src={i.src} index={index} title={i.title} onDone={this.onDone.bind(this)} onDel={this.onDel.bind(this)} display={i.display} />)

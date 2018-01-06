@@ -331,7 +331,7 @@ class TextareaItemExample extends Component {
                 </List>
                 <List renderHeader={() => '车辆图片(图片会以4:3显示，请上传3张以上图片.)'}>
                     <div ref="imgUrls">
-                        <ImageChoose src=',,,,,,,,,,,,,,' titles={[
+                        <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
                             '左侧车身',
                             '右侧车身',
                             '仪表盘',
@@ -354,7 +354,7 @@ class TextareaItemExample extends Component {
                 </List>
                 <List renderHeader={() => '改装件(可选)'}>
                     <div ref="License" >
-                        <ImageChoose src='' titles={['部件01','部件02','部件03','部件04']} length="4" />
+                        <ImageChoose src='' ratio="4/3" titles={['部件01','部件02','部件03','部件04']} length="4" />
                     </div>
                 </List>
 

@@ -60,7 +60,7 @@ class Banner extends Component {
         super(props);
         this.state = {
             data: [],
-            initialHeight: window.innerWidth*171/640+'px',
+            initialHeight: window.innerWidth*84.8/320+'px',
         }
     }
     componentDidMount() {
@@ -304,8 +304,8 @@ class Main extends Component {
                     }
 
 
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'BMW宝马'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'BMW'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -313,8 +313,8 @@ class Main extends Component {
                         <img src={bmw} />
                         <span>宝马</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Ducati杜卡迪'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'Ducati'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -322,9 +322,9 @@ class Main extends Component {
                         <img src={dkd} />
                         <span>杜卡迪</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
+                    <Link className="p1 animated " onClick={() => {
 
-                        var target = Object.assign({},{brand:'Harley-Davidson哈雷'});
+                        var target = Object.assign({},{brand:'Harley-Davidson'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -332,8 +332,8 @@ class Main extends Component {
                         <img src={hl} />
                         <span>哈雷</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Kawasaki川崎'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'Kawasaki'});
                         this.props.changeTab_('Buy')
                         history.replace(`/?${formatParams(target)}`)
                     }
@@ -341,8 +341,8 @@ class Main extends Component {
                         <img src={cq} />
                         <span>川崎</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'KTM科特姆'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'KTM'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -350,8 +350,8 @@ class Main extends Component {
                         <img src={ktm} />
                         <span>KTM</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Honda本田'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'Honda'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -359,8 +359,8 @@ class Main extends Component {
                         <img src={bt} />
                         <span>本田</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'YAMAHA雅马哈'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'YAMAHA'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -370,8 +370,8 @@ class Main extends Component {
                     </Link>
 
 
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Suzuki铃木'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'Suzuki'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -379,8 +379,8 @@ class Main extends Component {
                         <img src={lm} />
                         <span>铃木</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'Benelli贝纳利'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'Benelli'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
@@ -388,8 +388,8 @@ class Main extends Component {
                         <img src={bnl} />
                         <span>贝纳利</span>
                     </Link>
-                    <Link className="p1 animated swing" onClick={() => {
-                        var target = Object.assign({},{brand:'CFMOTO春风'});
+                    <Link className="p1 animated " onClick={() => {
+                        var target = Object.assign({},{brand:'CFMOTO'});
                         this.props.changeTab_('Buy');
                         history.replace(`/?${formatParams(target)}`);
                     }
