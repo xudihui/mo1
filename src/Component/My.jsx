@@ -80,7 +80,7 @@ class My extends Component {
                         }></i>
 
                 </div>
-                <div className="sub-title">买家中心</div>
+                <div className="sub-title sub-title-no">买家中心</div>
                 <Grid data={data1}
                       columnNum={4}
                       hasLine={false}
@@ -95,7 +95,7 @@ class My extends Component {
                           </Link>
                       )}
                 />
-                <div className="sub-title">卖家中心</div>
+                <div style={{marginTop:'.5rem'}} className="sub-title sub-title-no">卖家中心</div>
                 <Grid data={data2}
                       columnNum={4}
                       hasLine={false}

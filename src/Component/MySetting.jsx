@@ -35,12 +35,12 @@ class Main extends Component {
                 <div className="myTop">
                     <img className="myImg" style={{marginTop:'.45rem'}} src={myHead} />
                     <p>
-                        <i className="iconfont icon-huo"></i>版本号：v0.1.6.1
+                        <i className="iconfont icon-huo"></i>版本号：v0.2.0
                     </p>
 
                 </div>
                 <List className="my-list">
-                    <List.Item extra="v0.1.6.1" arrow="horizontal"  onClick={() => {Toast.success('已是最新版本')}}>检查更新</List.Item>
+                    <List.Item extra="v0.2.0" arrow="horizontal"  onClick={() => {Toast.success('已是最新版本')}}>检查更新</List.Item>
                     <List.Item extra="" arrow="horizontal" onClick={() => {location.href='tel:13235785858'}}>客服电话</List.Item>
                     <List.Item onClick={() => {alert(`客服邮箱地址：kefu@motozl.com`)}} arrow="horizontal" >客服邮箱</List.Item>
                     <Link  to="/help">

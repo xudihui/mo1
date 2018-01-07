@@ -6,7 +6,7 @@ import a1 from '../Images/01.jpg';
 import a2 from '../Images/02.jpg';
 import ImageChoose from './ImageChoose';
 import $ from './common/Jquery';
-import { history,dataBrand,dataModel,dataCity,dataCityNo } from './common/index';
+import { history,dataBrand,dataModel,dataCity,TopNavBar,dataCityNo } from './common/index';
 import { List, Toast, WhiteSpace,InputItem,Picker,Checkbox,Button,Modal,Switch,TextareaItem } from 'antd-mobile-web';
 import { createForm } from 'rc-form';
 import { district} from 'antd-mobile-demo-data';
@@ -119,13 +119,21 @@ class TextareaItemExample extends Component {
         super(props);
         this.state = {
             focused: false,
-            cut:a2
+            cut:a2,
+            init:false
         };
     }
+    handlerInit(){
+        this.props.form.setFieldsValue( {area:["110000","110100"],brand: undefined, motorModel: undefined, motorType: undefined,content: undefined, mileage: undefined, oriPrice: undefined, price: undefined, productDate: undefined, tel: undefined, urgent: undefined}
+        )
+        var self = this;
+        this.setState({
+            init:!self.state.init
+        })
+    }
     handlerClick(){
+        var self = this;
         var x = this.props.form.getFieldsValue();
-        //console.log(this.state);
-
         var images = {
             imgUrls:'',//车辆图片
             driLicense:'',//行驶证
@@ -161,7 +169,7 @@ class TextareaItemExample extends Component {
             }
         }
 
-        console.log(Object.assign({},x,images));
+        console.log(Object.assign({},x));
 
         //数组转字符串;
         for(let i in x){
@@ -186,7 +194,7 @@ class TextareaItemExample extends Component {
                 }
             }
 
-            else if(!x[i] && i!='urgent'){
+            else if(x[i]==undefined && i!='urgent'){
                 return Toast.info('请补全信息！')
             }
         }
@@ -202,7 +210,7 @@ class TextareaItemExample extends Component {
         x.title =`${x.productDate.slice(0,4)} ${x.brand=='未知' ? '' : x.brand} ${x.motorModel}`;//title必须要有值，否则接口报错
         Tool.post($extMotorAdd,Object.assign({},x,images),function(data){
             if(data.code == '0'){
-                console.log(data);
+                self.handlerInit();
                 alert('恭喜你，发布成功！', '',[
                     { text: '立即查看', onPress: () => {
                         changeTab_();
@@ -220,11 +228,11 @@ class TextareaItemExample extends Component {
     }
     render() {
         const { getFieldProps,getFieldError  } = this.props.form;
-        console.log('jQuery',$('body'))
         let errors;
+        var self = this;
         return (
             <div className="sellPanel">
-
+                <TopNavBar title="编辑车辆信息" back={true}  />
                 <List >
                     <div className="am-list-item-middle-border">
                         <table className="t_three">
@@ -331,30 +339,58 @@ class TextareaItemExample extends Component {
                 </List>
                 <List renderHeader={() => '车辆图片(图片会以4:3显示，请上传3张以上图片.)'}>
                     <div ref="imgUrls">
-                        <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
-                            '左侧车身',
-                            '右侧车身',
-                            '仪表盘',
-                            '车把',
-                            '车头',
-                            '车尾',
-                            '坐垫',
-                            '减震',
-                            '排气',
-                            '底部',
-                            '发动机',
-                            '发动机左',
-                            '发动机右',
-                            '前轮胎',
-                            '后轮胎',
-                        ]} length="15" />
+                        {
+                            !self.state.init &&  <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
+                                '左侧车身',
+                                '右侧车身',
+                                '仪表盘',
+                                '车把',
+                                '车头',
+                                '车尾',
+                                '坐垫',
+                                '减震',
+                                '排气',
+                                '底部',
+                                '发动机',
+                                '发动机左',
+                                '发动机右',
+                                '前轮胎',
+                                '后轮胎',
+                            ]} length="15" />
+                        }
+                        {
+                            self.state.init &&  <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
+                                '左侧车身',
+                                '右侧车身',
+                                '仪表盘',
+                                '车把',
+                                '车头',
+                                '车尾',
+                                '坐垫',
+                                '减震',
+                                '排气',
+                                '底部',
+                                '发动机',
+                                '发动机左',
+                                '发动机右',
+                                '前轮胎',
+                                '后轮胎',
+                            ]} length="15" />
+                        }
+
                     </div>
 
 
                 </List>
                 <List renderHeader={() => '改装件(可选)'}>
                     <div ref="License" >
-                        <ImageChoose src='' ratio="4/3" titles={['部件01','部件02','部件03','部件04']} length="4" />
+                        {
+                            !self.state.init &&  <ImageChoose src='' ratio="4/3" titles={['部件01','部件02','部件03','部件04']} length="4" />
+                        }
+                        {
+                            self.state.init &&  <ImageChoose src='' ratio="4/3" titles={['部件01','部件02','部件03','部件04']} length="4" />
+                        }
+
                     </div>
                 </List>
 
@@ -364,13 +400,14 @@ class TextareaItemExample extends Component {
                 {...getFieldProps('content', {
                     initialValue: '',
                 })}
-                rows={5}
-                count={100}
+                autoHeight
+                count={1000}
                     />
             </List>
                 <WhiteSpace />
                 <div className="btnWrap">
                     <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认卖车</Button>
+
                 </div>
                 <WhiteSpace />
                 <WhiteSpace />

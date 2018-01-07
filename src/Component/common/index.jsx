@@ -490,22 +490,30 @@ export class TopNavBar extends Component {
         var self = this;
         return (
         <div>
-            <div data-flex="dir:left box:first cross:center" className={`topNavBar ${transparent == '0' ? 'transparent' : ''}`}  style={{background:`rgba(255,255,255,${transparent == 'none' ? 1 : transparent})`}}>
-                    <span data-flex="dir:left" onClick={() => {
+            {
+                !self.props.back && <div data-flex="dir:left box:first cross:center" className={`topNavBar ${transparent == '0' ? 'transparent' : ''}`}  style={{background:`rgba(255,255,255,${transparent == 'none' ? 1 : transparent})`}}>
+                    <span data-flex="dir:left"  onClick={() => {
                         !handlerClick ?  history.goBack() : handlerClick()
                     }}>
                         <i className="iconfont icon-xiangzuojiantou" style={{padding:'15px 20px 15px 5px'}}></i>
                         <b></b>
                     </span>
-                <span>{title || '暂无标题'}</span>
-                {
-                   share && <i onClick={()=>{
-                     this.setState({
-                         visible:true
-                     })
-                   }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'65px',color:'#ff5b05'}}> 分享</i>
-                }
-            </div>
+                    <span>{title || '暂无标题'}</span>
+                    {
+                        share && <i onClick={()=>{
+                            this.setState({
+                                visible:true
+                            })
+                        }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'65px',color:'#ff5b05'}}> 分享</i>
+                    }
+                </div>
+            }
+            {
+                self.props.back && <div  className={`topNavBar ${transparent == '0' ? 'transparent' : ''}`}  style={{color:'#555',lineHeight:'48px',textAlign:'center'}}>
+
+                    {title || '暂无标题'}
+                </div>
+            }
             <div style={{height:'48px'}}></div>
             <Popover mask
                      overlayClassName="fortest"

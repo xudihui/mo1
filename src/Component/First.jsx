@@ -90,22 +90,32 @@ class Banner extends Component {
         }
         return (
             <div >
-                <Carousel
-                    className="my-carousel"
-                    autoplay={true}
-                    selectedIndex={0}
-                    infinite
-                    swipeSpeed={25}
-                >
-                    {this.state.data.map((ii,index) => (
-                        <Link to="/" key={ii} style={hProp}>
-                            <img
-                                src={ii}
-                                alt="摩一广告图"
-                            />
-                        </Link>
-                    ))}
-                </Carousel>
+                {
+                    this.state.data.length == 1 && <img
+                            src={this.state.data[0]}
+                            style={hProp}
+                            alt="摩一广告图"
+                        />
+                }
+                {
+                    this.state.data.length > 1 && <Carousel
+                        className="my-carousel"
+                        autoplay={true}
+                        selectedIndex={0}
+                        infinite
+                        swipeSpeed={25}
+                    >
+                        {this.state.data.map((ii,index) => (
+                            <Link to="/" key={ii} style={hProp}>
+                                <img
+                                    src={ii}
+                                    alt="摩一广告图"
+                                />
+                            </Link>
+                        ))}
+                    </Carousel>
+                }
+
             </div>
         );
     }

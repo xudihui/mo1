@@ -225,7 +225,7 @@ class TextareaItemExample extends Component {
                 }
             }
 
-            else if(!x[i] && i!='urgent'){
+            else if(x[i]==undefined && i!='urgent'){
                 return Toast.info('请补全信息！')
             }
         }

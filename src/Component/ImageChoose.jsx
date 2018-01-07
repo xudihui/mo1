@@ -365,11 +365,11 @@ class MainNative extends React.Component {
                     img = new Image;
                 img.crossOrigin = 'Anonymous';
                 img.onload = function() {
-                    canvas.height = img.height;
-                    canvas.width = img.width;
-                    ctx.drawImage(img, 0, 0);
+                    canvas.height = (window.innerWidth*2*img.height)/img.width;
+                    canvas.width = window.innerWidth*2;
+                    ctx.drawImage(img, 0, 0,canvas.width,canvas.height);
                     water.style.display = 'inline-block';
-                    ctx.drawImage(water,img.width-220,img.height-30);
+                    ctx.drawImage(water,canvas.width-220,canvas.height-30);
                     water.style.display = 'none';
                     var dataURL = canvas.toDataURL(outputFormat || 'image/jpeg');
                     callback(dataURL);
@@ -400,7 +400,7 @@ class MainNative extends React.Component {
                 var onFail = function(message) {
                     Toast.offline('图片上传失败');
                 }
-                navigator.camera.getPicture(onSuccess, onFail, { quality: 50,
+                navigator.camera.getPicture(onSuccess, onFail, { quality: 80,
                     destinationType: Camera.DestinationType.FILE_URI,
                     sourceType: 0,
                     allowEdit:false,

@@ -49,6 +49,17 @@ class TabBarExample extends Component {
         );
     }
     componentDidMount(){
+        sessionStorage.setItem('lastHeight',window.innerHeight);
+        window.onresize = function(){
+
+            if(parseInt(sessionStorage.getItem('lastHeight')) > parseInt(window.innerHeight)){
+                document.querySelector('.am-tab-bar-bar').style.position = 'static'
+            }else{
+                document.querySelector('.am-tab-bar-bar').style.position = 'fixed'
+            }
+
+            sessionStorage.setItem('lastHeight',window.innerHeight);
+        }
         var {myHotList,setCity} = this.props;
         var self = this;
         console.log('冷却成都',myHotList)

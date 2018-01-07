@@ -269,25 +269,26 @@ class Main extends Component {
         }
 
         var data1 = [
-            {
-                title:'出厂时间',
-                value:this.state.motoData.productDate.slice(0,4),
-            },
+
             {
                 title:'所在地区',
                 value:dataCityNo[this.state.motoData.area.split(',')[1]],
+            },
+            {
+                title:'出厂时间',
+                value:this.state.motoData.productDate.slice(0,4),
             },
             {
                 title:'品牌车型',
                 value:this.state.motoData.brand,
             },
             {
-                title:'行驶里程',
-                value:this.state.motoData.mileage+'公里',
-            },
-            {
                 title:'型号排量',
                 value:(this.state.motoData.motorModel || '未知'),
+            },
+            {
+                title:'行驶里程',
+                value:this.state.motoData.mileage+'公里',
             },
             {
                 title:'车型',
@@ -305,7 +306,16 @@ class Main extends Component {
                         <div >
                             {this.state.motoData.title}
                             {
-                                this.state.motoData.status == !'edit' ?  <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i> : <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                                this.state.motoData.status == 'pass' && <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i>
+                            }
+                            {
+                                this.state.motoData.status == 'edit' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                            }
+                            {
+                                this.state.motoData.status == 'unpass' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证不通过</i>
+                            }
+                            {
+                                this.state.motoData.status == 'off' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 已下架</i>
                             }
                         </div>
                         <div data-flex="main:justify">
@@ -352,7 +362,7 @@ class Main extends Component {
                 </div>
                 <div className="am-list-header">车况概述</div>
                 <div className="content">
-                    <p>{this.state.motoData.content}</p>
+                    <pre>{this.state.motoData.content}</pre>
                 </div>
 
                 <div className="am-list-header">大家在说</div>
@@ -364,7 +374,7 @@ class Main extends Component {
                     <List >
                         {
                             data1.map((dataItem,index) => {
-                                return <List.Item key={index} extra={dataItem.title}>{dataItem.value}</List.Item>
+                                return <List.Item key={index} extra={dataItem.value}>{dataItem.title}</List.Item>
                             })
                         }
 
