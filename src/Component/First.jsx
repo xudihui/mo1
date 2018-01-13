@@ -262,7 +262,7 @@ class Main extends Component {
 
                     </div>
                 </div>
-                <div style={{paddingTop:'40px'}}>
+                <div style={{paddingTop:'48px'}}>
                     <Banner />
                 </div>
 

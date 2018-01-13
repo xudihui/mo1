@@ -337,7 +337,19 @@ class TextareaItemExample extends Component {
                     >联系电话</InputItem>
                     </div>
                 </List>
-                <List renderHeader={() => '车辆图片(图片会以4:3显示，请上传3张以上图片.)'}>
+                <div className="am-list-item-middle-border">
+                <List renderHeader={() => '车辆使用状况'}>
+                    <TextareaItem
+                        {...getFieldProps('content', {
+                            initialValue: '',
+                        })}
+                        autoHeight
+                        count={1000}
+                    />
+                </List>
+                </div>
+                <div className="am-list-item-middle-border">
+                <List renderHeader={() => '图片(4:3显示，请上传3张以上)'}>
                     <div ref="imgUrls">
                         {
                             !self.state.init &&  <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
@@ -382,6 +394,7 @@ class TextareaItemExample extends Component {
 
 
                 </List>
+                </div>
                 <List renderHeader={() => '改装件(可选)'}>
                     <div ref="License" >
                         {
@@ -395,16 +408,7 @@ class TextareaItemExample extends Component {
                 </List>
 
 
-            <List renderHeader={() => '请在下方介绍车辆使用状况'}>
-            <TextareaItem
-                {...getFieldProps('content', {
-                    initialValue: '',
-                })}
-                autoHeight
-                count={1000}
-                    />
-            </List>
-                <WhiteSpace />
+
                 <div className="btnWrap">
                     <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认卖车</Button>
 

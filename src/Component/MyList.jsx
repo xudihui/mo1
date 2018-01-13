@@ -215,7 +215,7 @@ class Content extends Component {
                 {
 
                 }
-                <div style={{height:(queryKeys.indexOf('brand')>-1 || queryKeys.indexOf('title')>-1 || queryKeys.indexOf('motorType')>-1 ) ? '70px' : '40px'}}></div>
+                <div style={{height:(queryKeys.indexOf('brand')>-1 || queryKeys.indexOf('title')>-1 || queryKeys.indexOf('motorType')>-1 ) ? '70px' : '48px'}}></div>
                 <div className="tag-container">
                     {
                         queryKeys.map(i =>{

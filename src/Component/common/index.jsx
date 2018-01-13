@@ -504,8 +504,9 @@ export class TopNavBar extends Component {
                             this.setState({
                                 visible:true
                             })
-                        }} className="iconfont icon-lingcunwei" style={{position:'absolute',right:'10px',width:'65px',color:'#ff5b05'}}> 分享</i>
+                        }} className="iconfont icon-lingcunwei" style={{position:'absolute',fontSize:'14px',right:'10px',width:'65px',color:'#555'}}> 分享</i>
                     }
+
                 </div>
             }
             {

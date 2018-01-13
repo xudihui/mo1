@@ -271,35 +271,10 @@ class Main extends Component {
                                 this.state.motoData.status == 'off' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 已下架</i>
                             }
                         </div>
-                        <div data-flex="main:justify">
+                        <div style={{textAlign:'right'}}>
                             <span ><i className="iconfont icon-lichengdixian"></i>{this.state.motoData.price/100}元</span>
-
-                            <Button className="btn" type="primary" onClick={() => Modal.prompt('留言/砍价', '',
-                                [
-                                    { text: '取消' },
-                                    { text: '留言/砍价',
-                                        onPress: value => new Promise((resolve) => {
-                                            if(value == ''){
-                                                return Toast.fail('不能发布空内容！', 1);
-                                            }
-                                            Tool.post($extEvaluateAdd,{pid:self.state.motoData.id,content:value,tel:self.props.tel,cityName:self.props.city},function(data){
-                                                if(data.code == '0'){
-                                                    Toast.success('恭喜您，发布成功', 1);
-                                                    var talks_ = self.state.talks;
-                                                    talks_.unshift(data.response);
-                                                    self.setState({talks:talks_});
-                                                }
-                                                else{
-                                                    Toast.offline(data.msg)
-                                                }
-                                                resolve(); //关闭对话框
-                                            })
-
-                                        }),
-                                    },
-                                ], 'default', null, ['请输入您想说的话'])}>留言/砍价</Button>
                         </div>
-                        <div><span>新车含税{this.state.motoData.oriPrice/1000000}万</span>
+                        <div style={{marginTop:'-22px'}}><span>新车含税{this.state.motoData.oriPrice/1000000}万</span>
                             <i onClick={()=>{
                             Toast.info('新车含税价=厂家公布的指导价+购置税。结果仅供参考。')
                             }} className="iconfont icon-information"></i>
@@ -319,7 +294,32 @@ class Main extends Component {
                     <pre>{this.state.motoData.content}</pre>
                 </div>
 
-                <div className="am-list-header">大家在说</div>
+                <div className="am-list-header">大家在说
+                    <Button className="btn" type="primary" onClick={() => Modal.prompt('留言/砍价', '',
+                        [
+                            { text: '取消' },
+                            { text: '留言/砍价',
+                                onPress: value => new Promise((resolve) => {
+                                    if(value == ''){
+                                        return Toast.fail('不能发布空内容！', 1);
+                                    }
+                                    Tool.post($extEvaluateAdd,{pid:self.state.motoData.id,content:value,tel:self.props.tel,cityName:self.props.city},function(data){
+                                        if(data.code == '0'){
+                                            Toast.success('恭喜您，发布成功', 1);
+                                            var talks_ = self.state.talks;
+                                            talks_.unshift(data.response);
+                                            self.setState({talks:talks_});
+                                        }
+                                        else{
+                                            Toast.offline(data.msg)
+                                        }
+                                        resolve(); //关闭对话框
+                                    })
+
+                                }),
+                            },
+                        ], 'default', null, ['请输入您想说的话'])}>留言/砍价</Button>
+                </div>
                 <div className="content">
                     <Discuss list={ this.state.talks} />
                 </div>

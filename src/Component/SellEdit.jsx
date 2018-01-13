@@ -381,29 +381,45 @@ class TextareaItemExample extends Component {
                         >联系电话</InputItem>
                     </div>
                 </List>
-                <List renderHeader={() => '车辆图片(图片会以4:3显示，请上传3张以上图片.)'}>
-                    <div ref="imgUrls">
-                        <ImageChoose ratio="4/3"  src={this.state.data.imgUrls}  titles={[
-                            '左侧车身',
-                            '右侧车身',
-                            '仪表盘',
-                            '车把',
-                            '车头',
-                            '车尾',
-                            '坐垫',
-                            '减震',
-                            '排气',
-                            '底部',
-                            '发动机',
-                            '发动机左',
-                            '发动机右',
-                            '前轮胎',
-                            '后轮胎',
-                        ]} length="15" />
-                    </div>
 
 
-                </List>
+                <div className="am-list-item-middle-border">
+                    <List renderHeader={() => '车辆使用状况'}>
+                        <TextareaItem
+                            {...getFieldProps('content', {
+                                initialValue: '',
+                            })}
+                            autoHeight
+                            count={1000}
+                        />
+                    </List>
+                </div>
+                <div className="am-list-item-middle-border">
+                    <List renderHeader={() => '图片(4:3显示，请上传3张以上)'}>
+                        <div ref="imgUrls">
+                            <ImageChoose ratio="4/3"  src={this.state.data.imgUrls}  titles={[
+                                '左侧车身',
+                                '右侧车身',
+                                '仪表盘',
+                                '车把',
+                                '车头',
+                                '车尾',
+                                '坐垫',
+                                '减震',
+                                '排气',
+                                '底部',
+                                '发动机',
+                                '发动机左',
+                                '发动机右',
+                                '前轮胎',
+                                '后轮胎',
+                            ]} length="15" />
+
+                        </div>
+
+
+                    </List>
+                </div>
                 <List renderHeader={() => '改装件(可选)'}>
                     <div ref="License" >
                         <ImageChoose ratio="4/3" src={this.state.data.License} titles={['部件01','部件02','部件03','部件04']} length="4" />
@@ -411,16 +427,6 @@ class TextareaItemExample extends Component {
                 </List>
 
 
-                <List renderHeader={() => '请在下方介绍车辆使用状况'}>
-                    <TextareaItem
-                        {...getFieldProps('content', {
-                            initialValue: '',
-                        })}
-                        rows={5}
-                        count={100}
-                    />
-                </List>
-                <WhiteSpace />
                 <div className="btnWrap">
                     <Button className="btn" onClick={() => this.handlerClick()} type="primary">更新车辆信息</Button>
                 </div>
