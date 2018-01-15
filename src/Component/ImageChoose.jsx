@@ -290,12 +290,6 @@ class MainNative extends React.Component {
         var oColorImg = this.refs.img;
         var wrap = this.refs.wrap;
         var x = document.querySelectorAll('.am-list-body');
-        for(let i in x){
-            try{
-                x[i].style.position = 'relative'
-            }catch(e){
-            }
-        }
         wrap.setAttribute('class','imageChoose imageChooseDone');
         wrap.style.position = 'relative';
         oColorImg.src = this.props.src;
@@ -315,12 +309,6 @@ class MainNative extends React.Component {
         var pngData = self.state.src;
         // oColorImg.src = oCanvas.toDataURL('image/jpeg'); //静态赋值
         var x = document.querySelectorAll('.am-list-body');
-        for(let i in x){
-            try{
-                x[i].style.position = 'relative'
-            }catch(e){
-            }
-        }
         wrap.setAttribute('class','imageChoose imageChooseDone');
         wrap.style.position = 'relative';
         Tool.post($extFileuUpload,{base64FileStr:pngData.split('base64,')[1]},function(data){
@@ -443,7 +431,6 @@ class MainNative extends React.Component {
             }
 
         });
-
     }
     render() {
         var {title} = this.props;

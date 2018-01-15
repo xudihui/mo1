@@ -74,7 +74,7 @@ class ListItem extends Component {
                                         </div>
                                     }
                                     {
-                                        edit && <div data-flex="dir:left">
+                                        edit && <div data-flex="dir:right">
                                             <p onClick={() => {
                                                 history.push(`selledit?id=${id}&from=${from||'data'}`)
                                             }}><i className="iconfont icon-bianji" />编辑</p>

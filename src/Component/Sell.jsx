@@ -19,46 +19,23 @@ const data = [
     { value: 2, label: '有牌照' },
     { value: 3, label: '大贸车' },
 ];
-const years = [
-    [
-        {
-            label: '2010',
-            value: '2010',
-        },
-        {
-            label: '2011',
-            value: '2011',
-        },
-        {
-            label: '2012',
-            value: '2012',
-        },
-        {
-            label: '2013',
-            value: '2013',
-        },
-        {
-            label: '2014',
-            value: '2014',
-        },
-        {
-            label: '2015',
-            value: '2015',
-        },
-        {
-            label: '2016',
-            value: '2016',
-        },
-        {
-            label: '2017',
-            value: '2017',
-        },
-        {
-            label: '2018',
-            value: '2018',
-        }
-    ]
-];
+
+var makeYear = function(x){
+    var min = x[0];
+    var max = x[1];
+    var temp = [];
+    while(max > min ){
+        max--;
+        var n = max.toString();
+        temp.push({
+            label:n,
+            value:n,
+        })
+    }
+    return [temp]
+
+}
+const years = makeYear([2000,2019]);
 var keys_dataCityNo = Object.keys(dataCityNo);
 var arr_dataCityNo = [];
 var m = 0;
@@ -150,7 +127,7 @@ class TextareaItemExample extends Component {
                 if(i == 0){
                     images['imgUrls'] = imgUrls[i].getAttribute('src');
                 }
-                else{
+                else if(i != 15){
                     images['imgUrls'] = images['imgUrls'] +','+ imgUrls[i].getAttribute('src');
                 }
             }
@@ -235,7 +212,7 @@ class TextareaItemExample extends Component {
                 <TopNavBar title="编辑车辆信息" back={true}  />
                 <List >
                     <div className="am-list-item-middle-border">
-                        <table className="t_three">
+                        <table className="t_four">
                             <tr>
                                 <td>
                                     <Picker
@@ -252,72 +229,87 @@ class TextareaItemExample extends Component {
                                         {...getFieldProps('brand')}
                                         data={dataBrand_}
                                         cascade={false}
-                                        extra="品牌"
+                                        extra="品牌名称"
                                     >
                                         <List.Item arrow="horizontal"></List.Item>
                                     </Picker>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
-                                        <InputItem
-                                            {...getFieldProps('motorModel')}
-                                            clear
-                                            placeholder="输入型号排量"
-                                            maxLength="11"
-                                        ></InputItem>
+                                <td style={{width:window.innerWidth-252 + 'px'}}>
+                                    <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px',height:'44px'}}>
+
                                     </div>
-
-
                                 </td>
+                            </tr>
+                        </table>
+                        <table className="t_three">
+                            <tr>
                                 <td>
                                     <Picker
                                         {...getFieldProps('motorType')}
                                         data={dataModel_}
                                         cascade={false}
-                                        extra="类型"
+                                        extra="车辆类型"
                                     >
                                         <List.Item arrow="horizontal">类型</List.Item>
                                     </Picker>
                                 </td>
+                                <td style={{width:window.innerWidth-138 + 'px'}}>
+                                    <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
+                                        <InputItem
+                                            {...getFieldProps('motorModel')}
+                                            placeholder=""
+                                            maxLength="11"
+                                        >型号排量</InputItem>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <Picker
+                                        {...getFieldProps('area')}
+                                        data={arr_dataCityNo}
+                                        onOk={e => console.log('ok', e)}
+                                        onDismiss={e => console.log('dismiss', e)}
+                                        extra="所在城市"
+                                        cols = '2'
+
+                                    >
+                                        <List.Item arrow="horizontal"></List.Item>
+                                    </Picker>
+
+                                </td>
+                                <td style={{width:window.innerWidth-138 + 'px'}}>
+                                    <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
+                                        <InputItem
+                                            {...getFieldProps('mileage')}
+                                            placeholder=""
+                                            maxLength="9"
+                                        >行驶里程</InputItem>
+                                    </div>
+                                </td>
                             </tr>
                         </table>
-                    <InputItem
-                        {...getFieldProps('oriPrice')}
-                        clear
-                        placeholder=""
-                        extra="元"
-                        maxLength="7"
-                    >新车含税价</InputItem>
-                    <InputItem
-                        {...getFieldProps('mileage')}
-                        clear
-                        placeholder=""
-                        maxLength="9"
-                    >行驶里程</InputItem>
+
                     </div>
-                    <div className="am-list-item-middle-border">
+                    <div className="am-list-item-middle-border" style={{marginTop:'-3px'}}>
+                        <InputItem
+                            {...getFieldProps('oriPrice')}
+                            placeholder=""
+                            maxLength="7"
+                        >新车价格</InputItem>
                     <InputItem
                         {...getFieldProps('price')}
-                        clear
                         placeholder=""
                         maxLength="7"
-                        extra="元"
                     >售卖价格</InputItem>
-                    <Picker
-                        {...getFieldProps('area', {
-                            initialValue: ['110000', '110100'],
-                        })}
-                        data={arr_dataCityNo}
-                        onOk={e => console.log('ok', e)}
-                        onDismiss={e => console.log('dismiss', e)}
-                        extra="请选择(可选)"
-                        cols = '2'
-
-                    >
-                        <List.Item arrow="horizontal">车辆所在地区</List.Item>
-                    </Picker>
+                    </div>
+                    <div className="am-list-item-middle-border" >
+                        <InputItem
+                            {...getFieldProps('tel')}
+                            placeholder=""
+                            maxLength="11"
+                        >联系电话</InputItem>
 
                         <List.Item
                             extra={<Switch
@@ -329,32 +321,29 @@ class TextareaItemExample extends Component {
                             />}
                         >是否急售</List.Item>
 
-                    <InputItem
-                        {...getFieldProps('tel')}
-                        clear
-                        placeholder=""
-                        maxLength="11"
-                    >联系电话</InputItem>
+
                     </div>
                 </List>
-                <div className="am-list-item-middle-border">
-                <List renderHeader={() => '车辆使用状况'}>
+                <div className="am-list-item-middle-border" style={{padding:0}}>
+                <List renderHeader={() => '使用状况'}>
                     <TextareaItem
                         {...getFieldProps('content', {
                             initialValue: '',
                         })}
                         autoHeight
+                        rows={3}
                         count={1000}
                     />
                 </List>
                 </div>
-                <div className="am-list-item-middle-border">
-                <List renderHeader={() => '图片(4:3显示，请上传3张以上)'}>
+
+                <div className="am-list-item-middle-border" style={{padding:0}}>
+                <List renderHeader={() => '图片(请上传3张以上)'}>
                     <div ref="imgUrls">
                         {
                             !self.state.init &&  <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
-                                '左侧车身',
-                                '右侧车身',
+                                '左侧',
+                                '右侧',
                                 '仪表盘',
                                 '车把',
                                 '车头',
@@ -368,7 +357,8 @@ class TextareaItemExample extends Component {
                                 '发动机右',
                                 '前轮胎',
                                 '后轮胎',
-                            ]} length="15" />
+                                '其他'
+                            ]} length="16" />
                         }
                         {
                             self.state.init &&  <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
@@ -387,7 +377,8 @@ class TextareaItemExample extends Component {
                                 '发动机右',
                                 '前轮胎',
                                 '后轮胎',
-                            ]} length="15" />
+                                '其他'
+                            ]} length="16" />
                         }
 
                     </div>
@@ -395,6 +386,7 @@ class TextareaItemExample extends Component {
 
                 </List>
                 </div>
+                <div style={{display:'none'}}>
                 <List renderHeader={() => '改装件(可选)'}>
                     <div ref="License" >
                         {
@@ -406,19 +398,15 @@ class TextareaItemExample extends Component {
 
                     </div>
                 </List>
+                </div>
 
 
 
-                <div className="btnWrap">
+                <div className="btnWrap" style={{background:'#ddd',padding:'10px 10px 90px 10px',margin:'0'}}>
                     <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认卖车</Button>
 
                 </div>
-                <WhiteSpace />
-                <WhiteSpace />
-                <WhiteSpace />
-                <WhiteSpace />
-                <WhiteSpace />
-                <WhiteSpace />
+
             </div>
         );
     }
