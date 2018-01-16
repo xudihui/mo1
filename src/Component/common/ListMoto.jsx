@@ -33,7 +33,9 @@ class ListItem extends Component {
         }
         return (
             <div className="index-list-panel">
-                <div style={{background:'#ddd',height:'5px'}} className="blank"></div>
+                {
+                    showType != 'icon-viewlistHot' && <div style={{background:'#ddd',height:'1px'}} className="blank"></div>
+                }
                 <Link to={`/motoDetail?id=${id}&from=${from||'data'}`} onClick={(e)=>{
                     if(edit){
                         e.preventDefault()
@@ -49,93 +51,130 @@ class ListItem extends Component {
 
                 }}>
                     <div className="rowMoto">
-                        <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left cross:center`}>
-                            <img src={img_show} alt="icon" data-flex-box="0" style={imgS}/>
-                            <div className="rowMotoText" data-flex="main:justify dir:top">
-                                <div >
-                                    {title}
-                                    {
-                                        status == 'pass' && <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i>
-                                    }
-                                    {
-                                        status == 'edit' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
-                                    }
-                                    {
-                                        status == 'unpass' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证不通过</i>
-                                    }
-                                    {
-                                        status == 'off' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 已下架</i>
-                                    }
-                                </div>
-                                <div>
-                                    {
-                                        !edit && <div style={{display:'none'}}>
+                        {
+                            showType == 'icon-viewlistHot' && <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left cross:center`}>
 
-                                        </div>
-                                    }
-                                    {
-                                        edit && <div data-flex="dir:right">
-                                            <p onClick={() => {
-                                                history.push(`selledit?id=${id}&from=${from||'data'}`)
-                                            }}><i className="iconfont icon-bianji" />编辑</p>
-                                            {
-                                                status == 'off' &&  <p onClick={() => {
-                                                    Tool.post($extMotorOn,{id},function(data){
-                                                        if(data.code == '0'){
-                                                            Toast.info('上架成功', .5);
-                                                            var temp = state;
-                                                            for(let i in temp['data']){
-                                                                if(temp['data'][i]['id'] == id){
-                                                                    temp['data'][i]['status'] = 'edit';
-                                                                }
-                                                            }
-                                                            setState(temp);
-                                                        }
-                                                        else{
-                                                            Toast.offline(data.msg)
-                                                        }
-                                                    })
-                                                }}><i className="iconfont icon-ccgl-shangjiajilu-8" />上架</p>
-                                            }
-                                            {
-                                                status != 'off' &&  <p onClick={() => {
-                                                    Tool.post($extMotorOff,{id},function(data){
-                                                        if(data.code == '0'){
-                                                            Toast.info('下架成功', .5);
-                                                            var temp = state;
-                                                            for(let i in temp['data']){
-                                                                if(temp['data'][i]['id'] == id){
-                                                                    temp['data'][i]['status'] = 'off';
-                                                                }
-                                                            }
-                                                            setState(temp);
-                                                        }
-                                                        else{
-                                                            Toast.offline(data.msg)
-                                                        }
-                                                    })
-                                                }}><i className="iconfont icon-icon1" />下架</p>
-                                            }
+                                <div className="rowMotoText" data-flex="main:justify dir:top">
+                                    <div data-flex="main:justify dir:left">
+                                        <span className="setover">{title}</span>
+                                        <span >
 
-
-
-                                        </div>
-                                    }
-                                </div>
-                                <div  data-flex="main:justify">
-                                    <span>￥{price/100}元</span>
-                                    <span style={{color:'#aaa',fontSize:'.25rem'}}><i className="iconfont icon-shouhuodizhi"></i>{dataCityNo[area.split(',')[1]]}</span>
-
-                                </div>
-                                {
-
-                                    lastPrice-price > 0 && <span className="animated lightSpeedIn"  style={{color:'#ff3300',textAlign:'right',fontSize:'.25rem',paddingTop:'.1rem'}}>
-                                        <i className="iconfont icon-jiangjia"></i>
-                                        {lastPrice!=price ? `${(lastPrice-price)/100000}千` : ''}
+                                        {
+                                            status == 'pass' && <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i>
+                                        }
+                                        {
+                                            status == 'edit' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                                        }
+                                        {
+                                            status == 'unpass' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证不通过</i>
+                                        }
+                                        {
+                                            status == 'off' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 已下架</i>
+                                        }
                                         </span>
-                                }
+                                    </div>
+                                    {
+
+                                        lastPrice-price > 0 && <span className="animated lightSpeedIn"  style={{color:'#ff3300',textAlign:'right',fontSize:'.25rem',paddingTop:'.1rem'}}>
+                                        <i className="iconfont icon-jiangjia"></i>
+                                            {lastPrice!=price ? `${(lastPrice-price)/100000}千` : ''}
+                                        </span>
+                                    }
+                                </div>
+                                <img src={img_show} alt="icon" data-flex-box="0" style={imgS}/>
                             </div>
-                        </div>
+                        }
+
+                        {
+                            showType != 'icon-viewlistHot' && <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left cross:center`}>
+                                <img src={img_show} alt="icon" data-flex-box="0" style={imgS}/>
+                                <div className="rowMotoText" data-flex="main:justify dir:top">
+                                    <div >
+                                        {title}
+                                        {
+                                            status == 'pass' && <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i>
+                                        }
+                                        {
+                                            status == 'edit' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
+                                        }
+                                        {
+                                            status == 'unpass' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证不通过</i>
+                                        }
+                                        {
+                                            status == 'off' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 已下架</i>
+                                        }
+                                    </div>
+                                    <div>
+                                        {
+                                            !edit && <div style={{display:'none'}}>
+
+                                            </div>
+                                        }
+                                        {
+                                            edit && <div data-flex="dir:right">
+                                                <p onClick={() => {
+                                                    history.push(`selledit?id=${id}&from=${from||'data'}`)
+                                                }}><i className="iconfont icon-bianji" />编辑</p>
+                                                {
+                                                    status == 'off' &&  <p onClick={() => {
+                                                        Tool.post($extMotorOn,{id},function(data){
+                                                            if(data.code == '0'){
+                                                                Toast.info('上架成功', .5);
+                                                                var temp = state;
+                                                                for(let i in temp['data']){
+                                                                    if(temp['data'][i]['id'] == id){
+                                                                        temp['data'][i]['status'] = 'edit';
+                                                                    }
+                                                                }
+                                                                setState(temp);
+                                                            }
+                                                            else{
+                                                                Toast.offline(data.msg)
+                                                            }
+                                                        })
+                                                    }}><i className="iconfont icon-ccgl-shangjiajilu-8" />上架</p>
+                                                }
+                                                {
+                                                    status != 'off' &&  <p onClick={() => {
+                                                        Tool.post($extMotorOff,{id},function(data){
+                                                            if(data.code == '0'){
+                                                                Toast.info('下架成功', .5);
+                                                                var temp = state;
+                                                                for(let i in temp['data']){
+                                                                    if(temp['data'][i]['id'] == id){
+                                                                        temp['data'][i]['status'] = 'off';
+                                                                    }
+                                                                }
+                                                                setState(temp);
+                                                            }
+                                                            else{
+                                                                Toast.offline(data.msg)
+                                                            }
+                                                        })
+                                                    }}><i className="iconfont icon-icon1" />下架</p>
+                                                }
+
+
+
+                                            </div>
+                                        }
+                                    </div>
+                                    <div  data-flex="main:justify">
+                                        <span>￥{price/100}元</span>
+                                        <span style={{color:'#aaa',fontSize:'.25rem'}}><i className="iconfont icon-shouhuodizhi"></i>{dataCityNo[area.split(',')[1]]}</span>
+
+                                    </div>
+                                    {
+
+                                        lastPrice-price > 0 && <span className="animated lightSpeedIn"  style={{color:'#ff3300',textAlign:'right',fontSize:'.25rem',paddingTop:'.1rem'}}>
+                                        <i className="iconfont icon-jiangjia"></i>
+                                            {lastPrice!=price ? `${(lastPrice-price)/100000}千` : ''}
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        }
+
                     </div>
                 </Link>
             </div>
@@ -150,16 +189,33 @@ export default class ListMoto extends Component {
     render() {
         var self = this;
         return (
-            <ul className="index-list">
+            <div>
+            {
+                this.props.showType == 'icon-viewlistHot' && <ul className="index-list index-listHot" data-flex="main:justify dir:left" style={{marginTop:'-12px',width:window.innerWidth*2.3+'px'}}>
                 {
                     this.props.list.map((item, index) => {
                         if(JSON.stringify(item)!="{}"){
                             return <ListItem {...this.props} key={index} data={item} />
                         }
-
                     })
                 }
             </ul>
+            }
+                {
+
+                    this.props.showType != 'icon-viewlistHot' && <ul className="index-list" >
+                        {
+                            this.props.list.map((item, index) => {
+                                if(JSON.stringify(item)!="{}"){
+                                    return <ListItem {...this.props} key={index} data={item} />
+                                }
+
+                            })
+                        }
+                    </ul>
+                }
+            </div>
+
         );
     }
 }

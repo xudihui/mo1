@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
 import MyHotList from './common/MyHotList';
+import ListMoto from './common/ListMoto';
+
 import { history,formatParams,DataLoad,dataCityNo} from './common/index';
 import { Tabs, WhiteSpace, Toast, Icon,Menu, ActivityIndicator, Picker,Carousel,TabBar,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
 
@@ -262,12 +264,7 @@ class Main extends Component {
 
                     </div>
                 </div>
-                <div style={{paddingTop:'48px'}}>
-                    <Banner />
-                </div>
-
-
-                <div className="content">
+                <div className="content" style={{display:'none'}}>
                     {
                         this.makePrice([
                             {
@@ -408,13 +405,54 @@ class Main extends Component {
                         <span>春风</span>
                     </Link>
                 </div>
-                <div className="btnWrap">
+                <div style={{paddingTop:'48px'}}>
+                    <div style={{overflowX:'auto'}}>
+                        <div className="sub-title sub-title-no" style={{width:window.innerWidth*2.8+'px'}}>好车推荐
+                            <Link  onClick={() => {
+                                var target = Object.assign({},{isHot:'y'});
+                                this.props.changeTab_('Buy');
+                                history.replace(`/?${formatParams(target)}`);
+                            }
+                            }>
+                                <span>查看全部</span>
+                            </Link>
+                        </div>
+
+                        <ListMoto showType="icon-viewlistHot" from='new' isHot='true' list={this.props.state.myHotList} />
+
+                    </div>
+
+
+                    <div className="sub-title sub-title-no">降价急售
+                        <Link  onClick={() => {
+                            var target = Object.assign({},{urgent:'true'});
+                            this.props.changeTab_('Buy');
+                            history.replace(`/?${formatParams(target)}`);
+                        }
+                        }>
+                            <span>查看全部</span>
+                        </Link>
+                    </div>
+
+                    <ListMoto showType="icon-viewlist" from='new' isHot='true' list={this.state.urgent} />
+                    <div className="sub-title sub-title-no" >准新车
+                        <Link  onClick={() => {
+                            var target = Object.assign({},{maxMileage:'3000'});
+                            this.props.changeTab_('Buy');
+                            history.replace(`/?${formatParams(target)}`);
+                        }
+                        }>
+                            <span>查看全部</span>
+                        </Link>
+                    </div>
+                    <ListMoto showType="icon-viewlist" from='new' isHot='true' list={this.props.state.myHotList} />
+                </div>
+
+                <div className="btnWrap flex" data-flex="main:justify dir:left">
                     <Button className="btn" type="primary"  onClick={() =>{
                         history.replace(`/`);
                         this.props.changeTab_('Buy')
-                    } }>查看全部优质车源</Button>
-                </div>
-                <div className="btnWrap">
+                    } }>查看全部车源</Button>
                     <Button className="btn" type="primary"  onClick={() => {
                         if (!localStorage.getItem('userInfo')) {
                             history.push({ pathname: '/Login' });
@@ -425,8 +463,7 @@ class Main extends Component {
                         }
                     }}>立即免费卖车</Button>
                 </div>
-                <MyHotList isHot={true} data={this.state.urgent} title="急售车源" from="new" />
-                <MyHotList isHot={true} data={this.props.state.myHotList} />
+
             </div>
         );
     }

@@ -414,10 +414,10 @@ class TextareaItemExample extends Component {
                 </List>
                 </div>
 
-
-                <div className="btnWrap" style={{background:'#ddd',padding:'10px 10px 90px 10px',margin:'0'}}>
-                    <Button className="btn" onClick={() => this.handlerClick()} type="primary">更新车辆信息</Button>
-
+                <div className="am-list-item-middle-border" style={{padding:0}}>
+                    <div className="btnWrap" style={{background:'#fff',padding:'10px 10px 90px 10px',margin:'0'}}>
+                        <Button className="btn" onClick={() => this.handlerClick()} type="primary">更新车辆信息</Button>
+                    </div>
                 </div>
             </div>
         );

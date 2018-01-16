@@ -215,14 +215,14 @@ class Content extends Component {
                 {
 
                 }
-                <div style={{height:(queryKeys.indexOf('brand')>-1 || queryKeys.indexOf('title')>-1 || queryKeys.indexOf('motorType')>-1 ) ? '70px' : '48px'}}></div>
+                <div style={{height:(queryKeys.indexOf('brand')>-1 || queryKeys.indexOf('title')>-1 || queryKeys.indexOf('motorType')>-1 || queryKeys.indexOf('isHot')>-1  || queryKeys.indexOf('urgent')>-1  || queryKeys.indexOf('maxMileage')>-1  ) ? '90px' : '48px'}}></div>
                 <div className="tag-container">
                     {
                         queryKeys.map(i =>{
                             console.log('queryKeys',i);
 
                             return(
-                                i == 'brand' || i == 'title' || i == 'motorType' ?
+                                i == 'brand' || i == 'title' || i == 'motorType'|| i == 'isHot' || i == 'urgent' || i == 'maxMileage' ?
                                     <Tag closable
                                          onClose={() => {
                                              console.log('onClose');
@@ -234,15 +234,24 @@ class Content extends Component {
                                              location.reload();
                                          }}>
                                         {
-                                            i == 'brand' && '品牌'
+                                            i == 'brand' && '品牌' + ':'+query[i]
                                         }
                                         {
-                                            i == 'title' && '关键字'
+                                            i == 'title' && '关键字' + ':'+query[i]
                                         }
                                         {
-                                            i == 'motorType' && '车型'
+                                            i == 'motorType' && '车型' + ':'+query[i]
                                         }
-                                        {':'+query[i]}
+                                        {
+                                            i == 'urgent' && '降价急售'
+                                        }
+                                        {
+                                            i == 'isHot' && '好车推荐'
+                                        }
+                                        {
+                                            (i == 'maxMileage' && query[i]==3000) && '准新车'
+                                        }
+
                                     </Tag> : ''
                             );
                         })
@@ -272,8 +281,8 @@ export default GetNextPage({
     data: (props, state) => { //发送给服务器的数据
         console.log('$$$$',props)
         var {rows,page } = state;
-        var {orderKey,brand,title,area,maxPrice,minPrice,userId,motorType,urgent} = props.location.query;
-        var obj = {rows,page,orderKey,brand,title,area,maxPrice,minPrice,userId,motorType,urgent};
+        var {orderKey,brand,title,area,maxPrice,minPrice,userId,motorType,urgent,isHot,maxMileage} = props.location.query;
+        var obj = {rows,page,orderKey,brand,title,area,maxPrice,minPrice,userId,motorType,urgent,isHot,maxMileage};
         return {
             "request":JSON.stringify(obj),
             page

@@ -157,7 +157,16 @@ class Main extends React.Component {
          */
         const imageType = /^image\//;
         const fileInput = this.refs.enter;
+        var {title} = this.props;
         var self = this;
+        if(title == '其他'){
+            fileInput.addEventListener('click', (e) => {
+                e.preventDefault();
+                return;
+            })
+        }
+
+
         fileInput.addEventListener('change', (e) => {
             Toast.loading('图片准备裁切中...',0)
             scrollTop = document.body.scrollTop;
@@ -339,12 +348,16 @@ class MainNative extends React.Component {
          */
         const imageType = /^image\//;
         const fileInput = this.refs.enter;
+        var {title} = this.props;
         var self = this;
         var targetWidth = 800;
         var targetHeight = 800/self.state.crop.aspect;
         var water = this.refs.water;
         fileInput.addEventListener('click', (e) => {
             e.preventDefault();
+            if(title == '其他'){
+                return;
+            }
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             function convertImgToBase64(url, callback, outputFormat) {

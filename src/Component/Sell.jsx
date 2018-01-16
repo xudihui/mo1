@@ -101,7 +101,7 @@ class TextareaItemExample extends Component {
         };
     }
     handlerInit(){
-        this.props.form.setFieldsValue( {area:["110000","110100"],brand: undefined, motorModel: undefined, motorType: undefined,content: undefined, mileage: undefined, oriPrice: undefined, price: undefined, productDate: undefined, tel: undefined, urgent: undefined}
+        this.props.form.setFieldsValue( {area:[],brand: undefined, motorModel: undefined, motorType: undefined,content: undefined, mileage: undefined, oriPrice: undefined, price: undefined, productDate: undefined, tel: undefined, urgent: undefined}
         )
         var self = this;
         this.setState({
@@ -285,6 +285,10 @@ class TextareaItemExample extends Component {
                                             {...getFieldProps('mileage')}
                                             placeholder=""
                                             maxLength="9"
+                                            error={true}
+                                            onErrorClick={() =>{
+                                                alert('','公里数3000以内的车源，系统归为准新车类目。')
+                                            }}
                                         >行驶里程</InputItem>
                                     </div>
                                 </td>
@@ -338,7 +342,9 @@ class TextareaItemExample extends Component {
                 </div>
 
                 <div className="am-list-item-middle-border" style={{padding:0}}>
-                <List renderHeader={() => '图片(请上传3张以上)'}>
+                <List renderHeader={<div className="am-list-item am-input-error">车辆图片<div className="am-input-error-extra" onClick={() =>{
+                    alert('','图片上传至少3张，上传车辆所有部位图片，有几率获得首页推荐。')
+                }}></div></div>}>
                     <div ref="imgUrls">
                         {
                             !self.state.init &&  <ImageChoose ratio="4/3" src=',,,,,,,,,,,,,,' titles={[
@@ -401,11 +407,12 @@ class TextareaItemExample extends Component {
                 </div>
 
 
-
-                <div className="btnWrap" style={{background:'#ddd',padding:'10px 10px 90px 10px',margin:'0'}}>
+                <div className="am-list-item-middle-border" style={{padding:0}}>
+                <div className="btnWrap" style={{background:'#fff',padding:'10px 10px 90px 10px',margin:'0'}}>
                     <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认卖车</Button>
-
                 </div>
+                </div>
+
 
             </div>
         );
