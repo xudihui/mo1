@@ -278,7 +278,8 @@ class TextareaItemExample extends Component {
                                         <List.Item arrow="horizontal"></List.Item>
                                     </Picker>
                                 </td>
-                                <td style={{width:window.innerWidth-252 + 'px'}}>
+
+                                <td style={{width:window.innerWidth-273 + 'px'}}>
                                     <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px',height:'44px'}}>
 
                                     </div>
@@ -297,7 +298,7 @@ class TextareaItemExample extends Component {
                                         <List.Item arrow="horizontal">类型</List.Item>
                                     </Picker>
                                 </td>
-                                <td style={{width:window.innerWidth-138 + 'px'}}>
+                                <td style={{width:window.innerWidth-159 + 'px'}}>
                                     <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
                                         <InputItem
                                             {...getFieldProps('motorModel')}
@@ -323,12 +324,16 @@ class TextareaItemExample extends Component {
                                     </Picker>
 
                                 </td>
-                                <td style={{width:window.innerWidth-138 + 'px'}}>
+                                <td style={{width:window.innerWidth-159 + 'px'}}>
                                     <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
                                         <InputItem
                                             {...getFieldProps('mileage')}
                                             placeholder=""
                                             maxLength="9"
+                                            error={true}
+                                            onErrorClick={() =>{
+                                                alert('','公里数3000以内的车源，系统归为准新车类目。')
+                                            }}
                                         >行驶里程</InputItem>
                                     </div>
                                 </td>
@@ -380,7 +385,9 @@ class TextareaItemExample extends Component {
                     </List>
                 </div>
                 <div className="am-list-item-middle-border" style={{padding:0}}>
-                    <List renderHeader={() => '图片(请上传3张以上)'}>
+                    <List renderHeader={<div className="am-list-item am-input-error">车辆图片<div className="am-input-error-extra" onClick={() =>{
+                        alert('','图片上传至少3张，上传车辆所有部位图片，有几率获得首页推荐。')
+                    }}></div></div>}>
                         <div ref="imgUrls">
                             <ImageChoose ratio="4/3"  src={this.state.data.imgUrls}  titles={[
                                 '左侧车身',
@@ -415,7 +422,7 @@ class TextareaItemExample extends Component {
                 </div>
 
                 <div className="am-list-item-middle-border" style={{padding:0}}>
-                    <div className="btnWrap" style={{background:'#fff',padding:'10px 10px 90px 10px',margin:'0'}}>
+                    <div className="btnWrap" style={{background:'#fff',padding:'10px 20px 90px 20px',margin:'0'}}>
                         <Button className="btn" onClick={() => this.handlerClick()} type="primary">更新车辆信息</Button>
                     </div>
                 </div>

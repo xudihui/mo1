@@ -234,7 +234,8 @@ class TextareaItemExample extends Component {
                                         <List.Item arrow="horizontal"></List.Item>
                                     </Picker>
                                 </td>
-                                <td style={{width:window.innerWidth-252 + 'px'}}>
+
+                                <td style={{width:window.innerWidth-273 + 'px'}}>
                                     <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px',height:'44px'}}>
 
                                     </div>
@@ -253,7 +254,7 @@ class TextareaItemExample extends Component {
                                         <List.Item arrow="horizontal">类型</List.Item>
                                     </Picker>
                                 </td>
-                                <td style={{width:window.innerWidth-138 + 'px'}}>
+                                <td style={{width:window.innerWidth-159 + 'px'}}>
                                     <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
                                         <InputItem
                                             {...getFieldProps('motorModel')}
@@ -279,7 +280,7 @@ class TextareaItemExample extends Component {
                                     </Picker>
 
                                 </td>
-                                <td style={{width:window.innerWidth-138 + 'px'}}>
+                                <td style={{width:window.innerWidth-159 + 'px'}}>
                                     <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
                                         <InputItem
                                             {...getFieldProps('mileage')}
@@ -408,7 +409,7 @@ class TextareaItemExample extends Component {
 
 
                 <div className="am-list-item-middle-border" style={{padding:0}}>
-                <div className="btnWrap" style={{background:'#fff',padding:'10px 10px 90px 10px',margin:'0'}}>
+                <div className="btnWrap" style={{background:'#fff',padding:'10px 20px 90px 20px',margin:'0'}}>
                     <Button className="btn" onClick={() => this.handlerClick()} type="primary">确认卖车</Button>
                 </div>
                 </div>

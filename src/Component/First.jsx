@@ -133,6 +133,8 @@ class Main extends Component {
             open: false,
             matchIndex:-1,
             urgent:[],
+            myHotList:[],
+            maxMileage:[],
             visible:false
         }
     }
@@ -212,7 +214,20 @@ class Main extends Component {
             console.log('document');
             self.handlerSetMatch(false,-1);
         });
-
+        //请求好车推荐
+        Tool.post($extMotorFindPage,{isHot:'y',rows:3},function(data){
+            if(data.code == '0'){
+                self.setState({
+                    myHotList:data.response.searchData
+                });
+            }
+            else if(data.code == '-1001'){
+                Toast.offline(data.msg);
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
         //请求急售车辆
         Tool.post($extMotorFindPage,{urgent:true,rows:3},function(data){
             if(data.code == '0'){
@@ -228,12 +243,27 @@ class Main extends Component {
             }
         })
 
+       //请求准新车
+        Tool.post($extMotorFindPage,{maxMileage:3000,rows:3},function(data){
+            if(data.code == '0'){
+                self.setState({
+                    maxMileage:data.response.searchData
+                });
+            }
+            else if(data.code == '-1001'){
+                Toast.offline(data.msg);
+            }
+            else{
+                Toast.offline(data.msg)
+            }
+        })
+
     }
 
     render() {
         var {setCity} = this.props;
         return (
-            <div style={{paddingBottom:'50px'}}>
+            <div style={{paddingBottom:'70px'}}>
                 <div className='topWrap'>
                     <div className="top" onClick={(e) => {this.handleClick(e)}} data-flex="dir:left box:last" >
                         <div>
@@ -406,8 +436,8 @@ class Main extends Component {
                     </Link>
                 </div>
                 <div style={{paddingTop:'48px'}}>
-                    <div style={{overflowX:'auto'}}>
-                        <div className="sub-title sub-title-no" style={{width:window.innerWidth*2.8+'px'}}>好车推荐
+                    <div style={{overflowX:'auto',margin:'.2rem .4rem 0 .4rem '}}>
+                        <div className="sub-title sub-title-no" style={{width:window.innerWidth*2.53+'px',padding:'12px .0rem 12px 0',textIndent:'0'}}><b>好车推荐</b>
                             <Link  onClick={() => {
                                 var target = Object.assign({},{isHot:'y'});
                                 this.props.changeTab_('Buy');
@@ -418,12 +448,11 @@ class Main extends Component {
                             </Link>
                         </div>
 
-                        <ListMoto showType="icon-viewlistHot" from='new' isHot='true' list={this.props.state.myHotList} />
+                        <ListMoto showType="icon-viewlistHot" from='new' isHot='true' list={this.state.myHotList} />
 
                     </div>
 
-
-                    <div className="sub-title sub-title-no">降价急售
+                    <div className="sub-title sub-title-no" style={{bottom:'-.2rem',marginTop:'-.3rem',position:'relative'}}><b>降价急售</b>
                         <Link  onClick={() => {
                             var target = Object.assign({},{urgent:'true'});
                             this.props.changeTab_('Buy');
@@ -435,7 +464,7 @@ class Main extends Component {
                     </div>
 
                     <ListMoto showType="icon-viewlist" from='new' isHot='true' list={this.state.urgent} />
-                    <div className="sub-title sub-title-no" >准新车
+                    <div className="sub-title sub-title-no" style={{bottom:'-.2rem',marginTop:'-.3rem',position:'relative'}}><b>准新车</b>
                         <Link  onClick={() => {
                             var target = Object.assign({},{maxMileage:'3000'});
                             this.props.changeTab_('Buy');
@@ -445,7 +474,7 @@ class Main extends Component {
                             <span>查看全部</span>
                         </Link>
                     </div>
-                    <ListMoto showType="icon-viewlist" from='new' isHot='true' list={this.props.state.myHotList} />
+                    <ListMoto showType="icon-viewlist" from='new' isHot='true' list={this.state.maxMileage} />
                 </div>
 
                 <div className="btnWrap flex" data-flex="main:justify dir:left">

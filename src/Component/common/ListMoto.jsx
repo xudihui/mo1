@@ -55,7 +55,7 @@ class ListItem extends Component {
                             showType == 'icon-viewlistHot' && <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left cross:center`}>
 
                                 <div className="rowMotoText" data-flex="main:justify dir:top">
-                                    <div data-flex="main:justify dir:left">
+                                    <div data-flex="main:justify dir:left box:last">
                                         <span className="setover">{title}</span>
                                         <span >
 
@@ -191,7 +191,7 @@ export default class ListMoto extends Component {
         return (
             <div>
             {
-                this.props.showType == 'icon-viewlistHot' && <ul className="index-list index-listHot" data-flex="main:justify dir:left" style={{marginTop:'-12px',width:window.innerWidth*2.3+'px'}}>
+                this.props.showType == 'icon-viewlistHot' && <div ><ul className="index-list index-listHot" data-flex="main:justify dir:left" style={{marginTop:'-12px',width:window.innerWidth*2.53+'px'}}>
                 {
                     this.props.list.map((item, index) => {
                         if(JSON.stringify(item)!="{}"){
@@ -199,7 +199,7 @@ export default class ListMoto extends Component {
                         }
                     })
                 }
-            </ul>
+                </ul></div>
             }
                 {
 
