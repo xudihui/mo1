@@ -6,6 +6,8 @@ import { Tool, merged } from '../Tool';
  * @param {Object} action
  * @returns Object
  */
+
+//localStorage.userInfo = '{"id":3,"tel":"15067425400","userName":"你好哟人人","realName":"你很棒棒哦","idCard":"332528199009215416","headUrl":"http://47.94.230.18//group0/M00/00/00/424b22f9-0894-4984-b405-8b0033c01ef5.jpeg","fileRdfUrl":"http://47.94.230.18/","status":"on","msgCode":"3579","msgCodeTime":"2018-01-22 10:11:05","token":"25D3EE0993AD0EA6CC477353A096F5684C8EA8259B747973","tokenTime":"2018-01-22 10:11:18","updateTime":"2018-01-22 10:11:18","sign":"只卖最好最贵的车"}'
 var userDefault = {
     userInfo:JSON.parse(localStorage.getItem('userInfo')||null)||'',
     city:localStorage.getItem('city') || '全国'

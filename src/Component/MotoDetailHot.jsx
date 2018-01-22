@@ -8,9 +8,6 @@ import MyHotList from './common/MyHotList';
 import { history,TopNavBar,dataCityNo,getDateDiff } from './common/index';
 import Discuss from './common/Discuss';
 import { Toast ,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,Modal,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
-import Rows from './Rows';
-import a1 from '../Images/01.jpg';
-import a2 from '../Images/02.jpg';
 
 var talks = [];
 

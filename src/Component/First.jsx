@@ -436,8 +436,8 @@ class Main extends Component {
                     </Link>
                 </div>
                 <div style={{paddingTop:'48px'}}>
-                    <div style={{overflowX:'auto',margin:'.2rem .4rem 0 .4rem '}}>
-                        <div className="sub-title sub-title-no" style={{width:window.innerWidth*2.53+'px',padding:'12px .0rem 12px 0',textIndent:'0'}}><b>好车推荐</b>
+                    <div ref="a1" style={{overflowX:'auto',margin:'.2rem .4rem 0 .4rem '}}>
+                        <div className="sub-title sub-title-no" style={{width:window.innerWidth*2.53+'px',padding:'12px .0rem 20px 0',textIndent:'0'}}><b>好车推荐</b>
                             <Link  onClick={() => {
                                 var target = Object.assign({},{isHot:'y'});
                                 this.props.changeTab_('Buy');

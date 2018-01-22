@@ -8,9 +8,6 @@ import MyHotList from './common/MyHotList';
 import { history,TopNavBar,dataCityNo,getDateDiff } from './common/index';
 import Discuss from './common/Discuss';
 import { Toast ,List ,NoticeBar,Grid, WhiteSpace, Icon,Menu, ActivityIndicator, NavBar,Carousel,TabBar,Modal,SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder } from 'antd-mobile-web';
-import Rows from './Rows';
-import a1 from '../Images/01.jpg';
-import a2 from '../Images/02.jpg';
 const alert = Modal.alert;
 var talks = [];
 
@@ -321,7 +318,7 @@ class Main extends Component {
                         <div style={{textAlign:'right'}}>
                             <span ><i className="iconfont icon-lichengdixian"></i>{this.state.motoData.price/100}元</span>
                         </div>
-                        <div style={{marginTop:'-22px'}}><span>新车含税{this.state.motoData.oriPrice/1000000}万</span>
+                        <div style={{marginTop:'-22px'}}><span>新车含税{(this.state.motoData.oriPrice/1000000).toFixed(1)}万</span>
                             <i onClick={()=>{
                                 Toast.info('新车含税价=厂家公布的指导价+购置税。结果仅供参考。')
                             }} className="iconfont icon-information"></i>

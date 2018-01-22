@@ -19,7 +19,6 @@ import MotoDetailNew from '../Component/MotoDetailNew'; //摩托详情页
 import Steps from '../Component/Steps'; //摩托详情页
 
 import Choose from '../Component/Choose'; //摩托详情页
-import MySelling from '../Component/MySelling'; //摩托详情页
 import SellEdit from '../Component/SellEdit'; //卖车编辑页
 import Building from '../Component/Building'; //卖车编辑页
 /**
@@ -59,7 +58,6 @@ const RouteConfig = (
             <Route path="MotoDetailNew" component={MotoDetailNew} onEnter={requireLogin}/>
 
             <Route path="choose" component={Choose} />
-            <Route path="MySelling" component={MySelling} />
             <Route path="MySetting" component={MySetting} />
             <Route path="MyCenter" component={MyCenter} />
             <Route path="PersonCenter/:userId" component={PersonCenter} />
@@ -72,5 +70,6 @@ const RouteConfig = (
         </Route>
     </Router>
 );
+
 
 export default RouteConfig;

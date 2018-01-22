@@ -6,7 +6,6 @@ import { Tool, merged } from '../Tool';
 import ListMoto from './common/ListMoto';
 import { history,dataBrand,dataModel,formatParams } from './common/index';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, GetData,GetNextPage,TopNavBar } from './common/index';
-import a2 from '../Images/02.jpg';
 import { SearchBar,Badge, Button,WingBlank,Flex,PlaceHolder,Tag } from 'antd-mobile-web';
 /**
  * 模块入口
@@ -107,6 +106,7 @@ class Content extends Component {
                             <div onClick={(e)=>{this.handlerSetMatch(e,2)}}>车型<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{
                                 var target = Object.assign({},query);
+                                target.from = 'MySellList';
                                 history.push(`/Choose?${formatParams(target)}`);
                             }}>筛选<i className="iconfont icon-xiangxiajiantou"></i></div>
                             <div onClick={(e)=>{this.handlerChange()}}><i className={`iconfont ${this.state.showType}`}></i></div>
@@ -143,7 +143,7 @@ class Content extends Component {
                                     dataModel.map((item) =>(
                                         <li onClick={()=>{
                                             var target = Object.assign({},query,{motorType:item})
-                                            history.replace(`/?${formatParams(target)}`)
+                                            history.replace(`/MySellList?${formatParams(target)}`)
                                         }}>{item}</li>
                                     ))
                                 }

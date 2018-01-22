@@ -21,6 +21,9 @@ class ListItem extends Component {
         var {pathname, search} = location || {};
         var path = pathname + search;
         var imgS = showType != 'icon-viewlist' ? {width:'100%',height:'100%',margin:'0',marginBottom:'4px'} : {}
+        if(showType == 'icon-viewlistHot'){
+            imgS = {width:'100%',height:window.innerWidth/1.635,margin:'0',marginBottom:'4px'}
+        }
         var img_show = '';
         var img_source = imgUrls.split(',');
         for(let i in img_source){
@@ -34,7 +37,7 @@ class ListItem extends Component {
         return (
             <div className="index-list-panel">
                 {
-                    showType != 'icon-viewlistHot' && <div style={{background:'#ddd',height:'1px'}} className="blank"></div>
+                    showType != 'icon-viewlistHot' && <div style={{background:'#ddd',height:'1px',margin:'0 .401rem'}} className="blank"></div>
                 }
                 <Link to={`/motoDetail?id=${id}&from=${from||'data'}`} onClick={(e)=>{
                     if(edit){
@@ -55,12 +58,15 @@ class ListItem extends Component {
                             showType == 'icon-viewlistHot' && <div data-flex={`dir:${showType == 'icon-viewlist' ? 'left' : 'top'} main:left cross:center`}>
 
                                 <div className="rowMotoText" data-flex="main:justify dir:top">
-                                    <div data-flex="main:justify dir:left box:last">
-                                        <span className="setover">{title}</span>
-                                        <span >
+                                    <div data-flex="main:justify dir:left box:first">
+                                        <span className="setover" style={{maxWidth:window.innerWidth*0.84-63,marginRight:'8px'}}>{title}
+                                        </span>
+                                        <span>
+
+
 
                                         {
-                                            status == 'pass' && <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'3px'}}></i>
+                                            status == 'pass' && <i className="iconfont icon-yirenzheng" style={{color:'#ff5b05',padding:'0 5px',position:'relative',top:'1px'}}></i>
                                         }
                                         {
                                             status == 'edit' && <i className="iconfont icon-process"  style={{color:'#aaa',fontSize:'8px',padding:'0 5px',position:'relative',top:'-2px'}}> 认证中</i>
@@ -160,8 +166,10 @@ class ListItem extends Component {
                                         }
                                     </div>
                                     <div  data-flex="main:justify">
-                                        <span>￥{price/100}元</span>
+
                                         <span style={{color:'#aaa',fontSize:'.25rem'}}><i className="iconfont icon-shouhuodizhi"></i>{dataCityNo[area.split(',')[1]]}</span>
+                                        <span>￥{price/100}元</span>
+
 
                                     </div>
                                     {
@@ -196,6 +204,7 @@ export default class ListMoto extends Component {
                     this.props.list.map((item, index) => {
                         if(JSON.stringify(item)!="{}"){
                             return <ListItem {...this.props} key={index} data={item} />
+
                         }
                     })
                 }

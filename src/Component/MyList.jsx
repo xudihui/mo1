@@ -6,7 +6,6 @@ import { Tool, merged } from '../Tool';
 import ListMoto from './common/ListMoto';
 import { history,dataBrand,dataModel,formatParams,dataCityNo } from './common/index';
 import { DataLoad, DataNull, Header, TipMsgSignin, UserHeadImg, GetData,GetNextPage,TopNavBar } from './common/index';
-import a2 from '../Images/02.jpg';
 import { SearchBar,Badge, Button,Toast,Picker,PlaceHolder,Tag } from 'antd-mobile-web';
 
 /**

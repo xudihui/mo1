@@ -254,94 +254,102 @@ class TextareaItemExample extends Component {
         return (
             <div style={{overflowX:'hidden'}} className="sellPanel">
                 <TopNavBar title="编辑车辆信息"  />
+                <div style={{marginTop:'-1px'}}></div>
                 <List >
                     <div className="am-list-item-middle-border">
                         <table className="t_four">
                             <tr>
                                 <td>
-                                    <Picker
-                                        {...getFieldProps('productDate')}
-                                        data={years}
-                                        cascade={false}
-                                        extra="上市时间"
-                                    >
-                                        <List.Item arrow="horizontal"></List.Item>
-                                    </Picker>
+                                    <div className="line_">
+                                        <Picker
+                                            {...getFieldProps('productDate')}
+                                            data={years}
+                                            cascade={false}
+                                            extra="上市时间"
+                                        >
+                                            <List.Item arrow="horizontal"></List.Item>
+                                        </Picker>
+                                    </div>
+
                                 </td>
                                 <td>
-                                    <Picker
-                                        {...getFieldProps('brand')}
-                                        data={dataBrand_}
-                                        cascade={false}
-                                        extra="品牌名称"
-                                    >
-                                        <List.Item arrow="horizontal"></List.Item>
-                                    </Picker>
+                                    <div className="line_">
+                                        <Picker
+                                            {...getFieldProps('brand')}
+                                            data={dataBrand_}
+                                            cascade={false}
+                                            extra="品牌名称"
+                                        >
+                                            <List.Item arrow="horizontal"></List.Item>
+                                        </Picker>
+                                    </div>
+
                                 </td>
 
-                                <td style={{width:window.innerWidth-273 + 'px'}}>
-                                    <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px',height:'44px'}}>
-
-                                    </div>
+                                <td style={{width:window.innerWidth-269 + 'px'}}>
+                                    <div className="line_"></div>
                                 </td>
                             </tr>
                         </table>
                         <table className="t_three">
                             <tr>
                                 <td>
-                                    <Picker
-                                        {...getFieldProps('motorType')}
-                                        data={dataModel_}
-                                        cascade={false}
-                                        extra="车辆类型"
-                                    >
-                                        <List.Item arrow="horizontal">类型</List.Item>
-                                    </Picker>
+                                    <div className="line_">
+                                        <Picker
+                                            {...getFieldProps('motorType')}
+                                            data={dataModel_}
+                                            cascade={false}
+                                            extra="车辆类型"
+                                        >
+                                            <List.Item arrow="horizontal">类型</List.Item>
+                                        </Picker>
+                                    </div>
+
                                 </td>
-                                <td style={{width:window.innerWidth-159 + 'px'}}>
-                                    <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
+                                <td style={{width:window.innerWidth-155 + 'px'}}>
+                                    <div className="line_">
                                         <InputItem
                                             {...getFieldProps('motorModel')}
                                             placeholder=""
                                             maxLength="11"
                                         >型号排量</InputItem>
                                     </div>
-
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <Picker
-                                        {...getFieldProps('area')}
-                                        data={arr_dataCityNo}
-                                        onOk={e => console.log('ok', e)}
-                                        onDismiss={e => console.log('dismiss', e)}
-                                        extra="所在城市"
-                                        cols = '2'
+                                    <div className="line_">
+                                        <Picker
+                                            {...getFieldProps('area')}
+                                            data={arr_dataCityNo}
+                                            onOk={e => console.log('ok', e)}
+                                            onDismiss={e => console.log('dismiss', e)}
+                                            extra="所在城市"
+                                            cols = '2'
 
-                                    >
-                                        <List.Item arrow="horizontal"></List.Item>
-                                    </Picker>
+                                        >
+                                            <List.Item arrow="horizontal"></List.Item>
+                                        </Picker>
+                                    </div>
+
 
                                 </td>
-                                <td style={{width:window.innerWidth-159 + 'px'}}>
-                                    <div style={{borderBottom:'1px solid #ddd',marginTop:'-1px'}}>
+                                <td style={{width:window.innerWidth-155 + 'px'}}>
+                                    <div className="line_">
                                         <InputItem
                                             {...getFieldProps('mileage')}
                                             placeholder=""
                                             maxLength="9"
-                                            error={true}
-                                            onErrorClick={() =>{
-                                                alert('','公里数3000以内的车源，系统归为准新车类目。')
-                                            }}
-                                        >行驶里程</InputItem>
+                                        ><div className="am-list-item am-input-error">行驶里程<div className="am-input-error-extra" onClick={() =>{
+                                            alert('','公里数3000以内的车源，系统归为准新车类目。')
+                                        }}></div></div></InputItem>
                                     </div>
                                 </td>
                             </tr>
                         </table>
 
                     </div>
-                    <div className="am-list-item-middle-border" style={{marginTop:'-3px'}}>
+                    <div className="am-list-item-middle-border" style={{marginTop:'-2px'}}>
                         <InputItem
                             {...getFieldProps('oriPrice')}
                             placeholder=""

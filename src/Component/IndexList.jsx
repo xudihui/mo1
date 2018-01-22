@@ -14,8 +14,6 @@ var alert = Modal.alert;
 
 
 
-
-
 class TabBarExample extends Component {
     constructor(props) {
         super(props);

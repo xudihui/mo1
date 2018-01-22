@@ -495,7 +495,7 @@ export class TopNavBar extends Component {
                     <span data-flex="dir:left"  onClick={() => {
                         !handlerClick ?  history.goBack() : handlerClick()
                     }}>
-                        <i className="iconfont icon-xiangzuojiantou" style={{padding:'15px 20px 15px 5px'}}></i>
+                        <i className="iconfont icon-xiangzuojiantou" style={{padding:'15px 13px 15px 12px'}}></i>
                         <b></b>
                     </span>
                     <span>{title || '暂无标题'}</span>

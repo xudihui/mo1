@@ -54,7 +54,12 @@ class Main extends Component {
                 <div className="btnWrap">
                     <Button className="btn" type="primary"  onClick={() => {
                         var target = Object.assign({},query,{minPrice:this.state.minPrice*1000000,maxPrice:this.state.maxPrice*1000000})
-                        history.replace(`/?${formatParams(target)}`)
+                        if(location.href.indexOf('MySellList') > -1){
+                            history.replace(`/MySellList?${formatParams(target)}`)
+                        }
+                        else{
+                            history.replace(`/?${formatParams(target)}`)
+                        }
                     }}>确定</Button>
                 </div>
             </div>
