@@ -452,6 +452,7 @@ class Main extends Component {
 
                     </div>
 
+
                     <div className="sub-title sub-title-no" style={{bottom:'-.2rem',marginTop:'-.3rem',position:'relative'}}><b>降价急售</b>
                         <Link  onClick={() => {
                             var target = Object.assign({},{urgent:'true'});
@@ -464,6 +465,7 @@ class Main extends Component {
                     </div>
 
                     <ListMoto showType="icon-viewlist" from='new' isHot='true' list={this.state.urgent} />
+                    <div className="blank" style={{background:'#ddd',height:'1px',margin:'0 .401rem'}}></div>
                     <div className="sub-title sub-title-no" style={{bottom:'-.2rem',marginTop:'-.3rem',position:'relative'}}><b>准新车</b>
                         <Link  onClick={() => {
                             var target = Object.assign({},{maxMileage:'3000'});
@@ -477,6 +479,7 @@ class Main extends Component {
                     <ListMoto showType="icon-viewlist" from='new' isHot='true' list={this.state.maxMileage} />
                 </div>
 
+                <div className="blank" style={{background:'#ddd',height:'1px',margin:'0 .401rem'}}></div>
                 <div className="btnWrap flex" data-flex="main:justify dir:left">
                     <Button className="btn" type="primary"  onClick={() =>{
                         history.replace(`/`);

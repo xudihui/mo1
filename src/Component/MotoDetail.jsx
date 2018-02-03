@@ -242,9 +242,15 @@ class Main extends Component {
             }
 
         ];
+        var motoData_ = this.state.motoData;
         return (
             <div className="moto-detail" >
-                <TopNavBar title='车辆详情'  share={true} />
+                <TopNavBar option={{
+                    title : motoData_.title,
+                    thumb : motoData_.imgUrls.split(',')[0],
+                    description:motoData_.price/100 + '元',
+                    webpageUrl : `http://www.mo1.cn/exthtml/web/index.html#/motoDetailShare?id=${motoData_.id}&from=new`,
+                }} title='车辆详情'  share={true} />
 
                 {
                     /*

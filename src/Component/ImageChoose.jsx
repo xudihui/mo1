@@ -410,24 +410,13 @@ class MainNative extends React.Component {
             }
             else{
                 var onSuccess = function(imageURL) {
-                    var img = new Image();
-                    img.src =  "data:image/jpeg;base64," + imageURL;
-                    //先进行一次大范围的缩放
-                    img.onload = function(){
-                        var canvas = document.createElement("canvas");
-                        var ctx=canvas.getContext("2d");
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        ctx.drawImage(img,0,0, img.width, img.height);
-                        water.style.display = 'inline-block';
-                        ctx.drawImage(water,img.width-220,img.height-30);
-                        water.style.display = 'none';
-                        var pngData = canvas.toDataURL('image/jpeg');
+
+                    convertImgToBase64("data:image/jpeg;base64," + imageURL,function(base_){
                         self.setState({
-                            src:pngData
+                            src:base_
                         });
                         self.onDone();
-                    }
+                    })
                 }
                 var onFail = function(message) {
                     Toast.offline('图片上传失败');

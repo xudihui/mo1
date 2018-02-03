@@ -3,7 +3,7 @@ import { Router, Route, IndexRoute, browserHistory, Link } from 'react-router';
 import { connect } from 'react-redux';
 import action from '../Action/Index';
 import { Tool, merged } from '../Tool';
-
+import myHead from '../Images/logo.png';
 import MyHotList from './common/MyHotList';
 import { history,TopNavBar,dataCityNo,getDateDiff } from './common/index';
 import Discuss from './common/Discuss';
@@ -190,20 +190,6 @@ class Main extends Component {
     componentDidMount() {
         var self = this;
         document.body.scrollTop = 0;
-        Tool.post($extEvaluateFindPageByMo,{pid:self.id},function(data){
-            if(data.code == '0'){
-                Toast.info('评论载入成功', .5);
-                var talks_ = data.response.searchData;
-                self.setState({talks:talks_ || []});
-            }
-            else if(data.code == '-1001'){
-                Toast.offline(data.msg);
-                history.replace('/login');
-            }
-            else{
-                Toast.offline(data.msg)
-            }
-        })
 
 
         //请求用户在售车辆
@@ -293,16 +279,16 @@ class Main extends Component {
             }
 
         ];
-        console.log('热热热：',this.state.motoData)
-        var motoData_ = this.state.motoData;
+        console.log('热热热：',self.isHot)
         return (
-            <div className="moto-detail" >
-                <TopNavBar option={{
-                    title : motoData_.title,
-                    thumb : motoData_.imgUrls.split(',')[0],
-                    description:motoData_.price/100 + '元',
-                    webpageUrl : `http://www.mo1.cn/exthtml/web/index.html#/motoDetailShare?id=${motoData_.id}&from=new`,
-                }} title='车辆详情'  share={true} />
+            <div className="moto-detail" style={{padding:0}}>
+                <div className="downLoad">
+                    <img src={myHead} />
+                    <span>下载<i>摩一二手车</i>，看更多车源</span>
+                    <a href="http://www.mo1.cn/">立即下载</a>
+
+
+                </div>
 
                 <div className="detail-wrap">
                     <div className="rowMotoTextDetail" >
@@ -344,35 +330,6 @@ class Main extends Component {
                     <pre>{this.state.motoData.content}</pre>
                 </div>
 
-                <div className="am-list-header">大家在说
-                    <Button className="btn" type="primary" onClick={() => Modal.prompt('留言/砍价', '',
-                        [
-                            { text: '取消' },
-                            { text: '留言/砍价',
-                                onPress: value => new Promise((resolve) => {
-                                    if(value == ''){
-                                        return Toast.fail('不能发布空内容！', 1);
-                                    }
-                                    Tool.post($extEvaluateAdd,{pid:self.state.motoData.id,content:value,tel:self.props.tel,cityName:self.props.city},function(data){
-                                        if(data.code == '0'){
-                                            Toast.success('恭喜您，发布成功', 1);
-                                            var talks_ = self.state.talks;
-                                            talks_.unshift(data.response);
-                                            self.setState({talks:talks_});
-                                        }
-                                        else{
-                                            Toast.offline(data.msg)
-                                        }
-                                        resolve(); //关闭对话框
-                                    })
-
-                                }),
-                            },
-                        ], 'default', null, ['请输入您想说的话'])}>留言/砍价</Button>
-                </div>
-                <div className="content">
-                    <Discuss list={ this.state.talks} />
-                </div>
                 <div className="am-list-header">配置参数</div>
                 <div>
                     <List >
@@ -384,24 +341,14 @@ class Main extends Component {
 
                     </List>
                 </div>
-                {
-                    self.isHot=='false' && <MyHotList {...this.props} data={this.props.state.myHotList}  paddingBottom="50px"/>
-                }
-                <div style={{position:'fixed',width:'100%',bottom:'0',background:'#fff'}} data-flex="main:justify">
-                    {
-                        this.state.footer.map((dataItem,index) => (
-                                <div className={dataItem.checked ? 'bgWhite' : ''} data-flex-box="1" onClick={() => {
-                                    self.handlerChecked(index,dataItem.background);
-                                }} style={{ padding: '0.25rem .05rem',textAlign:'center',background:(dataItem.checked ? dataItem.backgroundChecked : dataItem.background) }}>
-                                    <i style={{ color: '#ff3300',fontSize: '0.25rem',display:'block', textAlign: 'center' }} className={'iconfont '+dataItem.icon} >
-                                        {' '+dataItem.title}
-                                    </i>
-                                </div>
-                        ))
-                    }
+
+                <div className="downLoad">
+                    <img src={myHead} />
+                    <span>下载<i>摩一二手车</i>，看更多车源</span>
+                    <a href="http://www.mo1.cn/">立即下载</a>
+
+
                 </div>
-
-
 
             </div>
         );

@@ -18,7 +18,7 @@ export { GetData, GetNextPage }
  * @class data
  * SHARE(1,'send-link-thumb-remote')
  */
-var SHARE_ = function (scene, id) {
+var SHARE_ = function (scene, id,opt) {
     if (typeof Wechat === "undefined") {
         alert("暂不支持微信分享！");
         return false;
@@ -67,11 +67,12 @@ var SHARE_ = function (scene, id) {
                 break;
 
             case 'send-link-thumb-remote':
-                params.message.title = "摩一二手车";
-                params.message.description = "第二好用的二手摩托车信息发布平台";
-                params.message.thumb = "https://cdnweb04.96225.com/images/logo.jpg";
+                var opt = opt || {};
+                params.message.title = opt.title || "摩一二手车";
+                params.message.description = opt.description || "第二好用的二手摩托车信息发布平台";
+                params.message.thumb = opt.thumb || "https://cdnweb04.96225.com/images/logo.jpg";
                 params.message.media.type = Wechat.Type.LINK;
-                params.message.media.webpageUrl = "http://mo1.cn/exthtml/download/";
+                params.message.media.webpageUrl = opt.webpageUrl || "http://mo1.cn/exthtml/download/";
                 break;
 
             case 'send-music':
@@ -465,7 +466,20 @@ export class TopNavBar extends Component {
         };
     }
     onSelect(opt){
-        SHARE_(parseInt(opt.props.value),'send-link-thumb-remote');
+        var t = this.props.option;
+      //  SHARE_(parseInt(opt.props.value),'send-link-thumb-remote',option);
+        window.Wechat.share({
+            message: {
+                title: t.title || '摩一',
+                description: t.description || '摩一',
+                thumb: t.thumb || 'https://cdnweb04.96225.com/images/logo.jpg',
+                media: {
+                    type: window.Wechat.Type.WEBPAGE,
+                    webpageUrl: t.webpageUrl || 'http://mo1.cn/exthtml/download/',
+                }
+            },
+            scene: window.Wechat.Scene.SESSION
+        })
         this.setState({
             visible: false,
             selected: opt.props.value,
@@ -521,9 +535,7 @@ export class TopNavBar extends Component {
                      overlayStyle={{ color: 'currentColor' }}
                      visible={this.state.visible}
                      overlay={[
-                         (<Item key="1" value="0" icon={<i className="iconfont icon-pyq"></i>} >微信好友</Item>),
-                         (<Item key="2" value="1" icon={<i className="iconfont icon-weixinhaoyou"></i>} >微信朋友圈</Item>),
-                         (<Item key="3" value="2" icon={<i className="iconfont icon-weixinshoucang"></i>} >微信收藏</Item>)
+                         (<Item key="1" value="0" icon={<i className="iconfont icon-pyq"></i>} >微信好友</Item>)
                      ]}
                      align={{
                          overflow: { adjustY: 0, adjustX: 0 },

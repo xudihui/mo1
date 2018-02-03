@@ -16,6 +16,7 @@ import MyOwn from '../Component/MyOwn'; //买家中心
 import MotoDetail from '../Component/MotoDetail'; //摩托详情页
 import MotoDetailHot from '../Component/MotoDetailHot'; //摩托详情页
 import MotoDetailNew from '../Component/MotoDetailNew'; //摩托详情页
+import MotoDetailShare from '../Component/MotoDetailShare'; //摩托详情页分享专用
 import Steps from '../Component/Steps'; //摩托详情页
 
 import Choose from '../Component/Choose'; //摩托详情页
@@ -55,8 +56,8 @@ const RouteConfig = (
             <Route path="myOwn" component={MyOwn} />
             <Route path="motoDetail" component={MotoDetail} onEnter={requireLogin}/>
             <Route path="motoDetailHot" component={MotoDetailHot} onEnter={requireLogin}/>
-            <Route path="MotoDetailNew" component={MotoDetailNew} onEnter={requireLogin}/>
-
+            <Route path="MotoDetailNew" component={MotoDetailNew} />
+            <Route path="MotoDetailShare" component={MotoDetailShare} />
             <Route path="choose" component={Choose} />
             <Route path="MySetting" component={MySetting} />
             <Route path="MyCenter" component={MyCenter} />
